@@ -1,0 +1,95 @@
+---
+title: Algoritmer
+description: Begreppet algoritm och tidskomplexitet
+order: 0010
+hidden: true
+---
+
+En algoritm är en entydig följd av instruktioner som beskriver hur en specifik uppgift ska lösas. Det är tydligt vad som är indata och vilket resultat algoritmen ska ge.  
+
+En uppgift, ofta kallad ett problem, kan många gånger lösas på flera sätt, dvs med olika algoritmer. Ett sådant exempel är problemet/uppgiften att sortera en datamängd (här finns flertalet olika algoritmer). Ett annat exempel är sökning i en datamängd.
+
+## Exempel på algoritmer i vardagen
+
+### Göra en smörgås
+
+Indata: bröd, smör och pålägg  
+Utdata : smörgås
+
+```text
+1. Ta en skiva bröd  
+2. Bred smör på brödskivan  
+3. Lägg på pålägg  
+```
+
+### Passera vid övergångsställe med trafikljus
+
+Indata: Övergångsställe med trafikljus, fotgängare  
+Utdata: fotgängare på andra sidan övergångsstället
+
+```text
+1. Om det är grönt    
+    2. Gå över 
+3. annars  
+    4. Tryck på knappen  
+    5. Vänta tills det blir grönt  
+    6. Gå över  
+```
+
+## Pseudokod
+
+Algoritmerna uttrycks ofta i **pseudokod**, vilket är ett mellanting mellan programspråk och naturligt språk. Man kan skriva pseudokod mer eller mindre programspråksnära. I vårt fall vill vi gärna att pseudokoden är ganska nära programspråk eftersom algoritmerna ska implementeras. I vårt fall kommer vi att använda programspråket C#. Ett exempel på olika nivåer på pseudokod är den **konceptuella pseudokoden** som är mer beskrivande och fokuserar på vad som ska uträttas medan den **formella pseudokoden** är mer anpassad för att översättas till ett programspråk.
+
+### Bestäm största talet - konceptuell pseudokod
+
+OBS: förutsätter att det finns minst ett element i listan
+
+Indata: en lista med tal  
+Utdata: det största talet  
+
+```text
+Anta att första talet är störst  
+Upprepa för varje tal i listan  
+    Om aktuellt tal är större än det hittills största  
+        Uppdatera hittills största så att det blir aktuellt tal  
+Leverera största talet
+```
+
+### Bestäm största talet - formell pseudokod
+
+OBS: förutsätter att det finns minst ett element i listan
+
+Indata: list (lista med heltal)  
+Utdata: maxValue (variabel för största talet)  
+
+```text
+MaxValueInList(list)
+    maxValue = list[0]   
+    for each nr in list  
+        if nr > maxValue  
+            maxValue = nr  
+    return maxValue   
+```
+
+## Iterativa och rekursiva algoritmer
+
+En **iterativ algoritm** är en algoritm som upprepar steg med någon form av loop.
+
+Det finns även algoritmer som är **rekursiva**. Det innebär att algoritmen använder "sig själv" men på ett mindre delproblem som närmar sig en lösning där svaret kan ges direkt. Därefter "nystas" lösningen fram genom att resultat efter resultat på föregående delproblem kan slutföras.
+
+Alla iterativa algoritmer kan, ganska enkelt, göras om till rekursiva men det omvända är inte alltid möjligt.
+
+Vi kommer att stöta på en del rekursiva algoritmer i denna kurs, där en del av dessa har en lösning som omfattar väldigt få rader kod och som samtidigt löser ett "omfattande" problem.
+
+## Effektivitet
+
+En del lösningar kan vara mer effektiva än andra. T.ex kan vissa sorteringsalgoritmer sortera effektivare än andra, dvs de kommer helt enkelt att vara snabbare än andra. Det kan även vara så att vissa sorteringsalgoritmer är snabbare än andra under specifika omständigheter. Oavsett vilket problem man ska lösa så är det viktigt att kunna reflektera över olika lösningars effektivitet och kunna välja den för ändamålet effektivaste lösningen.
+
+Effektivitet uttrycks i detta sammanhang med begreppet **tidskomplexitet** vilket vi kommer att återkomma till.
+
+## Sammanfattningsvis
+
+- En algoritm är en entydig beskrivning i steg som löser en specifik uppgift
+- Pseudokod används för att formulera/uttrycka algoritmer
+- Det finns rekursiva algoritmer
+- Algoritmers effektivitet avseende tid uttrycks genom tidskomplexitet
