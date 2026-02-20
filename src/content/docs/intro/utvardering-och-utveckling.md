@@ -14,7 +14,7 @@ Här finns en beskrivning av hur vi löpande jobbar med kursutvärdering och kur
 All feedback är  viktig för kursens kvalitet och vidare utveckling. Följande är de vanligaste sätten som används för att samla in feedback.
 
 * GitHub issues för kursmaterialet
-* Löpande i redovisningstexter
+* Löpande i redovisningstexter **???**
 * Löpande diskussioner i sal och chat
 * Summera, återkoppla och betygsätt kursen
 * BTH's kursvärdering
@@ -41,7 +41,7 @@ Ibland blir det spontana diskussioner i chatten där vi kan diskutera innehåll 
 
 
 
-### Summera, återkoppla och betygsätt kursen
+### Summera, återkoppla och betygsätt kursen ???
 
 I redovisningstexten för sista inlämningen får studenten möjlighet att sammanfatta kursen med ett omdöme om kursen tillsammans med ett "betyg". Detta textstycke och betyget ger en god vägledning i om kursen är på rätt spår eller ej. Beroende på vad som sägs där så planeras större justeringar av kursen eller delar av kursen.
 
@@ -49,7 +49,7 @@ I redovisningstexten för sista inlämningen får studenten möjlighet att samma
 
 ### BTH's kursvärderingssystem
 
-Ett formulär som mailas ut i slutet av kursen och besvaras anonymt. Resultatet är framförallt viktigt för att det används till att jämföra BTH's kurser mot varandra. På det sättet är den utvärderingen viktig för lärarteamet. Här kan vi också få en fingervisning om det är något som inte dykt upp under kursens gång.
+Ett formulär mailas ut i slutet av kursen och besvaras anonymt. Resultatet är framförallt viktigt eftersom det används för att jämföra BTH's kurser mot varandra. På det sättet är den utvärderingen viktig för lärarteamet. Här kan vi också få en fingervisning om det är något som inte dykt upp under kursens gång.
 
 
 
