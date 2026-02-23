@@ -1,0 +1,85 @@
+---
+title: "Resultat och redovisning" 
+description: No description.
+sidebar:
+    order: 001
+---
+
+Som ett sista steg i varje kursmoment ska du redovisa. Gör så här:
+
+- Gör veckans quiz
+- Gör inlämningsuppgiften och pusha till GitHub
+
+Ev. video här?
+
+PS! För kmom03, kmom06 och kmom10 skall du även göra en pull request (PR) på GitHub. Läs mer om det längst ner på sidan.
+
+## Kör testerna lokalt
+
+Dubbelkolla att din kod passerar testerna och validerar. Ladda ner testerna på nytt, se information i respektive kmom. De kan vara uppdaterade. Om du har några fel, fixa dem innan du fortsätter.
+
+## Gör veckans quiz
+
+Varje kmom har ett quiz på Canvas som ska göras och klaras av.
+ 
+
+## Kör testerna på GitHub
+
+Lägg till en tagg till ditt repo och pusha sedan både taggen och ditt repo.
+
+Du kan använda följande versioner för dina taggar.
+
+| Version | Kmom   |
+|---------|--------|
+| v1.0.0   | kmom01 |
+| v2.0.0   | kmom02 |
+| v3.0.0   | kmom03 |
+| v4.0.0   | kmom04 |
+| v5.0.0   | kmom05 |
+| v6.0.0   | kmom06 |
+| v10.0.0   | kmom10 |
+
+Tagga ditt repo så här.
+
+```bash title="Lägg till en tagg på ditt repo med versionsnummer."
+git tag -a v1.0.0 -m "First draft of kmom01."
+git tag -a v1.0.1 -m "Menu choice 1 in kmom01 ready."
+...
+git tag -a v1.1.0 -m "Ready with kmom01."
+```
+
+Om du gör ändringar så taggar du din nya inlämning med ett högre versionsnummer, till exempel v1.0.1 eller v1.1.0, du kan själv bestämma vilken version som känns lämplig.
+
+Nu kan du pusha både tagg och repo till GitHub.
+
+```bash title="Pusha din tagg till GitHub."
+git push --tags
+```
+
+När du taggar så körs testerna du har i ditt repo på respektive kmom på GitHub. Kolla på GitHub att det går grönt under "Actions"!
+
+Som ett sista steg i din inlämning så kan du kontrollera att GitHub verkligen innehåller den allra senaste versionen av din kod.
+
+
+
+## Återkoppling och bedömning
+
+Det sker ingen betygsättning, bedömning eller återkoppling när du är klar och lämnar in kmom01 och kmom02. 
+
+**När du lämnar in kmom03** kontrolleras att du uppfyller kraven i kmom01, kmom02 och kmom03. Du får betyget G när du är godkänd och du får Ux om det är något som saknas eller behöver uppdateras.
+
+Det sker ingen betygsättning, bedömning eller återkoppling när du är klar och lämnar in kmom01 och kmom02. 
+
+**När du lämnar in kmom06** kontrolleras att du uppfyller kraven i kmom04, kmom05 och kmom06. Du får betyget G när du är godkänd och du får Ux om det är något som saknas eller behöver uppdateras.
+
+**När du lämnar in kmom10** rättas den och samtidigt kontrolleras att du har godkänt på inlämningen för kmom03 och kmom06. Därefter får du ditt godkända betyg A-E eller Fx för komplettering eller F för underkänt. Betyget på kmom10 blir också ditt slutbetyg på kursen.
+
+
+
+## Pull request (PR) för kmom03, kmom06, kmom10
+
+I samband med att du lämnar in kmom03, kmom06 och kmom10 skall du även göra en pull request (PR) på GitHub för att visa att du gör din inlämning.
+
+[Gör en PR](/website/laromaterial/instruktion/gor-en-pr/).
+
+Läraren kommer att titta på din inlämning och betygsätta den.

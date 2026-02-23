@@ -1,0 +1,133 @@
+---
+title: Övningsuppgifter sökning
+description: Uppgifter på linjärsökning och binärsökning
+order: 0010
+hidden: true
+---
+
+
+1. Beskriv principen för linjärsökning.
+
+2. Anta att en sekvens innehåller elementen 11  23  33  45  51  55  68  73  79  80 82  88  93 och att linjärsökning används för att finna elementet 36. Hur många jämförelser kommer att ske, dvs hur många element i sekvensen kommer att jämföras med det sökta elementet 36?
+
+3. Skriv pseusokod för linjärsökning med indata arrayen **A**, antalet element **n**, startindex för var sökningen ska börja **startIndex** och det element som söks **toFind**.
+
+4. Vilken tidkomplexitet angiven i ordo-notation har linjärsökning i värsta fallet.
+
+5. Vilket krav måste vara uppfyllt för att binärsökning ska kunna utföras?
+
+6. Beskriv principen för binärsökning.
+
+7. Anta att en sekvens innehåller elementen 11  23  33  45  51  55   68  73  79  80 82  88  93 och att binärsökning används för att finna elementet 73. Vilka element i arrayen kommer det sökta elementet att jämföras med? Ange dessa i den ordning de kommer att jämföras.
+
+8. Skriv pseudokod för binärsökning med indata arrayen **A**, antalet element **n** och det element som söks **toFind**.
+
+9. Vilken tidkomplexitet angiven i ordo-notation har binärsökning i värsta fallet.
+
+**Överkurs**  
+
+10. Om det tog 4 microsekunder att exekvera linjärsökning när sekvensen/arrayen innehöll 5000 element och sökning genomfördes på ett element som inte fanns. 
+    - Hur lång tid kan du då förvänta dig att det tar om antalet element ökas till 15000 och elementet som söks efter inte finns? 
+    - Vid en sökning av ett element som inte fanns i arrayen tog det 6 microsekunder. Hur många element var det i arrayen?
+
+11. Om det tog 0.5 microsekunder att exekvera binärsökning när sekvensen/arrayen innehöll 2000 element och sökning genomfördes på ett element som inte fanns. 
+    - Hur lång tid kan du då förvänta dig att det tar om antalet element ökas till 4000000 (4 miljoner) och elementet som söks efter inte finns? 
+    - Vid en sökning av ett element som inte fanns i arrayen tog det 4 microsekunder. Hur många element var det i arrayen?
+
+
+# Lösningsförslag
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Sökningen börjar på första elementet och fortsätter ett element i taget tills det som söks hittas eller tills dess att alla element kontrollerats och det sökta elementet inte påträffats.
+    </details>
+
+
+2. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    13 (alla element jämförs med 36)
+    </details>
+
+
+3. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ``` 
+    // förslag på lösning
+    linSearch(A, n, startIndex, toFind)
+        for i=startIndex to n
+            if A[i] == toFind
+                return i
+        return -1
+    ```
+    </details>
+
+4. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(n)
+    </details>
+
+5. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Sekvensen/Arrayen som sökningen utförs i måste vara sorterad.
+    </details>
+
+6. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Mitten bestäms och om det som söks finns där är sökningen klar. Om inte utförs samma sak på vänster sida om mitten i det fall det som söks är mindre. Om det som söks är större utförs samma sak på höger sida om mitten. Detta fortgår tills det sökta elementet påträffats eller tills den del som återstår är tom.
+    </details>
+
+7. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    68, 80, 73
+    </details>
+
+8. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>   
+
+    ```
+    // förslag på lösning
+    binSearch(A, n, toFind)
+        start = 0
+        end = n-1
+        while start <= end
+            mid = (start + end)/2
+            if A[mid] = toFind
+                return mid
+            if toFind < A[mid]
+                end = mid - 1
+            else
+                start = mid + 1
+        return -1
+    ```
+    </details>
+
+9. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(log<sub>2</sub>n)
+    </details>
+
+**Överkurs**  
+
+10. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    12 microsekunder respektive 7500 element
+    </details>
+
+11. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    1 microsekund respektive 2000<sup>8</sup> element
+    </details>
+
+
