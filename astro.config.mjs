@@ -6,19 +6,25 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: 'Kursen Algo',
+			favicon: 'favicon.png',
+			logo: {
+				src: '@assets/leaf_256x256.png',
+			},
+			customCss: [
+				'./src/styles/dbwebb.css',
+			],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			sidebar: [
 				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
+					label: 'Introduktion',
+					collapsed: true,
+					autogenerate: { directory: 'intro' },
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: 'Kursmoment',
+					collapsed: true,
+					autogenerate: { directory: 'kmom' },
 				},
 			],
 		}),

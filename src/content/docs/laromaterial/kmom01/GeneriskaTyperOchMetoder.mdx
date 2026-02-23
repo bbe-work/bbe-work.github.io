@@ -5,9 +5,14 @@ order: 0015
 hidden: true
 ---
 
-Mycket av det som rör algoritmer (t.ex sortering) och datastrukturer (t.ex lagra data i en array enligt någon princip) är lösningar som är generella och inte är bundna till någon specifik datatyp. Vi behöver därför programmera lösningar för en obestämd datatyp. 
+Mycket av det som rör algoritmer (t.ex sortering) och datastrukturer (t.ex lagra data i en array enligt någon princip) är lösningar som är generella och inte är bundna till någon specifik datatyp. Vi behöver därför programmera lösningar för en obestämd datatyp.
 
 Denna möjlighet finns i de flesta moderna objektorienterade språk. Vi ska fokusera på hur man kan hantera detta i C#.
+
+Vad betyder generisk?
+
+- Generisk betyder allmän, fungerar för många olika saker t.ex en generisk laddare funkar till många mobiler.
+- Generisk i programmering betyder fungerar för olika datatyper, t.ex en klass som bara fungerar för alla typer - inte bara int eller string.
 
 ## Generiska klasser
 
@@ -38,22 +43,13 @@ public class List<T>
 - genom Get-metoden ser vi att T kan vara returdatatyp
 - det är dessutom möjligt att skapa variabler av typen T inom klassen, både som attribut och som lokala variabler
 
-När vi använder List-klassen behöver vi ange vilken datatyp T ska ersättas med. Om vi t.ex skriver `List<int> intList;` "skapas" en uppsättning av List-klassen enligt
+När vi använder List-klassen behöver vi ange vilken datatyp T ska ersättas med. Om vi t.ex skriver `List<int> intList;` "skapas" en uppsättning av List-klassen där T = int. Vi definierar inte en ny klass — vi använder den generiska klassen med en specifik typ.
 
-```csharp
-public class List
-{
-    // ...
-
-    public void Add(int item) {...}
-    public int Get(int index) {...}
-}
-```
 
 ### Skapa egna generiska klasser
 
-Vi tänker oss att vi vill skapa en klass `Pair` om ska användas för att representera ett par av värden/objekt som är av samma datatyp. Då gör vi på motsvarande sätt som i List-klassen när det gäller att göra klassen generisk `class Pair<T>`. Vidare deklarerar vi attribut/medlemsvariabler för att lagra de två värden/objekt som ska bilda paret. Dessa ska vara av den obestämda datatypen T.
-En konstruktor tillförs med parametrar som ska ta emot de två värden som ska bilda paret.
+Vi tänker oss att vi vill skapa en klass `Pair` som ska användas för att representera ett par av värden/objekt som är av samma datatyp. Då gör vi på motsvarande sätt som i List-klassen när det gäller att göra klassen generisk `class Pair<T>`. Vidare deklarerar vi attribut/medlemsvariabler för att lagra de två värden/objekt som ska bilda paret. Dessa ska vara av den obestämda datatypen T.
+En konstruktor defineras med parametrar som ska ta emot de värden som ska bilda paret.
 
 ```csharp
 public class Pair<T>
@@ -67,7 +63,7 @@ public class Pair<T>
 }
 ```
 
-Nu har vi möjlighet att skapa objekt för par av heltal, par av strängar, par av listor etc
+Nu har vi möjlighet att skapa objekt för par av heltal, par av strängar, par av listor etc.
 
 ```csharp
 Pair<int> pair = new Pair<int>(4, 6);
@@ -83,7 +79,7 @@ Pair<List<int>> listPair = new Pair<List<int>>(l1, l2);
 
 **Testa dig själv**
 
-1. Skapa en generisk klass Counter som ska användas för att hålla reda på antalet förekomster av något. Koden nedan ska vara fungerande
+1. Skapa en generisk klass Counter som ska användas för att hålla reda på antalet förekomster av något. Koden nedan ska vara fungerande.
 
     ```csharp
     Counter<string> counterOfBMW = new Counter<string>("BMW");
@@ -118,7 +114,7 @@ Pair<List<int>> listPair = new Pair<List<int>>(l1, l2);
 
 ## Generiskt interface
 
-I C# finns flera interface, bland annat ett interface som används när man vill kräva att objekt av en klass ska vara jämförbara. Interfacet är generiskt och ser ut så här
+I C# finns det flera interface, bland annat ett interface som används när man vill kräva att objekt av en klass ska vara jämförbara. Interfacet är generiskt och ser ut så här:
 
 ```csharp
 public interface IComparable<in T>
@@ -130,21 +126,22 @@ Vad kan vi utläsa av interfacet?
 
 - `<in T>` betyder att typ-parametern T endast kan användas som inparameter (det går inte att returnera datatypen T från metoder som ingår).
 - alla klasser som implementerar interfacet måste definiera metoden `int CompareTo(T? other)`
-- parametern i `int CompareTo(T? other)` motsvarar det objekt som anropande objekt ska jämföras med
+- attributet `int CompareTo(T? other)` motsvarar det objekt som anropande objekt ska jämföras med
 
-Tanken är att metoden `int CompareTo(T? other)` ska returnera  
+Tanken är att metoden `int CompareTo(T? other)` ska returnera:  
 
-**<0** om anropande objekt (this) är **mindre än** other  
+**&lt;0** om anropande objekt (this) är **mindre än** other  
  **0** om anropande objekt (this) är **lika med/ekvivalent med** other  
-**>0** om anropande objekt (this) är **större än** other  
+**&gt;0** om anropande objekt (this) är **större än** other  
 
-Vad som ska avgöra om ett objekt är mindre än, lika eller större än ett annat bestäms alltså i klassen i metoden compareTo.
+Vad som ska avgöra om ett objekt är mindre än, lika eller större än ett annat bestäms alltså i metoden `compareTo` i klassen.
 
-Några exempel på datatyper som implementerar interfacet `IComparable` är 
+Några exempel på datatyper som implementerar interfacet `IComparable` är:
+
 - string
 - DateTime
 - int
-- bool 
+- bool
 
 *Anm. Som vi ser har även de primitiva datatypen "tillförts" denna möjlighet vilket gör att vi vet att även dessa kan anropa `CompareTo`.*  
 
@@ -198,17 +195,18 @@ else
     </details>
 
 
-För kommande uppgifter för att **testa dig själv** där det handlar om att skapa metoder skapar du en klass (t.ex namngiven TestClass) i vilken du implementerar metoderna som klassmetoder (`static`). Just detta visas dock inte i svaren.
+I kommande uppgifter för att **testa dig själv** handlar det om att skapa metoder. Metoderna skapar du i en klass (t.ex namngiven TestClass) i vilken du implementerar metoderna som klassmetoder (`static`). I svaren visas bara metoderna eller delar av en metod.
 
 **Testa dig själv**
 
-1. Implementera metoden `int GetIndexOfSmalles(string[] words, int n)` vilken ska bestämma och returnera index för var den *minsta* strängen finns i arrayen. Om arrayens innehåll t.ex är `{"Stockholm", "Paris", "Oslo", "Köpenhamn", "Prag", "Helsingör", "Berlin", "Rom"}` ska metoden returnera `6`.
+1. Implementera metoden `int GetIndexOfSmallest(string[] words, int n)` vilken ska bestämma och returnera index för var den *minsta* strängen finns i arrayen. `n` är antalet ord i arrayen. *minst* i klassen string är bokstavsordning, t.ex "Anna" är mindre än "Anton".  
+Om arrayens innehåll t.ex är `{"Stockholm", "Paris", "Oslo", "Köpenhamn", "Prag", "Helsingör", "Berlin", "Rom"}` ska metoden returnera `6`.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
     ```csharp
-    int GetIndexOfSmalles(string[] words, int n)
+    int GetIndexOfSmallest(string[] words, int n)
     {
         int indexOfSmallest = 0;
         for (int i=1; i<n; i++)
@@ -224,7 +222,7 @@ I de fall vi ska implementera algoritmer i C# där objekt behöver jämföras be
 
 **Ett exempel**  
 
-Anta att vi har klassen `Die` (från C#-kursen) 
+Anta att vi har klassen `Die` (från C#-kursen).
 
 ```csharp
 public class Die
@@ -320,7 +318,7 @@ public class Die: IComparable<Die>
     
     </details>
 
-1. Om det istället ska vara årsmodellen som jämförelsen baseras på. Hur blir implementationen i metoden `CompareTo`?
+2. Om det istället ska vara bilmärket som jämförelsen baseras på. Hur blir implementationen i metoden `CompareTo`?
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
@@ -336,13 +334,13 @@ public class Die: IComparable<Die>
     ```
     </details>
 
-2. Överlagra metoden `GetIndexOfSmalles` från tidigare uppgift så att den istället returnera index för var det *minsta* Car-objektet finns i en array av typen Car.?
+3. Överlagra metoden `GetIndexOfSmallest` från tidigare uppgift så att den istället returnera index för var det *minsta* Car-objektet finns i en array av typen Car.?
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
     ```csharp
-    int GetIndexOfSmalles(Car[] cars, int n)
+    int GetIndexOfSmallest(Car[] cars, int n)
     {
         int indexOfSmallest = 0;
         for (int i=1; i<n; i++)
@@ -353,15 +351,15 @@ public class Die: IComparable<Die>
     ```
     </details>
 
-## Generiska metoder 
+## Generiska metoder
 
-Som tidigare nämnts behöver vi implementerar sökalgoritmer (och även sorteringsalgoritmer) utan att behöva veta vilken datatyp det är på datamängden som sökningen ska utföras på. Målsättningen är att implementera algoritmerna så att de ska kunna användas för alla datatyper som kan jämföras. Det kräver två saker:  
+Som tidigare nämnts behöver vi implementera sökalgoritmer (och även sorteringsalgoritmer) utan att behöva veta vilken datatyp det är på datamängden som sökningen ska utföras på. Målsättningen är att implementera algoritmerna så att de ska kunna användas för alla datatyper som kan jämföras. Det kräver två saker:  
 
 1. att metoden som implementerar algoritmen är generisk 
 2. att den generiska datatypen baseras på interfacet `IComparable`
 
 Att göra en metod generisk innebär återigen vi ger ett typ-namn på den obestämda datatypen vilken placeras inom `< >`. Detta placeras efter metodnamnet. Därefter kan typ-namnet, precis som tidigare, användas inom metoden inklusive som returtyp och typ på parametrar.  
-Låt oss t.ex skapa en metod `IsEqual` som ska avgöra om två variabler har samma innehåll eller ej. Vi vill ett denna ska vara användbar för olika datatyper. Vi börjar med stommen
+Låt oss t.ex skapa en metod `IsEqual` som ska avgöra om två variabler har samma innehåll eller ej. Vi vill ett denna ska vara användbar för olika datatyper. Vi börjar med stommen.
 
 ```csharp
 bool isEqual<T>(T a, T b) 
@@ -387,13 +385,13 @@ bool isEqual<T>(T a, T b) where T: IComparable<T>
 ```
 **Testa dig själv**
 
-1. Skriv om metoden `GetIndexOfSmalles` så att den inte finns i två versioner utan istället är en generisk metod med krav på att elementen som ska hanteras kan jämföra med `CompareTo`-metoden?
+1. Skriv om metoden `GetIndexOfSmallest` så att den inte finns i två versioner utan istället är en generisk metod med krav på att elementen som ska hanteras kan jämföra med `CompareTo`-metoden?
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
     ```csharp
-    int GetIndexOfSmalles<T>(T[] items, int n) where T: IComparable<T>
+    int GetIndexOfSmallest<T>(T[] items, int n) where T: IComparable<T>
     {
         int indexOfSmallest = 0;
         for (int i=1; i<n; i++)
