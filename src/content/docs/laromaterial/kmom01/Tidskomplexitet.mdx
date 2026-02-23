@@ -1,0 +1,245 @@
+---
+title: Tidskomplexitet
+description: Analys och ordo-notation
+order: 0020
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import BildTillvaxtOlikaFunktioner from '@assets/img/kmom01/BildTillvaxtOlikaFunktioner.png';
+
+## Tidskomplexitet
+
+I många sammanhang behöver vi bearbeta stora mängder data - det kan till exempel handla om att utföra sökning eller att sortera. Vid små mängder går bearbetningen i princip alltid snabbt men vid stora mängder data börjar det ta tid. Genom att analysera algoritmer kan vi uppskatta hur lång tid en algoritm tar att exekvera beroende på mängden indata. Detta kallas tidskomplexitet. Fokus ligger inte på faktisk tid i sekunder utan på hur antalet operationer (till exempel antalet jämförelser) växer när indatan växer.
+
+### Varför är detta bra? 
+- Hjälper oss att jämföra algoritmer avseende effektivitet (det finns till exempel flera olika sorteringsalgoritmer med olika tidskomplexitet)
+- Förutsäger prestanda vid stora mängder data
+- Är helt oberoende av hårdvara och programmeringsspråk
+
+## Ordo-notation, O(f(n))
+
+Tidskomplexiteten för en algoritm anges ofta med ordo-notation (även kallat *Big-O-notation*) där denna beskriver den **övre gränsen** för körtiden. Detta kallas den **asymptotiska tidskomplexiteten**. 
+
+Notationen är O(f(n)) där f(n) är tillväxtfunktionen som motsvarar en övre gräns. Några exempel:
+
+O(n): här är f(n) = n, dvs det är en tillväxt som är linjär  
+O(n<sup>2</sup>): här är tillväxtfunktionen kvadratisk.
+
+Några andra exempel är O(1), O(log(n)) och O(nlog(n)).   
+
+På bilden nedan ser vi skillnaden i ökning av tid (y-axeln) i förhållande till ökningen av n (x-axeln) för olika typiska funktioner som används i O-notationen.
+
+<Figure
+    src={BildTillvaxtOlikaFunktioner}
+    caption="Tillväxt för olika funktioner."
+    width="400px"
+/>
+
+**Hur kan vi tänka kring den asymptotiska tidskomplexiteten?**   
+Vi utgår från ett par exempel.  
+**O(1)** betyder att vi kan förvänta oss att algoritmen tar lika lång tid oavsett storleken på mängden data, *n*. Ett enkelt exempel är att bestämma värdet på index 0 i en array. Låt oss beteckna denna tid *t*. Det spelar ingen roll om det är 1, 10 eller 7000000 element i arrayen. Tiden det tar är alltid densamma nämligen *t*. Detta (att det tar en bestämd tid oavsett antal element) betecknas O(1).  
+
+**O(n)** betyder att vi kan förvänta oss att tiden för att utföra algoritmen skalar linjärt mot storleken på mängden data, *n*. Ett enkelt exempel är att beräkna summan av alla tal i en array. Att öka värdet på en variabel tar en viss tid, låt oss beteckna denna tid *t*. Att summera ett värde blir 1 * *t*, att summera 10 värden blir 10 * *t*, att summera 7000000 värden blir 7000000 * *t*. Tiden det tar för *n* element är n * *t*. Tiden ökar linjärt med antalet element *n*. Detta betecknas O(n).
+
+Motsvarande resonemang gäller för övriga f(n) i O(f(n)), men vi ska samtidigt vara medvetna om att **Ordo-notationen endast är relevant för stora n** (för små mängder data går det alltid snabbt).
+
+**Testa dig själv**
+
+1. Anta att vi har följande algoritmer och för var och en dess asymptotiska tidkomplexitet, O(f(n)). Ordna algoritmerna i ordningen snabbast till långsammast baserat på deras asymptotiska tidskomplexitet.  
+
+    A : O(nlogn), B : O(n<sup>2</sup>), C : O(1), D : O(logn) 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    C, D, A, B
+    </details>
+
+## Den faktiska körtidsfunktionen, T(n)
+
+För att få fram den faktiska körtidsfunktionen  (observera att det inte handlar om faktisk tid i sekunder utan snarare en lite mer detaljerad funktion för hur körtiden växer baserat på n) analyserar vi algoritmen del för del.
+
+### Analys av kodavsnitt
+
+Analysen kan göras på pseudokod eller kod skriven i ett specifikt programmeringsspråk.
+
+Vi börjar med ett litet exempel som löser problemet att summera alla heltal från 1 till n (1 + 2 + 3 + ... + n). I de flesta pseudokod‑konventioner betyder detta inklusive n.
+
+```batch
+sum = 0
+for i = 1 to n
+    sum = sum + i
+print(sum)
+```
+Storleken på datan är n.
+
+Att utföra `sum = 0` tar alltid samma tid, oavsett värdet på n. Vi säger då att detta kostar konstant tid. Hur mycket tid, i till exempel sekunder, är inte intressant (det har vi resonerat om tidigare) utan det vi uttrycker är att detta tar alltid samma tid. Denna tid kan representeras med *c* eller med bara *1* (båda tolkas som konstant tid). Vi kommer att använda *1* fortsättningsvis.
+
+Loopen som styrs av `for i = 1 to n`, innebär att `i` startar på 1 och slutar på n, kommer att utföras totalt n gånger. Varje gång utförs `sum = sum + i`, dvs en summering och tilldelning som alltid kräver samma arbetsinsats oavsett värdet på n, alltså konstant tid *1*. Vi konstaterar att det totala arbetet motsvarar n * 1, dvs *n*. 
+
+Med samma resonemang får vi att `print(sum)` tar konstant tid, dvs *1*.
+
+Om vi sammanställer ovan ger det *T(n) = 1 + n + 1 = n + 2*. Vi ser att detta innebär att tiden ökar linjärt med antalet heltal, *n*. 
+
+Om värdet på n dubbleras kommer även tiden att dubbleras (vi konstaterar att *2* som adderas är otroligt litet när n är stort).
+
+Vi kikar på ytterligare ett exempel.
+
+```batch
+for r = 0 to n
+    for c = 0 to n 
+        print(r, c)
+```
+Storleken på datan är n.
+
+Här är det nästlade loopar där den yttre utförs n gånger (r går från 0 till n) och inom den finns en inre loop som utförs n gånger (c går från 0 till n). Det som sker i den inre loopen är en utskrift som kostar konstant tid. Vi får *T(n) = n * n * 1 = n<sup>2</sup>*, dvs tiden ökar kvadratiskt mot antalet. 
+
+Om till exempel antalet ökas med faktorn 3 så kommer tiden att öka med faktorn 9 (som ju är 3<sup>2</sup>).
+
+**Testa dig själv**
+
+1. Avgör för pseudokoden nedan den asymptotiska tidkomplexiteten, O(f(n)).
+
+    ```csharp
+    nrOf = 10
+    price = 12.4
+    result = nrOf * price
+    ```
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(1)
+    </details>
+
+
+1. Avgör för pseudokoden nedan den asymptotiska tidkomplexiteten, O(f(n)).
+
+    ```csharp
+    i=0
+    res = 1
+    while i<n
+        res = res * i
+        i = i + 1
+    print(res)
+    ```
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(n)
+    </details>
+
+1. Avgör för pseudokoden nedan den asymptotiska tidkomplexiteten, O(f(n)).
+
+    ```csharp
+    for i = 0 to 10
+        print(res)
+    ```
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(1)
+    </details>
+
+1. Avgör för pseudokoden nedan den asymptotiska tidkomplexiteten, O(f(n)).
+
+    ```csharp
+    for i = 0 to n * n
+        print(res)
+    ```
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(n<sup>2</sup>)
+    </details>
+
+    
+## Från T(n) till O(f(n))
+
+När vi analyserar tidskomplexitet vill vi förstå hur algoritmens körtid växer när storleken på indatan n blir stor. Då är det den term som växer snabbast som till slut dominerar alla andra – den kallas den **dominanta termen**. Den dominanta termen kommer att representera f(n) i ordo-notationen.
+
+Anta att vi till exempel har fått fram att T(n) = 3n<sup>2</sup> + 5n + 40 för en viss algoritm.
+
+Vi ser att om n blir väldigt stort så kommer 3n<sup>2</sup> öka betydligt snabbare än 5n och så klart även snabbare än 40 (som ju inte ökar alls).
+
+Tänk dig att n<sup>2</sup> är en raket, n är en cykel och konstanten är en gående person. Ju längre sträcka som ska avverkas desto mindre bidrag ger cykeln och den gående.
+
+Detta är "resonemanget" bakom ordo-notationen där det intressanta är hur (enligt vilken funktion) tiden ökar när n blir väldigt stort. Detta ges av den dominanta termen i T(n). Vi ignorerar konstanter, termer av lägre ordning och fokuserar på tillväxttakten. 
+
+Då kommer vi fram till att T(n) = 3n<sup>2</sup> + 5n + 40 i detta fall ger den asymptotiska tidkomplexiteten O(n<sup>2</sup>). Tolkningen är att tiden växer proportionerligt mot n<sup>2</sup>.
+
+**Testa dig själv**
+
+1. Hur skriver man ordo-notationen för en algoritm som har T(n) = 6n + 2?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(n)
+    </details>
+
+1. Hur skriver man ordo-notationen för en algoritm som har T(n) = 17n<sup>3</sup> + 2n?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(n<sup>3</sup>)
+    </details>
+
+1. Hur skriver man ordo-notationen för en algoritm som har T(n) = 6logn + 2nlogn + 19?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(nlogn)
+    </details>
+
+
+## Överskurs: Uppskatta körtid med hjälp av O(f(n))
+
+### Linjär tidkomplexitet O(n) 
+Anta att vi har implementerat en algoritm som har tidkomplexiteten O(n). Vi exekverar denna och mäter tiden för n = 10000 (vi kör 10 gånger och får fram medelvärdet). Resultatet blir 2 mikrosekunder.  
+
+Vad kan vi då förvänta oss att det tar att exekvera samma algoritm (på samma dator under samma förutsättningar) för n = 30000?
+
+Eftersom tidskomplexiteten är O(n), kan vi formulera T(n) = c*n, där c är någon konstant som vi behöver bestämma (c*n i noggrannhet är ju tillräcklig för stora n).
+
+Vi vet att T(10000) = 2, dvs c*10000 = 2 vilket ger c = 2/10000. Vi har då T(n) = 2/10000 * n. 
+
+Vi skulle uppskatta tiden för n = 30000 och sätter in värdet 30000 i funktionen T(n) = 2/10000 * n. Vi får T(30000) = 2/10000 * 30000 = 2 * 3 = 6 mikrosekunder.
+
+n ökade från 10000 till 30000, dvs med faktorn 3 och eftersom tidskomplexiteten är linjär ökade tiden också med faktorn 3, från 2 till 6 mikrosekunder.
+
+### Kvadratisk tidkomplexitet O(n<sup>2</sup>) 
+Anta att vi har implementerat en algoritm som har tidkomplexiteten O(n<sup>2</sup>). Vi exekverar denna och mäter tiden för n = 10000 (vi kör 10 gånger och får fram medelvärdet). Resultatet blir 4 mikrosekunder.  
+
+Vad kan vi då förvänta oss att det tar att exekvera samma algoritm (på samma dator under samma förutsättningar) om n = 20000?
+
+Eftersom tidskomplexiteten är O(n<sup>2</sup>), formulerar vi T(n) = c*n<sup>2</sup>, där c återigen är en konstant som vi behöver bestämma.
+
+Vi vet att T(10000) = 4, dvs c*10000<sup>2</sup> = 4 vilket ger c = 4/10000<sup>2</sup>. Vi har då T(n) = 4/10000<sup>2</sup> * n<sup>2</sup>. 
+
+Vi skulle uppskatta tiden för n = 20000 och sätter in värdet 20000 i funktionen T(n) = 4/10000<sup>2</sup> * n<sup>2</sup>. Vi får T(20000) = 4/10000<sup>2</sup> * 20000<sup>2</sup> = 4/(20000 / 10000)<sup>2</sup> = 4/(2)<sup>2</sup> = 2 * 4 = 8 mikrosekunder.
+
+n ökade från 10000 till 20000, dvs med faktorn 2 och eftersom tidskomplexiteten är kvadratisk ökade tiden med faktorn 4 (<sup>2</sup>), från 2 till 8 mikrosekunder.
+
+
+**Testa dig själv**
+
+1. Om det tog 1.5 mikrosekunder att exekvera en algoritm som är O(n) för n = 20000. Hur lång tid förväntas det då ta att exekvera samma algoritm (på samma dator med samma förhållanden) för n = 100000?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    7.5 mikrosekunder
+    </details>
+
+
+1. Om det tog 1 millisekunder att exekvera en algoritm som är O(n<sup>2</sup>)för n = 50000. Hur lång tid förväntas det då ta att exekvera samma algoritm (på samma dator med samma förhållanden) för n = 150000?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    9 millisekunder
+    </details>
+## Extra material
+
+Här kan du läsa mer om [Ordo-notation](https://www.datacamp.com/tutorial/big-o-notation-time-complexity)
+
+## Sammanfattningsvis
+
+- Tidskomplexitet handlar om beteendet för stora n
+- Den term som växer snabbast blir dominant
+- Lägre ordningens termer och konstanter blir försumbara
+- Tidskomplexiteten (Ordo-notation) anges av den dominanta termen eftersom den helt tar över körtiden när datamängden blir stor.
+- Om man mäter tiden vid exekvering av en algoritm som man vet tidskomplexiteten för, med ett visst antalet element (n) kan man uppskatta den förväntade tiden för ett annat antal element
+
+
+

@@ -1,0 +1,151 @@
+---
+title: Värdetyp och referenstyp
+description: Beskrivning av skillnaden mellan värde och referenstyp
+order: 0010
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import minnet001 from '@assets/img/intro/minnet001.png';
+import minnet002 from '@assets/img/intro/minnet002.png';
+import minnet003 from '@assets/img/intro/minnet003.png';
+import minnet4Bilder from '@assets/img/intro/minnet4Bilder.png';
+import minneReferens01 from '@assets/img/intro/minneReferens01.png';
+import minneReferens02 from '@assets/img/intro/minneReferens02.png';
+import minneReferens03 from '@assets/img/intro/minneReferens03.png';
+import minneReferens04 from '@assets/img/intro/minneReferens04.png';
+import minneReferens05 from '@assets/img/intro/minneReferens05.png';
+import minneReferensSistaIllustration2 from '@assets/img/intro/minneReferensSistaIllustration2.png';
+
+I denna kurs ska vi bland annat använda länkning vilket innebär att objekt "pekar ut" objekt av samma typ. För att förstå hur detta fungerar är det av största vikt att man förstår vad en referenstyp är och vad en variabel av referenstyp innehåller.  
+Eftersom det förutom referenstyper även finns så kallade värdetyper är det väsentligt att vi förstår skillnaden på dessa och hur det påverkar variabler.
+
+## Variabler
+
+En variabel, är som vi redan vet, en namngiven plats i minnet. Minnet består av ett antal platser som alla har en unik adress. Olika datatyper behöver olika mycket minne, dvs de behöver en eller flera sådana platser (i en följd). 
+Variabeln "förknippas" med den minnesadress där utrymmet börjar.
+
+Låt oss illustrera minnet mycket förenklat (observera att minnesadresserna egentligen är hexadecimala tal men det är inte det viktiga nu). 
+
+
+<Figure
+    src={minnet001}
+    caption="Bild 1 på minnet"
+    width="250px"
+/>
+
+
+### Värdetyper
+
+Det vi kallar värdetyper (eng. value types) omfattar bland annat de primitiva datatyperna (int, char, float, bool etc) men även enum och struct. Vi kommer här att exemplifiera med primitiva datatyper.  
+
+Vi deklarerar först en variabel `int nrOne;`. För enkelhetsskull antar vi att ett heltal (int) kräver 1 minnesplats (Bild 1).  
+Därefter gör vi en tilldelning `nrOne = 10;` (Bild 2).  
+Vi fortsätter med `double value = 12.5;` som kräver mer minne vilket i här motsvarar 2 minnesplatser (Bild 3).  
+Följt av `int nrTwo = nrOne;` som innebär att värdet i nrOne kopieras till nrTwo (Bild 4).
+
+<Figure
+    src={minnet4Bilder}
+    caption="Bild på minnet med variabler"
+/>
+
+
+## Referenstyper
+
+Klasser och interface är exempel på referenstyper. När man deklarerar variabler av en referenstyp kommer variabeln att innehålla en adress(referens). Vi antar att en adress/referens kräver 1 minnesplats.
+
+Tänk att vi har klassen Point enligt
+
+```csharp
+public class Point
+{
+    private int _x;
+    private int _y;
+
+    public Point()
+    {
+        this._x = 0;
+        this._y = 0;
+    }
+    
+    public void SetX(int x)
+    {
+        this._x = x;
+    }
+
+    public void SetY(int y)
+    {
+        this._y = y;
+    }
+    // ...
+}
+```
+
+Om vi deklarerar en variabel av typen Point kommer den att allokera 1 minnesplats (enligt vårt antagande att en adress/referens kräver det). 
+
+Vi gör följande deklarationer `Point? pointOne = null;` och `Point? pointTwo = null;` (Bild 5). 
+
+<Figure
+    src={minneReferens01}
+    caption="Bild på minnet med referenser"
+    width="350px"
+/>
+
+
+Därefter utförs `pointOne = new Point();` vilket innebär att ett objekt av typen Point skapas. Låt oss anta att ett Point-objekt kräver 2 minnesplatser. Detta objekt allokeras i en annan del av minnet vilket åskådliggörs med adresser som börjar på 5000 och uppåt.  Därefter levereras adressen/referensen till var detta objekt finns till variabeln pointOne (Bild 6).
+
+<Figure
+    src={minneReferens02}
+    caption="Bild på minnet med referenser"
+    width="600px"
+/>
+
+Vi fortsätter med `pointOne.SetX(5);`, `pointOne.SetX(40);` och `pointTwo = new Point();` (Bild 7).
+
+<Figure
+    src={minneReferens03}
+    caption="Bild på minnet med referenser"
+    width="600px"
+/>
+
+Om vi nu gör tilldelningen `pointTwo = pointOne;` kommer det att resultera i att värdet i variabeln pointOne kopieras till variabeln pointTwo. Resultatet blir att pointsTwo och pointOne har samma adress/referens och således *refererar de till* eller *pekar på* samma objekt (Bild 8). Objektet som pointTwo tidigare hade adressen/referensen till är "borttappat".
+
+<Figure
+    src={minneReferens04}
+    caption="Bild på minnet med referenser"
+    width="600px"
+/>
+
+Om `pointTwo.SetY(99);` utförs så har värdet på `_y` ändrats i det objekt som båda variablerna refererar till (Bild 9).
+
+<Figure
+    src={minneReferens05}
+    caption="Bild på minnet med referenser"
+    width="600px"
+/>
+
+## Alternativ illustration
+
+Med ovan i åtanke, dvs att en variabel som är av referenstyp håller en adress/referens, kan man illustrera detta med en pil (läses pekar på eller refererar till).
+
+Vi tar samma exempel med pointOne och pointTwo och börjar med `Point? pointOne = null;` och `Point? pointTwo = null;` och markerar att de inte refererar till något objekt med en punkt (Bild 10).  
+
+Därefter utförs `pointOne = new Point();` (Bild 11)
+
+Följt av `pointOne.SetX(5);`, `pointOne.SetX(40);` och `pointTwo = new Point();` (Bild 12). 
+
+Därefter `pointTwo = pointOne` (Bild 13)
+
+Och slutligen  `pointTwo.SetY(99);` (Bild 14)
+
+<Figure
+    src={minneReferensSistaIllustration2}
+    caption="Alternativ bild"
+/>
+
+## Avslutningsvis
+
+Det sista sättet att illustrera referenser/pekare är väldigt snarlikt det sätt som används när man pratar om länkning/kedjning vilket kommer att vara återkommande i kursen. I grunden bygger allt i detta sammanhang på att man har förståelse för referenstyper. När det kommer till länkning/kedjning bygger detta även på förståelse för klasser och objekt.
+
+Konsekvensen av en tilldelning mellan två referensvariabler innebär att en adress/referens kopieras och därmed refererar båda variablerna till samma adress i minnet.

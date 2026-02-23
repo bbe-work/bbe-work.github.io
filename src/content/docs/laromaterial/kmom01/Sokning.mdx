@@ -1,0 +1,346 @@
+---
+title: Sökning
+description: Linjär och binärsökning
+order: 0040
+hidden: true
+---
+
+## Sökalgoritmer
+
+Det finns många sammanhang då vi har behov av att "hitta" ett specifikt element, dvs att söka, i en datamängd som representeras av en indexerad sekvens av element (i C# motsvaras detta av en array).
+
+Resultatet av sökningen är det **index där det sökta elementet hittades** alternativt **-1** om det som söktes inte fanns i arrayen.
+
+Eftersom antalet element ofta är stort behöver vi uttrycka bearbetningen på ett systematiskt sätt, dvs med algoritmer. När vi exemplifierar hur algoritmerna arbetar gör vi det på små datamängder och ofta med enkla värden som t.ex heltal eller strängar. När vi däremot implementerar och använder sökalgoritmer, är det oftast ett stort antal element och mer komplicerade element än enkla heltal eller strängar.
+
+I exemplen utgår vi från att det inte förkommer dubbletter i arrayerna men algoritmerna fungerar naturligtvis även om så är fallet. 
+
+
+## Linjärsökning (linear search)
+
+Ett sätt att utföra sökning efter ett element i en array är att börja från index 0 och "gå framåt" ett steg i taget och jämföra varje element på vägen med det vi letar efter. Detta innebär att vi söker **linjärt**. Om vi hittar elementet är vi klara och fortsätter därför inte sökandet. Om vi kontrollerat alla element i arrayen utan att hitta det vi letar efter vet vi att det inte finns i arrayen. 
+
+Exempel: Anta att vi har en array med följande 11 element och därmed indexeringen 0 t.o.m 10.
+
+```
+153  43  767  66  82  123  983  634  71  333  455
+```
+
+Vi söker efter **767**: 
+Vi kommer då att jämföra 767 med 153, därefter med 43 och slutligen med 767. Resultatet är att 767 finns i arrayen på index 2. Resultatet av sökningen är därmed **2**.
+
+Vi söker efter **75**:  
+Vi kommer då att jämföra 75 med 153, 43, 767, ..., 333 och slutligen 455. Resultatet är att 75 inte finns i arrayen. Resutatet av sökningen är därmed **-1**.
+
+**Testa dig själv**
+
+1. Innehållet i en array är 50, 90, 20, 40, 10, 70, 60, 30, 80  
+Sökning görs på 20. Vilka element kommer 20 att jämföras med i arrayen?  Vilket är resultatet av sökningen?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Node som jämförs är 50, 90 och 20
+    Resultatet är 2
+    </details>
+
+1. Det är samma innehåll i arrayen som i uppgift 1.    
+Sökning görs på 25. Vilka element kommer 25 att jämföras med i arrayen? Vilket är resultatet av sökningen?  
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Alla element kommer att jämföras med 25
+    Resultatet är -1
+    </details>
+
+1. Om arrayen istället innehåller 50, 90, 20, 50, 10, 10, 60, 50, 80 och värdet som söks är 50. Vilket resultat blir det då?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Node som jämförs är 50
+    Resultatet blir 0
+    </details>
+
+### Pseudokod
+
+Vi formulerar sökningen som en algoritm i pseudokod.  
+
+Indata är en array *A*, antalet element som finns i arrayen *n* och det element som söks *toFind* 
+Utdata är index för var det sökta elementet finns alternativt -1 om det sökta elementet inte finns 
+
+**Algoritm 1:**  
+
+**Idé**: Använd en räknare *index* som sätts till 0 och en boolesk variabel *found* som sätts till false. Upprepa att undersöka om det som söks finns i arrayen på plats index. Om så är fallet sätt found till true, men om det inte är så öka istället index med 1. Upprepningen ska endast fortgå om det finns element kvar i arrayen (dvs index < n) och found fortfarande är falsk. När upprepningen är klar kontrolleras om found fortfarande är false. Om så är fallet sätts index till -1. Avslutningsvis returneras index.
+
+```
+linearsearch(A, n, toFind)
+    index = 0
+    found = false
+    while index is less than n and found is false
+        if A[index] is the same as toFind
+            found = true
+        else
+            increase index by 1
+    if found is false
+        index = -1
+    return index
+```
+
+**Algoritm 2:**  
+
+**Idé**: Iterera från 0 till n och jämför elementet som söks med det som finns i arrayen på plats index. Om det är samma returneras index. Om hela iterationen genomförts har elementet inte hittats och då returneras -1. 
+
+```
+linearsearch(A, n, toFind)
+    for index=0 to n
+        if A[index] is the same as toFind
+            return index
+    return -1
+
+```
+
+Reflektion: Båda varianterna är linjärsökning och kan formuleras i programkod som t.ex C#.
+
+**Testa dig själv**  
+
+1. Skriv en av versionerna av de båda algoritmer i C#. Skapa klassen Searching och definiera metoden i denna. Namnet ska vara `LinearSearch` och parametrarna ska vara i ordningen array, antal, det som söks. Testa med de exempel som finns i tidigare "Testa dig själv". Tänk på att metoden behöver vara generisk och att det ska vara möjligt att jämföra elementen.
+
+    <details>
+    <summary>Klicka här för att visa lösningsförslag</summary>
+
+    ```csharp
+    public static int LinearSearch<T>(T[] A, int n, T toFind) 
+        where T : IComparable<T>
+    {
+        for (int index=0; index< n; index++)
+            if (A[index].CompareTo(toFind) == 0)
+                return index;
+        return -1;
+    }
+    ```
+    Anm: Det går att använda interfacet `IEquatable` och metoden `Equals` istället för `IComparable` och `CompareTo`.
+    </details>
+
+1. Ändra så att det är möjligt att utföra sökningen från ett startindex som, om inget anges, ska vara 0. Prova att använda din implementation för att få alla index som sökningen av 50 ger för en array med innehållet 50, 90, 20, 50, 10, 10, 60, 50, 80. Obs: Det krävs flera anrop.
+
+    <details>
+    <summary>Klicka här för att visa lösningsförslag</summary>
+    ```csharp
+    public static int LinearSearch<T>(T[] A, int n, T toFind, int fromIndex = 0)
+        where T : IComparable<T>
+    {
+        for (int index=fromIndex; index< n; index++)
+            if (A[index].CompareTo(toFind) == 0)
+                return index;
+        return -1;
+    }
+    ```
+    </details>
+
+### Effektivitet och Ordo-notation
+
+Vi har sett att det finns ett vedertaget sätt, kallat **Ordo-notation**, att uttrycka algoritmers effektivitet. Vid analys av effektiviteten utgår man alltid från att det är många element som ingår i uppgiften som algoritmen löser. Detta stora antal benämns oftast **n**. Det man oftast är intresserad av är vad man kan förvänta sig av en algoritm när förutsättningarna är som sämst, kallat det **värsta fallet** (*worst case*).
+
+Det fall som kommer att kräva flest jämförelser är när det som söks inte finns i arrayen. Detta är **värsta fallet** (*worst case*). Om vi har 10 element kommer det sökta elementet att behövas jämföras med alla 10 som finns i arrayen. Att söka bland få element går alltid fort och därför är det inte särskilt intressant. I stället är vi intresserade av arbetet som utförs när vi har stora mängder element och vi anger som bekant detta antal med ***n***.
+
+Om vi utgår från ett godtyckligt (stort) antal ***n*** element i arrayen kommer det att krävas ***n*** jämförelser. Det innebär att arbetet som utförs skalar linjärt mot antalet element. Vi får då **tidskomplexiteten** för värsta fallet som är ***O(n)***.
+
+### Överskurs: Uppskatta körtid med hjälp av O(f(n))
+
+Vi kan dra slutsaten att i värsta fallet, dvs vid sökning av ett element som inte finns, ökar tiden med samma faktor som ökningen av antalet element. Exempelvis om mätning av tid vid sökning i en array med 2000 element resulterade i 4 mikrosekunder så kommer sökningen i en array med 8000 element att ta 16 mikrosekunder. Antalet element ökade med faktorn 4 och då ökar tiden med faktorn 4. 
+  
+**Testa dig själv**
+
+1. Om det vid en exekvering av linjärsökning med en array med 3000 element tog 5 mikrosekunder vid sökning av ett element som inte fanns i arrayen. Vid en annan exekvering tog det 15 mikrosekunder vid sökning av ett element som inte fanns i arrayen. Hur många element fanns det då i arrayen?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    9000, eftersom tiden ökade med faktorn 3 så måste antalet ökat med samma faktor.
+    </details>
+
+Ibland är det intressant att analysera algoritmer avseende deras **bästa fall** (*best case*) och/eller deras **medelfall** (*average case*).
+
+När det gäller linjärsökning är dess bästa fall när förutsättningarna är sådana att det kommer krävas så få jämförelser som möjligt. Detta inträffar när det man söker efter finns på första platsen i arrayen, dvs på index 0. Då krävs en (1) jämförelse oavsett hur många element det finns i arrayen. Det kommer helt enkelt alltid ta samma (konstanta) tid oavsett hur många element arrayen innehåller. Vi får då tidskomplexiteten ***O(1)***. 
+ 
+I medelfallet kommer algoritmen att behöva jämföra det sökta elementet med hälften av elementen i arrayen. Det innebär att om vi har n element så kommer det motsvara 0.5n jämförelser. I notationen för tidskomplexiteten vet vi att man bortser helt från konstanta tal, i detta fall 0.5, (de har i princip ingen betydelse när vi har riktigt stora mängder element) och tidkomplexiteten blir därmed linjär, dvs ***O(n)*** även i medelfallet.
+
+
+## Binärsökning (binary search)
+
+Om elementen i arrayen är sorterade kan vi dra nytta av det. Vi kan helt enkelt successivt utesluta hälften av elementen. Om vi ser att det som söks inte är det som finns på mitten (mittelementet) kan vi dra följande **Slutsats**:   
+Om det vi letar efter är mindre än mittelementet kan det bara finnas i den "halva" som finns till vänster om mittelementet (alla element där är mindre än mittelementet).  
+Om det istället är större än mittelementet måste det finnas i den högra "halvan".  
+
+```
+Tal:   3  11  ...  433  477  480  ...  733 ...  770  ...  854  ...  999
+Index: 0   1  ...   48   49   50  ...   61 ...    ?  ...   74  ...   99
+```
+
+Anta att vi söker värdet 770 och att vi har en sorterad array med 100 element (lägsta värdet på index 0 och högsta på index 99). Mitt-index beräknas (0 + 99)/2 vilket ger 49 (heltalsaritmetik). Vi jämför med värdet på index 49 vilket är 477, alltså inte det vi söker. 
+
+Eftersom 770 är större än 477 innebär det att vi inte behöver söka i den del av arrayen som motsvaras av index 0 till index 49 (här finns endast värden som är mindre än 477). Denna del är alltså inte intressant eftersom 770 inte kan finnas där.
+
+Vi fortsätta istället vår sökning från index 50 till 99 (om 770 finns så måste det finnas i denna del av arrayen). Vi beräknar återigen mitt-index enligt (50 + 99)/2 som ger 74. Vi jämför med värdet på index 74 vilket är 854, alltså inte det vi söker.
+
+Eftersom 770 är mindre än 854 innebär det att vi inte behöver söka i den del av arrayen som motsvaras av index 74 till index 99 (här finns endast värden som är större än 854). Denna del är alltså inte intressant eftersom 770 inte kan finnas där.
+
+Vi fortsätta istället vår sökning från index 50 till 73 (om 770 finns så måste det finnas i denna del av arrayen). Vi beräknar återigen mitt-index enligt (50 + 73)/2 som ger 61. Vi jämför med värdet på index 61 vilket är 733, alltså inte det vi söker.
+
+Sökningen fortsätter på samma sätt tills:
+
+- det som finns på mitt-index är det som söks  
+eller  
+- det inte finns några element kvar att söka i efter halvering
+
+**Testa dig själv**
+
+1. Innehållet i en array är 10, 20, 30, 40, 50, 60, 70, 80, 90  
+Sökning görs på 20. Vilka element kommer 20 att jämföras med i arrayen?  Vilket är resultatet av sökningen?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Node som jämförs är 50 och 20
+    Resultatet är 1
+    </details>
+
+1. Det är samma innehåll i arrayen som i förra uppgiften.    
+Sökning görs på 25. Vilka element kommer 25 att jämföras med i arrayen? Vilket är resultatet av sökningen?  
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Node som jämförs är 50, 20, 30
+    Resultatet är -1
+    </details>
+
+1. Om arrayen istället innehåller 10, 20, 20, 50, 50, 50, 60, 60, 70 och värdet som söks är 50. Vilket resultat blir det då?
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Resultatet blir 4
+    </details>
+
+### Pseudokod
+
+Vi formulerar sökningen som en algoritm i pseudokod.
+
+**Idé**: Vi behöver hålla reda på *startindex*, *slutindex* och *mittindex* i arrayen. Beräkning av mittindex görs genom (startindex + mittindex)/2. Använd en boolesk variabel *found* som sätts till false. 
+Upprepa att undersöka om det som söks finns i arrayen på plats mittindex. Om så är fallet sätt found till true, men om det inte är så uppdatera startindex eller slutindex baserat på om det som söks är mindre än det som finns på mittindex eller ej. Upprepningen ska endast fortgå om det finns element kvar i arrayen (dvs startindex < endindex) och found fortfarande är falsk. När upprepningen är klar kontrolleras om found fortfarande är false. Om så är fallet sätts index till -1. Avslutningsvis returneras index.
+
+Indata: en array *A*, antalet element som finns i arrayen *n* och det element som söks *toFind*
+
+```bash
+binarysearch(A, n, toFind)
+    startindex = 0
+    endindex = n-1
+    midindex = endindex/2
+    found = false
+    while startindex <= endindex and not found
+        if A[midindex] == toFind
+            found = true
+        else if toFind < A[midindex]
+            endindex = midindex - 1
+        else 
+            startindex = midindex + 1
+        midindex = (startindex + endindex)/2
+    if not found
+        midindex = -1
+    return midindex
+```
+
+och ett snarlikt alternativ, men utan den booleska variabeln
+
+```bash
+binarysearch(A, n, toFind)
+    startindex = 0
+    endindex = n-1
+    midindex = endindex/2
+    while startindex <= endindex and A[midindex] != toFind
+        if toFind < A[midindex]
+            endindex = midindex - 1
+        else 
+            startindex = midindex + 1
+        midindex = (startindex + endindex)/2
+    if startindex > endindex
+        midindex = -1
+    return midindex
+```
+
+**Testa dig själv**  
+
+1. Skriv en av versionerna av de båda algoritmer i C# som en metod i klassen Searching. Namnet ska vara `BinarySearch` och parametrarna ska vara i ordningen array, antal, det som söks. Testa med de exempel som finns i tidigare "Testa dig själv". Tänk på att metoden behöver vara generisk och att det ska vara möjligt att jämföra elementen.
+
+    <details>
+    <summary>Klicka här för att visa lösningsförslag</summary>
+
+    ```csharp
+    public static int BinarySearch<T>(T[] A, int n, T toFind) 
+        where T : IComparable<T>
+    {
+        int startIndex = 0;
+        int endIndex = n-1;
+        int midIndex = (startIndex + endIndex) / 2;
+        while (startIndex <= endIndex && A[midIndex].CompareTo(toFind) != 0)
+        {
+            if (toFind.CompareTo(A[midIndex]) < 0)
+                endIndex = midIndex - 1;
+            else
+                startIndex = midIndex + 1;
+
+            midIndex = (startIndex + endIndex) / 2;
+        }
+        if (startIndex > endIndex)
+            midIndex = -1;
+        return midIndex;
+    }
+    ```
+
+    </details>
+
+### Effektivitet och Ordo-notation
+
+Det som kommer att kräva mest arbete, dvs flest jämförelser är (precis som vid linjärsökning) när det som söks inte finns i arrayen, dvs *värsta fallet*. Eftersom vi hela tiden halverar antalet element när vi kontrollerat mitt-elementet i den aktuella delen av arrayen (som från början är hela arrayen) kan vi anta att binärsökning är snabbare/effektivare än linjärsökning. Vi gör ett litet räkneexempel:
+
+Anta att vi har 32 element i arrayen, då återstår det 15 element efter jämförelsen med elementet på mitten, därefter återstår det 7 element, sedan 3 och slutligen 1 element.
+Summerar vi antalet jämförelser (dvs antalet gånger det element som söks jämförs med elementet på mitten) får vi 5.
+
+Ökar vi till 64 element så ökar antalet jämförelser med 1 och det blir total 6 jämförelser. 
+Vid 1024 element blir det totalt 10 jämförelser.
+
+Vi ser ett mönster, nämligen att antalet jämförelser för n element blir log<sub>2</sub>n.
+
+**Slutsats**: Om vi har n element i arrayen kommer det att krävas log<sub>2</sub>n jämförelse. Det innebär att arbetet som utförs skalar logaritmiskt mot antalet element. Vi får tidskomplexiteten för värsta fallet som *O(log n)*. 
+
+## Överskurs: Uppskatta körtid med hjälp av O(f(n))
+
+Vi kan då dra slutsaten att i värsta fallet, dvs vid sökning av ett element som inte finns, ökar tiden logaritmiskt i förhållande till ökningen av antalet element.  
+Exempelvis om mätning av tiden vid sökning i en array med 2000 element resulterade i 2 microsekunder så kommer sökningen i en array med 4000000 element att ta 4 microsekunder. Antalet element ökade kvadratiskt (4000000 = 2000<sup>2</sup>) och då ökar tiden med faktorn 2 (log4000000 = log 2000<sup>2</sup> = 2*log 2000 = 2*2 microsekunder)
+
+**Testa dig själv**
+
+1. Om det vid en exekvering av binärsökning i en array med 3000 element tog 5 mikrosekunder vid sökning av ett element som inte fanns i arrayen. Vid en annan exekvering tog det 25 mikrosekunder vid sökning av ett element som inte fanns i arrayen. Hur många element fanns det då i arrayen?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    3000<sup>3</sup> eller 3000\*3000\*3000
+
+    </details>
+
+1. Om det vid en exekvering av binärsökning i en array med 4000 element tog 3 mikrosekunder vid sökning av ett element i värsta fallet. Om antalet element istället var 16000000 och en sökning motsvarande värsta fallet utförs, hur lång tid förväntas då körningen ta?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    6 mikrosekunder
+
+    </details>
+
+
+När det gäller binärsökning är dess bästa fall när förutsättningarna är sådana att det kommer krävas så få jämförelser som möjligt. Detta inträffar när det man söker efter finns på mittplatsen i arrayen, dvs på index (n-1)/2. Då krävs en (1) jämförelse oavsett hur många element det finns i arrayen. Det kommer helt enkelt alltid ta samma (konstanta) tid oavsett hur många element arrayen innehåller om det som söks är det mittersta elementet. Tidskomplexiteten blir ***O(1)***.
+ 
+I medelfallet kommer algoritmen att behöva jämföra det sökta elementet med hälften av elementen i arrayen, följt av hälften av dessa, följt av ... vilket blir färre gånger än vid värsta fallet men långt ifrån det bästa fallet. Det blir helt enkelt "ett värde" * log(n). Där "ett värde" < 1 (annars blir det ju inte bättre än värsta fallet). Vi inser att notationen för tidskomplexiteten i medelfallet blir ***O(log n) eller som det också kan skrivas O(log<sub>2</sub> n)***.
+
+## Sammanfattningsvis
+
+- **Linjärsökning:**
+  - söker från början mot slutet i en sekvens av element, array
+  - fungerar på både osorterad och sorterad data
+  - har tidkomplexiteten O(n) i värsta fallet
+- **Binärsökning:**
+  - halverar hela tiden sökmängden
+  - fungerar enbart på sorterad data
+  - har tidkomplexiteten O(log<sub>2</sub> n) i värsta fallet
