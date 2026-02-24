@@ -11,7 +11,7 @@ import minnet001 from '@assets/img/intro/minnet001.png';
 import minnet002 from '@assets/img/intro/minnet002.png';
 import minnet003 from '@assets/img/intro/minnet003.png';
 
-import minnet4Bilder from '@assets/img/intro/minnet4Bilder.png';
+
 import minnetBild01_02 from '@assets/img/intro/minnetBild01_02.png';
 import minnetBild03_04 from '@assets/img/intro/minnetBild03_04.png';
 
@@ -20,7 +20,12 @@ import minneReferens02 from '@assets/img/intro/minneReferens02.png';
 import minneReferens03 from '@assets/img/intro/minneReferens03.png';
 import minneReferens04 from '@assets/img/intro/minneReferens04.png';
 import minneReferens05 from '@assets/img/intro/minneReferens05.png';
+
+
 import minneReferensSistaIllustration2 from '@assets/img/intro/minneReferensSistaIllustration2.png';
+
+import minnetReferensBild10_11 from '@assets/img/intro/minnetReferensBild10_11.png';
+import minnetReferensBild12_13_14 from '@assets/img/intro/minnetReferensBild12_13_14.png';
 
 I denna kurs ska vi bland annat använda länkning vilket innebär att objekt "pekar ut" objekt av samma typ. För att förstå hur detta fungerar är det av största vikt att man förstår vad en referenstyp är och vad en variabel av referenstyp innehåller.  
 Eftersom det förutom referenstyper även finns så kallade värdetyper är det väsentligt att vi förstår skillnaden på dessa och hur det påverkar variabler.
@@ -141,6 +146,11 @@ Vi tar samma exempel med pointOne och pointTwo och börjar med `Point? pointOne 
 
 Därefter utförs `pointOne = new Point();` (Bild 11)
 
+<Figure
+    src={minnetReferensBild10_11}
+    caption="Alternativ bild"
+/>
+
 Följt av `pointOne.SetX(5);`, `pointOne.SetX(40);` och `pointTwo = new Point();` (Bild 12). 
 
 Därefter `pointTwo = pointOne` (Bild 13)
@@ -148,7 +158,7 @@ Därefter `pointTwo = pointOne` (Bild 13)
 Och slutligen  `pointTwo.SetY(99);` (Bild 14)
 
 <Figure
-    src={minneReferensSistaIllustration2}
+    src={minnetReferensBild12_13_14}
     caption="Alternativ bild"
 />
 
