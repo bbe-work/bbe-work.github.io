@@ -55,6 +55,7 @@ Bristerna är för stora för att kunna lösas med en enkel komplettering.
 Följande tabell visar en sammanställning av bedömningen.
 
 | U, G, Ux | Definition                                             |
+| ---------|--------------------------------------------------------|
 | G        | GODKÄNT – resultatet uppfyller kriterierna.            |
 | Ux       | KOMPLETTERA – mer arbete krävs innan betyg kan sättas. |
 | U        | OTILLRÄCKLIGT – (avsevärt) mer arbete krävs.           |
