@@ -1,0 +1,113 @@
+---
+title: "Kmom01 - Sökning"
+description: Kmom01 inlämningsuppgift om linjär- och binärsökning
+order: 0010
+hidden: true 
+---
+
+I denna uppgift ska du implementera linjär- och binärsökning och undersöka deras prestanda genom att mäta antalet jämförelser som görs under sökning. Du ska även skapa en generisk klass som kan jämföras samt testprogram för att säkerställa att dina sökalgoritmer fungerar korrekt och effektivt.
+
+### Förberedelser
+
+I `kmom01` skapar du ett dotnet console-projekt namngivet `Searching` och ett dotnet NUnit-projekt namngivet `Searching.tests`. Searching och Searching.Tests ska vara på samma nivå i katalogstrukturen. 
+
+<details>
+<summary>Kort repetition/sammanställning</summary>  
+
+```
+// skapa dotnet console projekt
+dotnet new console -n Searching
+
+// ändra till katalogen för Searching projektet
+cd  Searching
+
+// exekvera console projektet
+dotnet run
+```
+```
+// skapa dotnet nunit projekt
+dotnet new nunit -n Searching.Tests
+
+// ändra till katalogen för Searching.Tests projektet
+cd Searching.Tests
+
+// lägg till referens till Searching projektet
+dotnet add reference ../Searching/Searching.csproj
+
+// exekvera nunit projektet
+dotnet test
+```
+</details>
+
+### Generisk klass med krav på jämförelse
+
+Implementera en generisk klass `BusStop` som representerar en busshållplats och som implementerar interfacet `IComparable` enligt klassdiagrammet nedan.
+
+![BusStop klassdiagram](/images/KlassdiagramKmom01Uppgift_70procent.png)
+
+Filen ska namnges BusStop.cs och ingå i dotnet-projktet Searching. Klassen ska ingå i ett namespace med namnet `Searching`.
+
+### Sökalgoritmer
+
+Algoritmerna ska vara generiska men kräva att elementen som sökningen utförs på implementerar `IComparable`-gränssnittet så att de kan jämföras med varandra.
+
+Det innebär att det bl. a ska vara möjligt att utföra sökning i en array av heltal, en array av strängar och en array anpassade objekt av typen `BusStop` som implementerar `IComparable`-gränssnittet (denna har du gjort).
+
+I en fil namngiven SearchAlgorithms.cs ska du implementera klassen `SearchAlgorithm` med de två sökalgoritmerna `LinearSearch` och `BinarySearch` (se nedan). Klassen ska ingå i samma namespace (`Searching`) som `BusStop`.   
+
+Det finns för båda sökalgoritmerna en extra parameter som är en lista (datatypen `List<int>`) vilken ska användas för att registrera indexen där jämförelser görs. Detta för att kunna analysera hur många jämförelser som görs och var i arrayen de sker.
+
+Parameterlistan ska vara anpassad efter följande anrop:
+```
+// Sökning av targetInt i arrayen nrs med 10 heltal 
+int index = SearchAlgorithms.LinearSearch(nrs, 10, target, indexes);
+```
+```
+// Sökning targetStr i arrayen words med 100 strängar
+int index = SearchAlgorithms.BinarySearch(words, 100, target, indexes);
+``` 
+```
+// Sökning targetBusStop i arrayen busStops med 1000 BusStop-objekt
+int index = SearchAlgorithms.LinearSearch(busStops, 1000, targetBusStop, indexes);
+```
+
+```csharp
+public class SearchAlgorithms
+{
+    public static int LinearSearch<T>(/* parameter lista */)
+    where T : IComparable<T>
+    {
+        // Implementera linjärsökning här
+    }
+
+    public static int BinarySearch<T>(/* parameter lista */)
+    where T : IComparable<T>
+    {
+        // Implementera binärsökning här
+    }
+}
+```
+
+### Tester för att säkerställa att algoritmerna fungerar
+
+När du implementerat sökalgoritmerna ska du göra tester för att säkerställa att algoritmerna fungerar såsom avsett.  
+
+Byt namn på UnitTest1.cs i Searching.Tests till SearchAlgorithmTests.cs och implementera tester för både linjär och binärsökning i denna fil.   
+
+Använd `TestCase` för att testa olika scenarion och datatyper. Det är viktigt att du inte bara testar att algoritmerna ger rätt svar utan också att de gör det på ett effektivt sätt, dvs. att de gör rätt antal jämförelser och att jämförelserna sker på rätt element i arrayen.  
+
+Några tips på vägen:
+
+1. Fungerar algoritmen på för olika datatyper (int, string, BusStop)?
+1. Ger algoritmen korrekt svar på 
+    - en tom array?
+    - om det som söks är placerat först?
+    - om det som söks är placerat sist?
+    - om det som söks finns på ett index som inte är första eller sista?
+    - om det finns flera förekomster av det som söks?
+    - om det som söks inte finns i arrayen?
+1. Gör algoritmen korrekt antal jämförelser och utförs jämförelserna på rätt element?
+
+I filerna `words999.txt`, `words1200.txt`, `orderedWords999.txt` och `orderedWords1200.txt` finns ord som du kan använda för att testa dina sökalgoritmer på lite större mängder med strängar. De två första filerna innehåller 999 respektive 1200 ord i slumpmässig ordning, medan de två sista filerna innehåller samma ord i sorterad ordning.
+
+För att testa med större mängder heltal kan du dels generera slumpmässiga heltal genom att använda `Random`-klassen och dels sortera dem med hjälp av `Array.Sort`-metoden. 
