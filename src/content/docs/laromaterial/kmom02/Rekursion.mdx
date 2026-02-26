@@ -1,0 +1,108 @@
+---
+title: Rekursion
+description: Introduktion till rekursion
+order: 0020
+hidden: true
+---
+
+Vissa algoritmer är sk. rekursiva. Detta innebär att de anropar sig själva.
+
+En algoritmen har till uppgift att lösa ett problem (en uppgift) och om detta utförs rekursivt innebär det att problemet vid varje nytt anrop minskar och att det finns ett direkt resultat när problemet är tillräckligt litet. 
+
+Om vi tänker oss det enkla exemplet att summera alla heltal från 1 till ett visst värde representerat av n. Då hade vi med största säkerhet tänkt oss en iteration från 1 till n i vilken summan ökas med nästa tal. Vi kan nu formulera algoritmen, som vi namnger *iterative_sum* enligt
+
+```
+iterative_sum(n)
+    the_sum = 0
+    for nr from 1 to n
+        the_sum += nr
+    return the_sum
+```
+
+Om vi vill göra en rekursiv algoritm `recursive_sum(n)` för att lösa samma problem, dvs att beräkna summan 1 + 2 + 3 + .... + (n-2) + (n-1) + n, behöver vi göra två saker:
+
+1. identifiera den minsta summan som kan beräknas och resultatet av denna - detta kallas **basfallet**
+2. definiera hur en större summa kan beräknas genom att använda resultatet för en mindre summa, där den mindre summan är *närmare* den minsta summan - detta kallas det **rekursiva fallet**
+
+ **Lösning**
+
+ 1. Minsta summan som kan beräknas är summan från 1 till 1, dvs sum(1). Denna ska resultera i 1, dvs *sum(1) = 1*.
+ 2. Vi ser att t.ex att om vi redan har beräknat summan från 1 till 6 så behöver vi bara addera 7 till denna för att få fram summan från 1 till 7. Generaliserar vi kan vi säga att om vi har summan från 1 till n-1 så kan vi, genom att addera n, till denna få summan 1 till n. Vi kan uttrycka detta genom **sum(n) = sum(n-1) + n** och tillsammans med att vi vet och har definierat att **sum(1) = 1** har vi en rekursiv lösning.
+
+ Nu använder vi detta för att formulera algoritmen, som vi namnger `recursive_sum` enligt
+
+    ```csharp
+    static int recursive_sum(int n)
+    {
+        if (n == 1)
+            return 1;
+        return recursive_sum(n-1) + n;
+    }
+    ```
+
+**Testa dig själv**
+
+1. Skriv en rekursiv metod `power`, som beräknar x<sup>y</sup> där du kan förutsätta att y är ett heltal >= 0.  
+
+    <details>
+    <summary>Klicka här för att visa lösningsförslag</summary>
+
+    ```csharp
+    static int power(int x, int y)
+    {
+        if (y == 0)
+            return 1;
+        return x * power(x, y - 1);
+    }
+    ```
+    </details>
+
+
+
+2. Skriv en rekursiv metod `count_char_occurrences` som räknar hur många gånger ett visst tecken (target) förekommer i en sträng. Du får inte använda sträng-metoder.
+
+
+    <details>
+    <summary>Klicka här för att visa lösningsförslag</summary>
+
+    ```csharp
+    static int count_char_occurrences(string str, int last_index, char the_char)
+    {
+        if (last_index == -1)
+            return 0;
+        int res = 0;
+        if (str[last_index] == the_char)
+            res = 1;
+        return res + count_char_occurrences(str, last_index - 1, the_char);
+    }
+    ```
+    </details>
+
+3. Skriv en rekursiv metod `toss_until_six` som slumpar tärningsvärden (heltal mellan 1 och 6) tills det blir en sexa. Funktionen ska dels skriva ut tärningsvärden och returnera antalet kast som krävdes. 
+
+
+    <details>
+    <summary>Klicka här för att visa lösningsförslag</summary>
+
+    ```csharp
+    static int toss_until_six()
+    {
+        Random rand = new Random();
+        int current_value = rand.Next() % 6 + 1;
+        if (current_value == 6)
+        {
+            Console.WriteLine(current_value);
+            return 1;
+        }
+        Console.Write(current_value + ", ");
+        return 1 + toss_until_six();
+    }
+    ```
+    </details>
+
+**Sammanfattningsvis**
+
+- Rekursiva algoritmer är algoritmer som anropar sig själv
+- En rekursiv algoritm kräver 
+    - minst ett basfall
+    - att rekursiva anrop utförs på ett mindre problem

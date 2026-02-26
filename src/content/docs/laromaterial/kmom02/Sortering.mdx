@@ -7,7 +7,13 @@ hidden: true
 
 import Figure from '@components/CustomFigure.astro';
 
-import bubbleSortPass01 from '@assets/img/kmom02/BubbelSortPass01.png';
+import bubblesortPass01 from '@assets/img/kmom02/bubblesortPass01.png';
+import bubblesortPass02 from '@assets/img/kmom02/bubblesortPass02.png';
+import selectionsortPass01 from '@assets/img/kmom02/selectionsortPass01.png';
+import selectionsortPass02 from '@assets/img/kmom02/selectionsortPass02.png';
+import insertionsortPass01 from '@assets/img/kmom02/insertionsortPass01.png';
+import insertionsortPass02 from '@assets/img/kmom02/insertionsortPass02.png';
+
 
 Precis som sökning så är sortering något vi har behov av i många sammanhang, dvs vi vill **ordna elementen**. Sorteringsalgoritmerna arbetar på en sekvens av element, som i vårt fall representeras av en array.
 
@@ -21,22 +27,26 @@ Vi börjar med att kika på några algoritmer som är relativt enkla men inte de
 
 **Exempel**  
 
-Anta att vi har elementen 22, 66, 55, 77, 11, 33, 44 i en array där 22 är längst "ned" (på index 0) och 44 är längst "upp" (på index 6). Se bilden nedanför. När vi löper igenom nedifrån och upp så jämförs först 22 med 66. Eftersom 22 är mindre än 66 (markeras med gult) görs inget byte. Nästa par som jämförs är 66 och 55. 66 är större än 55 (markeras med rött i bilden) och 66 bubblar därför förbi 55. Algoritmen fortsätter till vi nått slutet på arrayen. Då är innehållet i arrayen 22, 55, 66, 11, 33, 44, 77, där 77 är på rätt plats (markeras med grönt) när **första passet** är genomfört.
+Anta att vi har elementen 22, 66, 55, 77, 11, 33, 44 i en array där 22 är längst "ned" (på index 0) och 44 är längst "upp" (på index 6). Se bilden nedanför. När vi löper igenom nedifrån och upp så jämförs först 22 med 66. Eftersom 22 är mindre än 66 (markeras med gult) görs inget byte. Nästa par som jämförs är 66 och 55. 66 är större än 55 (markeras med rött i bilden) och 66 bubblar därför förbi 55. Algoritmen fortsätter till vi nått slutet på arrayen. Då är innehållet i arrayen 22, 55, 66, 11, 33, 44, 77, där 77 är på rätt plats (markeras med grönt) när **första passet** är genomfört.  
 
+<br></br>
 <Figure
-    src={minnet001}
+    src={bubblesortPass01}
     caption="Första passet i bubblesort"
-    width="400px"
+    width="550px"
+    height="250px"
 />
-{/*
-![Första passet i bubbelsort](/images/BubblesortPass01.png)
-*/}
 
 Vi kör nästa pass på samma sätt.
 
-{/*
-![Andra passet i bubbelsort](/images/BubblesortPass02.png)
-*/}
+<br></br>
+<Figure
+    src={bubblesortPass02}
+    caption="Andra passet i bubblesort"
+    width="550px"
+    height="250px"
+/>
+
 Innehållet i arrayen, efter **andra passet**, är 22, 55, 11, 33, 44, 66, 77. De två största elementen har placerats på rätt plats.
 
 
@@ -63,7 +73,7 @@ För att hela innehållet i arrayen ska vara garanterat sorterat behövs det sam
 
 **Algoritm**  
 
-Idé: Använd en räknare som *index* och låt denna börja i botten på arrayen och röra sig uppåt. Jämför elementen parvis, dvs på positionerna `index` och `index  + 1` i arrayen. Om dessa element är i fel ordning (avseende tyngd, vilket i realiteten är något värde) så byter elementen plats. Vid en sådan genomgång kommer vi med säkerhet veta att det lättaste elementet har hamnat överst. Samtidigt kan naturligtvis en del andra element bytt plats inbördes. Vi behöver upprepa förfarandet tills vi med säkerhet vet att alla element är på rätt plats. Eftersom 1 element med säkerhet kommer att placeras på sin rätta plats efter ett varje pass behöver detta utföras `n-1` gånger när det är `n` element som ska sorteras.
+**Idé**: Använd en räknare som *index* och låt denna börja i botten på arrayen och röra sig uppåt. Jämför elementen parvis, dvs på positionerna `index` och `index  + 1` i arrayen. Om dessa element är i fel ordning (avseende tyngd, vilket i realiteten är något värde) så byter elementen plats. Vid en sådan genomgång kommer vi med säkerhet veta att det lättaste elementet har hamnat överst. Samtidigt kan naturligtvis en del andra element bytt plats inbördes. Vi behöver upprepa förfarandet tills vi med säkerhet vet att alla element är på rätt plats. Eftersom 1 element med säkerhet kommer att placeras på sin rätta plats efter ett varje pass behöver detta utföras `n-1` gånger när det är `n` element som ska sorteras.
 
 **Testa dig själv**
 
@@ -90,7 +100,7 @@ Har vi tur har alla elementen hamnat på rätt plats utan att vi behöver löpa 
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
-
+F
     ```
     bubblesort(A, n)
         for nrOfTimes=1 to n
@@ -105,7 +115,7 @@ Har vi tur har alla elementen hamnat på rätt plats utan att vi behöver löpa 
     </details>
 
 
-*Anm: Den inre for-loopen kan "kortas" ner så att den inte löper hela vägen utan stannar ett steg tidigare för varje ny omgång (elementen kommer ju att vara sorterade "uppifrån och ner" och denna del ökas med ett element varje pass)*  
+*Notera: Den inre for-loopen kan "kortas" ner så att den inte löper hela vägen utan stannar ett steg tidigare för varje ny omgång (elementen kommer ju att vara sorterade "uppifrån och ner" och denna del ökas med ett element varje pass)*  
 
 **Effektivitet**
 
@@ -123,14 +133,22 @@ Har vi tur har alla elementen hamnat på rätt plats utan att vi behöver löpa 
 Anta att vi har elementen 44, 33, 11, 77, 55, 66, 22. Vi börjar med att hitta det minsta värdet från och med index 0 (markeras med rött). Eftersom algoritmen behöver jämföra ett element i taget med det hittills minsta behöver vi ett startvärde vilket blir det första, i detta fall 44. Vi stegar igenom element för element i arrayen (kontrollerade element markeras med gult). Det första som påträffas är 33 och 33 < 44 och vi uppdaterar det hittills minsta till 33. Nästa är 11 och vi får återigen uppdatera minsta elementet. När alla element i arrayen kontrollerats har vi identifierat det minsta elementet som är 11. 
 Det minsta elementet ska vara placerat först. Detta hanteras genom att byta det minsta och det som är först. Nu är det minsta elementet på rätt plats (markeras med grönt).
 
-{/*
-![Första passet i selectionsort](/images/SelectionsortPass01.png)
-*/}
-Nu fortsätter algoritmen på samma sätt men med start på index 1 (här börjar den osorterade delen).
 
-{/*
-![Andra passet i selectionsort](/images/SelectionsortPass02.png)
-*/}
+<br></br>
+<Figure
+    src={selectionsortPass01}
+    caption="Första passet i selectionsort"
+    width="320px"
+/>
+Nu fortsätter algoritmen på samma sätt men med sStart på index 1 (här börjar den osorterade delen).
+
+<br></br>
+<Figure
+    src={selectionsortPass02}
+    caption="Andra passet i selectionsort"
+    width="320px"
+/>
+
 
 **Testa dig själv**
 
@@ -155,7 +173,7 @@ För att hela innehållet i arrayen ska vara bli sorterat behövs det samma anta
 
 **Algoritm**  
 
-Idé: Att hitta det minsta värdet (eller snarare index för var det minsta värdet finns) behöver upprepas n-1 gång om det finns n element. Att hitta index för det minsta värdet *indexOfMinValue* kan lösas genom att utgå från att det första värdet är minst, vilket innebär att vi registrerar detta. Sök igenom resterande del av arrayen från nästa index. När vi hittar ett värde som är mindre uppdaterar vi indexOfMinValue till index för detta. När vi är klara, dvs när vi gått igenom alla värden till sista index, byter vi det minsta med det första. Detta upprepas men varje gång startar vi på nästa index, dvs det index som kommer efter det som var minst och placerades först i den del som genomsöktes.
+**Idé**: Att hitta det minsta värdet (eller snarare index för var det minsta värdet finns) behöver upprepas n-1 gång om det finns n element. Att hitta index för det minsta värdet *indexOfMinValue* kan lösas genom att utgå från att det första värdet är minst, vilket innebär att vi registrerar detta. Sök igenom resterande del av arrayen från nästa index. När vi hittar ett värde som är mindre uppdaterar vi indexOfMinValue till index för detta. När vi är klara, dvs när vi gått igenom alla värden till sista index, byter vi det minsta med det första. Detta upprepas men varje gång startar vi på nästa index, dvs det index som kommer efter det som var minst och placerades först i den del som genomsöktes.
 
 **Testa dig själv**
 
@@ -188,13 +206,21 @@ Algoritmen börjar med att jämföra n-1 element, därefter n-2, nästa gång n-
 
 Anta att vi har elementen 44, 33, 11, 77, 55, 66, 22. Den sorterade delen består initialt av 44 (markeras med grönt) och resterande elementen ingår i den osorterade delen. Vi tar det första elementet i den osorterade delen (markeras med gult) vilket är 33 och jämför det med 44. Eftersom 33 är mindre än 44 så måste det placeras före 44 vilket innebär att vi måste göra plats genom att flytta 44 ett steg åt höger. Men eftersom 33 inte får skrivas över använder vi en hjälpvariabel (markerad med beige) som vi kopierar 33 till. Det finns inte några element före 44 och platsen för 33 är funnen. 33 placeras på index 0.   
 
-{/*
-![Första passet i insertionsort](/images/InsertionssortPass01.png)
-*/}
+<br></br>
+<Figure
+    src={insertionsortPass01}
+    caption="Första passet i insertionsort"
+    width="320px"
+/>
 Nu fortsätter algoritmen på samma sätt men med start på index 2 (här börjar den osorterade delen). Nu behöver båda elementen flyttas eftersom 11 är mindre än både 44 och 33.
-{/*
-![Andra passet i insertionsort](/images/InsertionssortPass02.png)
-*/}
+
+<br></br>
+<Figure
+    src={insertionsortPass01}
+    caption="Första passet i insertionsort"
+    width="320px"
+/>
+
 1. Hur är innehållet i arrayen efter tredje respektive fjärde passet?  
 
     <details>
@@ -219,7 +245,7 @@ För att hela innehållet i arrayen ska vara bli sorterat behövs det samma anta
 
 
 **Algoritm**
-Idé: Vi behöver n-1 gånger placera in ett nytt element i en redan sorterad sekvens genom att börja med att jämföra det sorterade element som finns längst till höger och "vandra" ett index mot vänster. Vandrandet behöver fortgå tills vi stöter på ett element som är mindre (har ett lägre värde) än det som ska placeras in eller till vi passerat alla i den sorterade delen (då det nya elementet är det minsta). Vi behöver en variabel *index* som minskar med 1 så länge vi inte nått "slutet" (index 0) och det de nya elementet är mindre än det som finns på index i arrayen. Eftersom detta ska upprepas från index 1 till index n behöver vi en iteration ger dessa index-värden.  
+**Idé**: Vi behöver n-1 gånger placera in ett nytt element i en redan sorterad sekvens genom att börja med att jämföra det sorterade element som finns längst till höger och "vandra" ett index mot vänster. Vandrandet behöver fortgå tills vi stöter på ett element som är mindre (har ett lägre värde) än det som ska placeras in eller till vi passerat alla i den sorterade delen (då det nya elementet är det minsta). Vi behöver en variabel *index* som minskar med 1 så länge vi inte nått "slutet" (index 0) och det de nya elementet är mindre än det som finns på index i arrayen. Eftersom detta ska upprepas från index 1 till index n behöver vi en iteration ger dessa index-värden.  
 
 **Testa dig själv**
 
