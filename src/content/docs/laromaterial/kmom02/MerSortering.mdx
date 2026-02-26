@@ -506,44 +506,59 @@ För enkelhetens skull kikar vi på ett exempel där arrayen innehåller 8 eleme
 
 <Figure
     src={merge001}
-    width="500px"
+    width="450px"
 />
-![Mergesort 001](/images/Merge001.png)
 
 Från början är sekvensen hela arrayen, dvs från index 0 till index 7. 
 
 Vi beräknar mitten genom att addera start- och slutindex och dela (heltalsdivision) resultatet med 2. Det ger oss (0 + 7)/2 vilket blir 3 i heltalsaritmetik.
 
 Vi har nu en sekvens från index 0 till index och sekvensen från index 4 till index 7
-
-![Mergesort 002](/images/Merge002.png)
+<Figure
+    src={merge002}
+    width="600px"
+/>
 
 Vi behöver fortsätta att dela upp delsekvenserna. Vi börjar med den vänstra vilket resulterar i
 
 index 0 till 1, index 2 till 3, index 4 till 5 samt index 6 till 7
-
-![Mergesort 003](/images/Merge003.png)
+<Figure
+    src={merge003}
+    width="640px"
+/>
 
 Vid nästa delning får vi i detta fall ett element i vardera sekvens
-
-![Mergesort 004](/images/Merge004.png)
+<Figure
+    src={merge004}
+    width="700px"
+/>
 
 Nu är det dags att sätta samman de totalt 8 sorterade delsekvenserna med ett element vardera så att vi får 4 sorterade sekvenser med två element i vardera.
 
-![Mergesort sammanfogning 1 till 2](/images/Mergesammanfogn01_02.png)
+<Figure
+    src={mergesammanfogn01_02}
+    width="700px"
+/>
 
 Därefter sammanfogas de 4 delsekvenserna med vardera 2 element till 2 sekvenser med 4 element vardera
 
-![Mergesort sammanfogning 2 till 4](/images/Mergesammanfogn02_04.png)
+<Figure
+    src={mergesammanfogn02_04}
+    width="650px"
+/>
 
 Slutligen sammanfogas de 2 delsekvenserna med 4 element till en sekvens med 8 element.
 
-![Mergesort sammanfogning 4 till 8](/images/Mergesammanfogn04_08.png)
+<Figure
+    src={mergesammanfogn04_08}
+    width="660px"
+/>
 
 Vi illustrerar hela bearbetningen, dvs både delningen och sammanfogningen.
-
-![Mergesort](/images/MergeHela.png)
-
+<Figure
+    src={mergeHela}
+    width="700px"
+/>
 
 **Testa dig själv**
  
@@ -609,23 +624,37 @@ Bearbetningen med att sätta samman två sorterade delsekvenser till en dubbelt 
 
 Om vi går tillbaka till exemplet som illustrerat mergesort och tittar på den del som vissa i bilden nedan.
 
-![Merge-algoritmen 01](/images/MergeAlgoritmen001.png)
+<Figure
+    src={mergeAlgoritmen001}
+    width="300px"
+/>
 
 Det ser uppenbarligen ut som om sekvensen "delats" men det är en och samma sekvens i ursprungssekvensen, dvs egentligen är det från ordningen i den översta delen som ska ordnas enligt den nedre delen enligt bilden. 
-
+<Figure
+    src={mergeAlgoritmen002}
+    width="230px"
+/>
 ![Merge-algoritmen 02](/images/MergeAlgoritmen002.png)
 
 För att få elementen i sorterad ordning behöver vi gå igenom båda delsekvenserna från början och undersöka vilket element som är minst. I bilden illustreras aktuell position i vänstra delsekvensen (som sträcker sig över index 4 och 5) med rosa och aktuell position i den andra delsekvenser (som sträcker sig över index 6 och 7) med blå.
 
-![Merge-algoritmen 03](/images/MergeAlgoritmen003.png)
+<Figure
+    src={mergeAlgoritmen003}
+    width="500px"
+/>
 
 Elementen jämförs och 2 < 7. 2 kopieras till den extra "sekvensen" och sedan flyttas aktuell position fram för den vänstra sekvensen fram.
 
-![Merge-algoritmen 04](/images/MergeAlgoritmen004.png)
+<Figure
+    src={mergeAlgoritmen004}
+    width="500px"
+/>
 
 Nästa jämförelse blir mellan 77 och 7 och eftersom 7 < 77 kopieras 7 tilld en extra sekvensen på nästa plats. Aktuell position för den högra delen flyttas fram.
-
-![Merge-algoritmen 05](/images/MergeAlgoritmen005.png)
+<Figure
+    src={mergeAlgoritmen005}
+    width="500px"
+/>
 
 Algoritmen fortsätter och när alla element kopierats till den extra "sekvensen" gås denna igenom från början till slut och varje element kopieras till ursprungssekvensen.
 
