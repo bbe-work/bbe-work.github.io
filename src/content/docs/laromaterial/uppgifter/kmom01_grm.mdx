@@ -5,10 +5,6 @@ order: 0010
 hidden: true 
 ---
 
-import Figure from '@components/CustomFigure.astro';
-
-import minnet001 from '@assets/img/kmom01/KlassdiagramKmom01Uppgift_70procent.png';
-
 I denna uppgift ska du implementera linjär- och binärsökning och undersöka deras prestanda genom att mäta antalet jämförelser som görs under sökning. Du ska även skapa en generisk klass som kan jämföras samt testprogram för att säkerställa att dina sökalgoritmer fungerar korrekt och effektivt.
 
 ### Förberedelser
@@ -29,7 +25,7 @@ cd  Searching
 dotnet run
 ```
 ```
-// skapa dotnet NUnit projekt
+// skapa dotnet nunit projekt
 dotnet new nunit -n Searching.Tests
 
 // ändra till katalogen för Searching.Tests projektet
@@ -47,12 +43,7 @@ dotnet test
 
 Implementera en generisk klass `BusStop` som representerar en busshållplats och som implementerar interfacet `IComparable` enligt klassdiagrammet nedan.
 
-<Figure
-    src={minnet001}
-    caption="BusStop klassdiagram"
-    width="400px"
-/>
-
+![BusStop klassdiagram](/images/KlassdiagramKmom01Uppgift_70procent.png)
 
 Filen ska namnges BusStop.cs och ingå i dotnet-projektet Searching. Klassen ska ingå i ett namespace med namnet `Searching`.
 
