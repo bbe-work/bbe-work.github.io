@@ -1,0 +1,147 @@
+---
+title: Övningsuppgifter på rekursion och sortering
+description: Uppgifter på rekursion, quicksort och mergesort
+order: 0020
+hidden: true
+---
+
+
+1. Skriv pseudo-kod för rekursiv linjärsökning.
+
+1. Skriv pseudo-kod för rekursiv binärsökning.
+
+1. Vilka påståenden är sanna och vilka är falska? Motivera.  
+    A. Antalet gånger två listor av storlek 2 sammanfogas vid sortering (till listor av storlek 4) under Mergesort, är alltid en fjärdedel av antalet element    
+    B. Quicksort är en sk. ”in-place” algoritm  
+    C. Mergesort är en sk. ”in-place” algoritm  
+    D. Valet av pivot-element påverkar tidskomplexiteten för Quicksort  
+
+1. Redogör för vad som är värsta respektive bästa fallets partitionering för Quicksort.  
+
+1. Vilken tidkomplexitet gäller för bästa respektive värsta fallet för Quicksort?  
+
+1. Betrakta de 3 talsekvenserna nedan
+
+    A. 2 76 11 22 67 45 17 33 56 89  
+    B. 12 25 67 69 75 81 89 89 92 99  
+    C. 12 25 38 41 55 61 53 21 67 99
+
+    Vilken/Vilka av dessa kan vara resultatet av att quicksort genomfört partitionering med pivot-element 67?
+
+1.  Anta att sekvensen 60 44 12 66 76 31 12 55 99 30 ska sorteras med quicksort och att principen *medianen-av-tre* används. Vilka blir de tre elementen och vilket blir pivot?
+
+
+1. Visa/Illustrera sorteringsalgoritmen Quicksort vid sortering av innehållet motsvarar sekvenserna nedan om pivot-elementet är det sista elementet  
+    A. 60 44 12 66 76 31 12 55 99 30  
+    B. 12 25 38 41 55 61 79 81 92 99  
+
+1. Visa/Illustrera sorteringsalgoritmen Mergesort vid sortering av innehållet motsvarande 
+60 44 12 66 76 31 12 55 99 30.  
+
+
+
+# Lösningsförslag
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```
+    linearsearch(A, toFind, startIndex, endIndex)
+        if startIndex > endIndex
+            return -1
+        if A[startIndex] == toFind
+            return startIndex
+        return linearseach(A, toFind, startIndex + 1, endIndex)
+    ```
+    
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    
+    ```
+    binearsearch(A, toFind, startIndex, endIndex)
+        if startIndex > endIndex
+            return -1
+        mid = (startIndex + endIndex)/2
+        if A[mid] == toFind
+            return mid
+        if (toFind < A[mid])
+            return binearseach(A, toFind, startIndex, mid - 1)
+        else
+            return binearseach(A, toFind, mid - 1, endIndex)
+    ```
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    A. Falskt  
+    B. Sant  
+    C. Falskt  
+    D. Sant  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Bästa: det blir två lika stora delar var sida om pivot  
+    Sämsta: Det bli en tom del ena sidan om pivot och resten av elementen andra sidan  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Bästa: O(nlogn)  
+    Sämsta: O(n<sup>2</sup>)   
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    B och C
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    60, 76 och 30 där 60 blir pivot-element
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A.  (exempelvis, beror på partitioneringsprincip) 
+    60 44 12 66 76 31 12 55 99 30  // pivot 30  
+    12 12 30 60 44 66 76 31 55 99  // pivot 12, 99  
+    12 12 30 60 44 66 76 31 55 99  // pivot 12, 44, 55  
+    12 12 30 44 31 55 60 66 76 99  // ...  
+    ...   
+    
+    B.   
+    12 25 38 41 55 61 79 81 92 99  // pivot 99   
+    12 25 38 41 55 61 79 81 92 99  // pivot 92  
+    12 25 38 41 55 61 79 81 92 99  // pivot 81  
+    12 25 38 41 55 61 79 81 92 99  // pivot 79  
+    12 25 38 41 55 61 79 81 92 99  // ....
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    60 44 12 66 76 31 12 55 99 30  
+    delas 2 st med 5 element  
+    delas 2 st med 2 element, 2 med 3 element  
+    delas 6 st med 1 element, 2 st med 2 element  
+    delas endast delar med 2 element som blir 4 st med 1 element  
+    sammansätts 66, 76 och 30, 99  
+    sammansätts 44, 60 och 12, 66, 76 och 12, 31 och 30, 55, 99  
+    sammansätts 12, 44, 60, 66, 76 och 12, 30, 31, 55, 99  
+    sammansätts 12, 12, 30, 31, 44, 55, 60, 66, 76, 99  
+    </details>
+

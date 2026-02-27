@@ -1,0 +1,119 @@
+---
+title: Övningsuppgifter enkel sortering
+description: Uppgifter på bubblesort, selectionsort och insertionsort
+order : 0010
+hidden: true
+---
+
+1. Visa hur elementen i en arrayen med innehållet 60  10  30  70  90  50  40  20  80  omarbetas vid sortering med  
+  
+    - bubblesort
+    - insertionsort
+    - selectionsort
+
+
+1. Vilken av algoritmerna selectionsort och insertionsort kommer att vara snabbast att sortera en array med 8000 element om de 7999 första elementen redan är sorterade och det 8000:e elementet är det minsta av alla? Motivera.
+
+1. Vilken tidskomplexitet har selectionsort? Redogör för hur man kan komma fram till denna.
+
+1. Givet algoritmen `findIndexOfSmallest(A, startIndex, endIndex)` vilken returnerar index för det minsta elementet i arrayen fr.o.m `startIdex` t.om `endIndex`. Skriv pseudokod för selectionsort där `findIndexOfSmallest` används på ett relevant sätt.  
+
+1. Givet algoritmen `insertSorted(A, startIndex, endIndex)` vilken förutsätter att elementet fr.o.m `startIndex` till `endIndex` är sorterade och placerar elementet på `endIndex` på rätt plats i bland de sorterade. Skriv pseudokod för insertionsort där `insertSorted` används på ett relevant sätt. 
+
+1. Skriv psedokod för `insertSorted(A, startIndex, endIndex)` enligt föregående uppgift.
+
+
+## Lösningsförslag
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    bubbelsort:  
+    60 10 30 70 90 50 40 20 80   
+    10 30 60 70 50 40 20 80 90   
+    10 30 60 50 40 20 70 80 90   
+    10 30 50 40 20 60 70 80 90  
+    10 30 40 20 50 60 70 80 90  
+    10 30 20 40 50 60 70 80 90  
+    10 20 30 40 50 60 70 80 90  
+    10 20 30 40 50 60 70 80 90  
+
+    insertionsort:  
+    60 10 30 70 90 50 40 20 80  
+    10 60 30 70 90 50 40 20 80  
+    10 30 60 70 90 50 40 20 80  
+    10 30 60 70 90 50 40 20 80  
+    10 30 60 70 90 50 40 20 80  
+    10 30 60 70 90 50 40 20 80  
+    10 30 50 60 70 90 40 20 80  
+    10 30 40 50 60 70 90 20 80  
+    10 20 30 40 50 60 70 90 80  
+    10 20 30 40 50 60 70 80 90  
+
+    selectionsort:  
+    60 10 30 70 90 50 40 20 80  
+    10 60 30 70 90 50 40 20 80  
+    10 20 30 70 90 50 40 60 80  
+    10 20 30 70 90 50 40 60 80  
+    10 20 30 40 90 50 70 60 80  
+    10 20 30 40 50 90 70 60 80  
+    10 20 30 40 50 60 70 90 80  
+    10 20 30 40 50 60 70 90 80  
+    10 20 30 40 50 60 70 80 90  
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    insertionsort, eftersom alla element förutom det sista kommer att kräva en (1) jämförelse vardera. 
+    selectionsort utför samma arbete oavsett hur elementen är ordnade.
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    O(n<sup>2</sup>), vid varje pass (som är n-1 till antalet) ska det minsta bestämmas av de element som återstår. Det är n-1 första passet, n-2 andra passet etc. Det ger summan (n-1) + (n-2) + ... 3 + 2 + 1 vilket motsvarar O(n<sup>2</sup>)
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```
+    selectionsort(A, n)
+        for i=0 to n-1
+            index = findIndexOfSmallest(A, i, n-1)
+            swap(A[i], A[index])
+    ```
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```
+    insertionsort(A, n)
+        for i=1 to n
+            insertSorted(A, 0, i)
+    ```
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```
+    insertSorted(A, startIndex, endIndex)
+        elem = A[endIndex]
+        i = endIndex - 1
+        while i>=0 and elem < A[i]
+            A[i+1] = A[i]
+            i = i - 1
+        A[i+1] = elem
+    ```
+    </details>
+
