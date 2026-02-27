@@ -1,8 +1,154 @@
 ---
-title: Kmom02 ?
-description: Kmom02 inlämningsuppgift
+title: Kmom02 - Sortering
+description: Kmom02 inlämningsuppgift om sortering
 order: 0020
 hidden: true
 ---
 
-Mer info kommer.
+I denna uppgift ska du implementera sorteringsalgoritmerna insertionsort och quicksort och undersöka hur algoritmernas prestanda påverkas av ordningen på indata. Du ska även undersöka hur quicksort påverkas avseende val av pivot och genom att använda insertionsort för färre element. 
+
+Du ska använda den generiska klass du skapade i kmom01 (`BusStop`). Denna utökas så att vi kan registrera antalet jämförelser. 
+Vidare ska du säkerställa att dina sorteringsalgoritmer fungerar korrekt och effektivt.
+
+### Förberedelser
+
+I `kmom02` skapar du ett dotnet console-projekt namngivet `Sorting` och ett dotnet nunit-projekt namngivet `Sorting.Tests`. Sorting och Sorting.Tests ska vara på samma nivå i katalogstrukturen. 
+
+<details>
+<summary>Kort repetition/sammanställning</summary>  
+
+```
+// skapa dotnet console projekt
+dotnet new console -n Sorting
+
+// ändra till katalogen för Sorting projektet
+cd  Sorting
+
+// exekvera console projektet
+dotnet run
+```
+```
+// skapa dotnet nunit projekt
+dotnet new nunit -n Sorting.Tests
+
+// ändra till katalogen för Sorting.Tests projektet
+cd Sorting.Tests
+
+// lägg till referens till Sorting projektet
+dotnet add reference ../Sorting/Sorting.csproj
+
+// exekvera nunit projektet
+dotnet test
+```
+</details>
+
+### Generisk klass med krav på jämförelse
+
+Kopiera den generiska klassen `BusStop` som du har i `kmom01` till katalogen `Sorting` och ändra dessutom namespace till `Sorting`. 
+
+Uppdatera dessutom `BusStop` enligt klasdiagrammet
+
+![Klassdiagram](/images/KlassdiagramKmom02Uppgift.png)
+
+där 
+
+- `NrOfComparisons` används för att räkna antalet gånger anrop av CompareTo utförs
+- `ResetNrOfComparisons()` nollställer `NrOfComparisons`
+- `GetNrOfComparisons()` returnerar innehållet i `NrOfComparisons`
+
+Vidare behöver du i `CompareTo()` räkna upp `NrOfComparisons`
+
+Kontrollera att du får rätt resultat. 
+
+<details>
+<summary>Ett förslag hittar du här</summary>
+
+```csharp
+BusStop busStopA = new BusStop("Traryd", 134, "Hög kant");
+BusStop busStopB = new BusStop("Älmhult", 122, "Ingen busskur för närvarande");
+
+Console.WriteLine($"Antalet jämförelser vid start {BusStop.GetNrOfComparisons()}");
+if (busStopA.CompareTo(busStopB) > 0)
+    Console.WriteLine("OK");
+else
+    Console.WriteLine("INTE OK");
+Console.WriteLine($"Antalet jämförelser ska var 1 och är {BusStop.GetNrOfComparisons()}");
+if (busStopB.CompareTo(busStopA) < 0)
+    Console.WriteLine("OK");
+else
+    Console.WriteLine("INTE OK");
+Console.WriteLine($"Antalet jämförelser ska var 2 och är {BusStop.GetNrOfComparisons()}");
+if (busStopA.CompareTo(busStopA) == 0)
+    Console.WriteLine("OK");
+else
+    Console.WriteLine("INTE OK");
+Console.WriteLine($"Antalet jämförelser ska var 3 och är {BusStop.GetNrOfComparisons()}");
+
+BusStop.ResetNrOfComparisons();
+Console.WriteLine($"Antalet jämförelser efter Reset {BusStop.GetNrOfComparisons()}");
+
+```
+</details>
+
+### Sorteringsalgoritmer
+
+Algoritmerna ska vara generiska men kräva att elementen som sorteras implementerar   
+`IComparable`-gränssnittet så att de kan jämföras med varandra.
+ alla finnas i filen SortingAlgorithms.cs   
+
+Du ska implementera insertionsort och quicksort i lite olika varianter. Dessa ska finnas i filen SortingAlgorithms.cs som ska tillhöra namespace `Sorting`. 
+
+#### Insertionsort
+
+Du ska göra två överlagrade varianter av insertionsort enligt  
+
+```csharp
+public static void Insertionsort<T>(T[] A, int n) where T : IComparable<T> {/*ska implementeras*/}
+public static void Insertionsort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
+
+```
+Den överlagrade varianten med 3 parametrar ska utföra insertionsortering på den del av arrayen som börjar på index `start` och slutar på `index` end.  
+Tänk efter så att du skriver kod som uppfyller DRY!
+
+#### Quicksort
+
+Det ska även tillföras quicksort i några varianter
+
+```csharp
+public static void Quicksort<T>(T[] A, int start, int end) {/*ska implementeras*/}
+public static void QuicksortUsingMedianOfThree<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
+public static void QuicksortUsingInsertionsort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
+```
+
+**Quicksort**  Utför quicksort där pivot är det sista elementet.
+
+**QuicksortUsingMedianOfThree** Utför quicksort där pivot bestäms enligt principen "medianen-av-tre".
+
+**QuicksortUsingInsertionsort** Utför quicksort där pivot väljs som sista elementet men där insertionsort används när antalet element i en delsekvens är mindre än ett givet antal.
+
+Partitioneringsalgoritmen där sista elementet är pivot får du här:
+
+```csharp 
+private static int Partition<T>(T[] A, int start, int end) where T : IComparable<T>
+{
+    T pivot = A[end];
+    int i = start - 1;
+    
+    for (int j = start; j < end; j++)
+    {
+        if (A[j].CompareTo(pivot) < 0)
+        {
+            i++;
+            (A[i], A[j]) = (A[j], A[i]);
+        }
+    }
+    (A[i + 1], A[end]) = (A[end], A[i + 1]);
+    return i + 1;
+}
+```
+
+Du förväntas tillföra fler hjälpmetoder för att lösa uppgiften.
+
+### Använd sorteringsalgoritmerna
+
+FYLLAS PÅ !!!!
