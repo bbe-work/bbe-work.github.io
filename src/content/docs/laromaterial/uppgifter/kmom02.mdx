@@ -5,6 +5,10 @@ order: 0020
 hidden: true
 ---
 
+import Figure from '@components/CustomFigure.astro';
+
+import klassdiagram from '@assets/img/kmom02/KlassdiagramKmom02Uppgift.png';
+
 I denna uppgift ska du implementera sorteringsalgoritmerna insertionsort och quicksort och undersöka hur algoritmernas prestanda påverkas av ordningen på indata. Du ska även undersöka hur quicksort påverkas avseende val av pivot och genom att använda insertionsort för färre element. 
 
 Du ska använda den generiska klass du skapade i kmom01 (`BusStop`). Denna utökas så att vi kan registrera antalet jämförelser. 
@@ -46,9 +50,14 @@ dotnet test
 
 Kopiera den generiska klassen `BusStop` som du har i `kmom01` till katalogen `Sorting` och ändra dessutom namespace till `Sorting`. 
 
-Uppdatera dessutom `BusStop` enligt klasdiagrammet
+Uppdatera dessutom `BusStop` enligt klassdiagrammet  
 
-![Klassdiagram](/images/KlassdiagramKmom02Uppgift.png)
+<Figure
+    src={klassdiagram}
+    caption="BusStop klassdiagram"
+    width="400px"
+/>
+
 
 där 
 
@@ -89,6 +98,7 @@ Console.WriteLine($"Antalet jämförelser efter Reset {BusStop.GetNrOfComparison
 
 ```
 </details>
+
 
 ### Sorteringsalgoritmer
 
