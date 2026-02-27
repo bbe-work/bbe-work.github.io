@@ -270,6 +270,40 @@ Om vi formulerar detta med antalet n får vi (n - 1) * (n - 2) / 2 = (n<sup>2</s
     "qq" "ss" "rr" "aa"
     </details>
 
+### Val av pivot
+
+Det finns några olika principer som används för att bestämma pivot-element:
+
+1. ta alltid det första (eller alltid det sista) i delsekvensen
+2. slumpa ett index inom delsekvensen och låt elementet på detta index blir pivot-element
+3. ta medianen av det första, det mittersta och det sista
+
+Alternativ 1 (första eller sista noden) är enklast. Eftersom vi inte vet något om ordningen i arrayen så är det första (eller det sista) elementet i delsekvensen ett lika bra/dåligt val som vilket annan element som helst i arrayen.
+
+Alternativ 2 (slumpa index) innebär endast ett tillägg som innebär att elementet på den slumpade index-positionen byter med det sista elementet i delsekvensen (enligt Lomutos och Hoares). 
+
+För både alternativ 1 och 2 finns det en risk att pivot-elementet blir det minsta eller det största elementet, vilket vi vet ger det värsta fallet om det inträffar väldigt ofta. 
+
+För att undvika detta finns alternativ 3 (median av tre). Då kan det aldrig bli det minsta eller det största (förutom om det finns många av samma värde).
+
+**Testa dig själv**
+ 
+1. Anta att pivot-element ska väljas enligt principen medianen av tre och att det är sekvensen 43  28  64  83  21  61  97  12  55 som detta sker i. Vilka element är de 3 som valet baseras på och vilket av dessa blir pivot-element?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Det är 43, 21 och 55. Det som blir pivot är 43.
+    </details>
+
+
+1. Anta att pivot-element ska väljas enligt principen medianen av tre och att det är sekvensen 55  64  83  21  61  97  12  28 som detta sker i. Vilka element är de 3 som valet baseras på och vilket av dessa blir pivot-element?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Det är 55, 21 och 28. Det som blir pivot är 28.
+    </details>
+
+
 ### Överkurs: Partitioneringsalgoritmer
 
 Det finns bl.a de båda partitioneringsalgoritmerna **Lomuto** och **Hoares** vilka vi ska kika lite närmare på.
@@ -461,42 +495,6 @@ Nu är pivot-elementet på rätt plats.
     <summary>Klicka här för att visa svaret</summary>
     4  12  15  10  63  96  67    
     </details>
-
-
-
-### Val av pivot
-
-Det finns några olika principer som används för att bestämma pivot-element:
-
-1. ta alltid det första (eller alltid det sista) i delsekvensen
-2. slumpa ett index inom delsekvensen och låt elementet på detta index blir pivot-element
-3. ta medianen av det första, det mittersta och det sista
-
-Alternativ 1 (första eller sista noden) är enklast. Eftersom vi inte vet något om ordningen i arrayen så är det första (eller det sista) elementet i delsekvensen ett lika bra/dåligt val som vilket annan element som helst i arrayen.
-
-Alternativ 2 (slumpa index) innebär endast ett tillägg som innebär att elementet på den slumpade index-positionen byter med det sista elementet i delsekvensen (enligt Lomutos och Hoares). 
-
-För både alternativ 1 och 2 finns det en risk att pivot-elementet blir det minsta eller det största elementet, vilket vi vet ger det värsta fallet om det inträffar väldigt ofta. 
-
-För att undvika detta finns alternativ 3 (median av tre). Då kan det aldrig bli det minsta eller det största (förutom om det finns många av samma värde).
-
-**Testa dig själv**
- 
-1. Anta att pivot-element ska väljas enligt principen medianen av tre och att det är sekvensen 43  28  64  83  21  61  97  12  55 som detta sker i. Vilka element är de 3 som valet baseras på och vilket av dessa blir pivot-element?
-
-    <details>
-    <summary>Klicka här för att visa svaret</summary>
-    Det är 43, 21 och 55. Det som blir pivot är 43.
-    </details>
-
-
-1. Anta att pivot-element ska väljas enligt principen medianen av tre och att det är sekvensen 55  64  83  21  61  97  12  28 som detta sker i. Vilka element är de 3 som valet baseras på och vilket av dessa blir pivot-element?
-
-    <details>
-    <summary>Klicka här för att visa svaret</summary>
-    Det är 55, 21 och 28. Det som blir pivot är 28.
-    </details>
-
 
 ## Mergesort
 
