@@ -32,7 +32,7 @@ Vid länkning behöver man definiera en klass (eller motsvarande) som ska använ
 - kan hålla data/info och 
 - kan peka ut ett (eller flera) objekt som är av samma klasstyp
 
-### Enkellänkad lista med heltal
+## Enkellänkad lista med heltal
 
 I detta fall kommer vi låta medlemsvariablerna vara publika - dels för att direkt (utan metodanrop) kunna ändra på den referens som motsvarar *pekaren* och dels för att vi senare kan se att det är ok om man kapslar in klassen och döljer den inom den klass som ska skapa länkade konstruktioner. Den yttre klassen "äger" då den inre klassen och har förtroendet att accessa medlemsvariablerna i denna.  
 Låt oss börja med att definiera en klass som kan hålla ett heltal och länka till ett annat objekt av samma sort. 
@@ -224,7 +224,7 @@ För att skriva ut alla heltals-värden i den länkade listan vi skapat kan vi s
     ```
     </details>
 
-### Enkellänkad lista för olika datatyper
+## Enkellänkad lista för olika datatyper
 
 Nu vill vi ändra så att Node-objekten kan lagra olika datatyper. Vi gör klassen generisk. I detta fall väljer vi att använd namnet E (för Element) på den obestämda datatypen.
 
@@ -253,7 +253,7 @@ För att länka ihop dessa så att ordningen blir "A" följt av "B" skriver vi
 elemOne.Next = elemTwo;
 ```
 
-### Dubbellänkade listor
+## Dubbellänkade listor
 
 Vi kan skapa länkade listor där noderna *pekar på* noden före (previus) och noden efter (next). Det ger oss möjlighet att vandra i listan i båda riktningarna.
 
@@ -305,7 +305,7 @@ public class Node<E>
     ``` 
     </details>
 
-###  Cirkulära länkade listor
+##  Cirkulära länkade listor
 
 Genom att låta "slutelementet" i en enkellänkad list *peka på* "startlement" kan vi skapa en cirkulär enkellänkad lista.
 
@@ -323,7 +323,7 @@ På motsvarande sätt kan vi skapa en cirkulär dubbellänkad lista.
     width="500px"
 />
 
-### Länkade listor med huvud
+## Länkade listor med huvud
 
 Man kan använda en nod som ett så kallat huvud. Noden lagrar inget som är relevant för listan i övrigt. Detta gör man för att undvika specialfall och istället få implementationer som är enhetliga. 
 
@@ -345,12 +345,12 @@ Man kan använda en nod som ett så kallat huvud. Noden lagrar inget som är rel
     Det kommer bara att fungera för listor med huvud.
     </details>
 
-### Annan länkning
+## Annan länkning
 
 Det behöver inte vara listor som bildas när man länkar noder. Senare i kursen kommer vi att se att länkning även kan användas för att skapa andra strukturer såsom träd och grafer.
 
 
-### Sammanfattningvis
+## Sammanfattningvis
 
 En länkad lista är en följd av noder/element där varje nod "pekar på" en eller flera andra noder.  
 I C# skapas en klass för att representera en nod. Klassen gös dessutom generisk för att möjliggöra för olika datatyper i de länkade listorna.  
