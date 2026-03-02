@@ -182,7 +182,7 @@ else
 Vi vill inte gärna uttrycka "utför inget" när vi implementera och vänder därför på villkoret, dvs om startindex < slutindex så:
 
 ```text
-if starIndex < endIndex
+if startindex < endIndex
     ...
 ```
 
@@ -203,7 +203,7 @@ Vi har sett att det första som ska utföras vid sorteringen är att utföra par
 
     ```text
     quicksort(A, startIndex, endIndex)
-        if starIndex < endIdex
+        if startindex < endIdex
             indexOfPivot = partition(A, startIndex, endIndex)
             quicksort(A, startIndex, indexOfPivot - 1)
             quicksort(A, indexOfPivot + 1, endIndex)
@@ -371,9 +371,9 @@ När alla element i delsekvensen i arrayen har passerats och därmed delats upp 
     src={lomuto008}
     width="500px"
 />
-Nu återstår att placera pivot-elementet mellan dessa delar.   
+Nu återstår att placera pivot-elementet mellan dessa delar.
 
-Detta görs genom att i den högra delen ta det element som är längst till vänster (precis intill den vänstra delen som innehåller alla element som är mindre än pivot) och byta detta med pivot-elementet (som är placerat sist). 
+Detta görs genom att i den högra delen ta det element som är längst till vänster (precis intill den vänstra delen som innehåller alla element som är mindre än pivot) och byta detta med pivot-elementet (som är placerat sist).
 
 <Figure
     src={lomuto009}
@@ -391,12 +391,12 @@ På så vis hamnar pivot-elementet efter det som är mindre och före resterande
     </details>
 
   
-  
 1. Utför partitioner med Lomutos algoritm på sekvensen 96  12  87  15  63  4  10 där pivot-elementet är det sista i sekvensen och visa hur innehållet har ändrats?  
 
     <details>
     <summary>Klicka här för att visa svaret</summary>
-    12  15  4  10  63  87  96    
+    12  15  4  10  63  87  96
+    Borde det inte vara??? 4 10 87 15 63 96 12  
     </details>
 
 
@@ -409,7 +409,7 @@ Anta att arrayen innehåller 6 88 90 55 44 78 9 94 70.
 
 För att markera pekaren som går från vänster och ska passera alla mindre element används rosa. För att markera *pekaren* som går från höger och ska passera alla större och lika element används blå färg. Pivot-elementet är det sista vilket markeras med gult.
 
-Båda pekarna är markerade i arrayen. 
+Båda pekarna är markerade i arrayen.
 
 <Figure
     src={hoares001}
@@ -441,7 +441,7 @@ Det blir i detta fall ingen fortsättning eftersom 50 < 70 och pekaren stannar.
     src={hoares005}
     width="500px"
 />
-Nu har den pekare som går från vänster för att passerar element mindre än pivot (70) stannat eftersom den stött på ett element som är ≥ 70 och dessutom har den pekare som går från höger för att passera de element som är större eller lika med pivot (70) stannat eftersom den stött på ett element som är < 70.   
+Nu har den pekare som går från vänster för att passerar element mindre än pivot (70) stannat eftersom den stött på ett element som är ≥ 70 och dessutom har den pekare som går från höger för att passera de element som är större eller lika med pivot (70) stannat eftersom den stött på ett element som är < 70.  
 Då ska elementen byta plats och båda pekarna röra sig ett steg framåt i sin förutbestämda riktning.
 <Figure
     src={hoares006}
@@ -462,11 +462,11 @@ Den vänstra pekaren upptäcker att 44 < 70.
     src={hoares009}
     width="500px"
 />
-Men samtidigt möter den den högra pekaren när det ska stega fram. Det innebär att alla element har kontrollerats och att alla element som som är < 70 finns till vänster om gränsen för den blå pekaren. 
+Men samtidigt möter den den högra pekaren när det ska stega fram. Det innebär att alla element har kontrollerats och att alla element som som är < 70 finns till vänster om gränsen för den blå pekaren.
 
-Nu återstår att placera pivot-elementet mellan dessa delar.   
+Nu återstår att placera pivot-elementet mellan dessa delar.
 
-Detta görs genom att i den högra delen ta det element som är längst till vänster (precis intill den vänstra delen som innehåller alla element som är mindre än pivot) och byta detta med pivot-elementet (som är placerat sist). 
+Detta görs genom att i den högra delen ta det element som är längst till vänster (precis intill den vänstra delen som innehåller alla element som är mindre än pivot) och byta detta med pivot-elementet (som är placerat sist).
 <Figure
     src={hoares010}
     width="500px"
@@ -489,12 +489,12 @@ Nu är pivot-elementet på rätt plats.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>
-    4  12  15  10  63  96  67    
+    4  12  15  10  63  96  67  
     </details>
 
 ## Mergesort
 
-Namnet merge ger en ledtråd till att algoritmen utför någon form av sammanfogning. I själva verket motsvaras merge av att två redan sorterade delsekvenser av samma storlek (kan skilja på ett (1) element) sätts samman till en dubbelt så stor sorterad delsekvens. Den minsta sorterade delsekvens som finns (och som därmed blir ett basfall) är en lista innehållande endast ett (1) element. Algoritmen är rekursiv och varje "nytt" rekursivt steg, som inte är basfallet, börjar med att den aktuella delsekvens delas i två lika stora delar (återigen med en möjlig skillnad på ett (1) element). 
+Namnet merge ger en ledtråd till att algoritmen utför någon form av sammanfogning. I själva verket motsvaras merge av att två redan sorterade delsekvenser av samma storlek (kan skilja på ett (1) element) sätts samman till en dubbelt så stor sorterad delsekvens. Den minsta sorterade delsekvens som finns (och som därmed blir ett basfall) är en lista innehållande endast ett (1) element. Algoritmen är rekursiv och varje "nytt" rekursivt steg, som inte är basfallet, börjar med att den aktuella delsekvens delas i två lika stora delar (återigen med en möjlig skillnad på ett (1) element).
 
 För enkelhetens skull kikar vi på ett exempel där arrayen innehåller 8 element, som ju är en potens av 2. Vi illustrerar inte det rekursiva förfarandet i detta skede utan fokuserar på den övergripande principen.
 
@@ -503,7 +503,7 @@ För enkelhetens skull kikar vi på ett exempel där arrayen innehåller 8 eleme
     width="450px"
 />
 
-Från början är sekvensen hela arrayen, dvs från index 0 till index 7. 
+Från början är sekvensen hela arrayen, dvs från index 0 till index 7.
 
 Vi beräknar mitten genom att addera start- och slutindex och dela (heltalsdivision) resultatet med 2. Det ger oss (0 + 7)/2 vilket blir 3 i heltalsaritmetik.
 
@@ -575,16 +575,18 @@ Vi illustrerar hela bearbetningen, dvs både delningen och sammanfogningen.
 
 Illustrationerna ovan har inte tagit hänsyn till när varje delsekvens bearbetas utan visat överskådligt hur algoritmen fungerar. Mergesort är, precis som quicksort, en rekursiv algoritm. Vi vet att sammanfogningarna görs på delsekvenser som vid delningen bestämts genom att beräkna mittindex, givet startindex och slutindex. Detta kan vi dra nytta av.
 
-Det är lämpligt att hantera själva sammanfogningen av två sorterade delsekvenser till en sorterad sekvens som innehåller elementen från de båda delsekvenserna i en egen metod. Denna kallar vi `merge`. Om vi just nu antar att vi redan har definierat denna med parametrar som motsvarar en *array* samt *startindex*, *mittindex* och *slutindex* för den delsekvens i arrayen som motsvaras av de båda sorterade listorna i arrayen (vänstra listan sträcker sig från *startindex* till *mittindex* och den högra listan sträcker sig från *mittindex + 1* till *slutindex*), enligt 
+Det är lämpligt att hantera själva sammanfogningen av två sorterade delsekvenser till en sorterad sekvens som innehåller elementen från de båda delsekvenserna i en egen metod. Denna kallar vi `merge`. Om vi just nu antar att vi redan har definierat denna med parametrar som motsvarar en *array* samt *startindex*, *mittindex* och *slutindex* för den delsekvens i arrayen som motsvaras av de båda sorterade listorna i arrayen (vänstra listan sträcker sig från *startindex* till *mittindex* och den högra listan sträcker sig från *mittindex + 1* till *slutindex*), enligt:
 
-```merge(A, startIndex, midIndex, endIndex)```
+```text
+merge(A, startIndex, midIndex, endIndex)
+```
 
 så kan vi formulera algoritmen för mergesort. Algoritmen är rekursiv och grundtanken är att mergesort utför halveringar tills dess att detta resulterat i delsekvenser som redan är sorterade för att därefter sätta samman de sorterade delsekvenserna genom algoritmen merge.
 
-Vi kan konstatera att en sekvens med endast 1 element (och egentligen även 0) är sorterat och därmed inte ska delas ytterligare. Basfallet är därmed att 1 (och även 0) redan är sorterat och inget ska uträttas. Vi gör som vid quicksort och formulerar detta
+Vi kan konstatera att en sekvens med endast 1 element (och egentligen även 0) är sorterat och därmed inte ska delas ytterligare. Basfallet är därmed att 1 (och även 0) redan är sorterat och inget ska uträttas. Vi gör som vid quicksort och formulerar detta.
 
 ```text
-if starIndex < endIndex
+if startIndex < endIndex
     ...
 ```
 
@@ -595,7 +597,7 @@ Vi har sett att det första som ska utföras är att beräkna/använda mittindex
 1. Formulera i pseudokod algoritmen för den rekursiva definitionen av merge (som matchar anropet med 3 parametrar) givet sammanfogningsalgoritmen `merge(A, startIndex, midIndex, endIndex)`.
 
     ```text
-    meregsort(A, n):
+    mergesort(A, n):
         mergesort(A, 0, n - 1)
     ```
 
@@ -604,11 +606,11 @@ Vi har sett att det första som ska utföras är att beräkna/använda mittindex
 
     ```text
     mergesort(A, startIndex, endIndex)
-        if starIndex < endIdex
+        if startindex < endIdex
             midIndex = (startIndex + endIndex)/2
             mergesort(A, startIndex, midIndex)
             mergesort(A, midIndex + 1, endIndex)
-            merge(A, starIndex, midIndex, endIndex)
+            merge(A, startindex, midIndex, endIndex)
     ```
     </details>
 
@@ -623,7 +625,7 @@ Om vi går tillbaka till exemplet som illustrerat mergesort och tittar på den d
     width="300px"
 />
 
-Det ser uppenbarligen ut som om sekvensen "delats" men det är en och samma sekvens i ursprungssekvensen, dvs egentligen är det från ordningen i den översta delen som ska ordnas enligt den nedre delen enligt bilden. 
+Det ser uppenbarligen ut som om sekvensen "delats" men det är en och samma sekvens i ursprungssekvensen, dvs egentligen är det från ordningen i den översta delen som ska ordnas enligt den nedre delen enligt bilden.
 <Figure
     src={mergeAlgoritmen002}
     width="230px"
@@ -643,7 +645,7 @@ Elementen jämförs och 2 < 7. 2 kopieras till den extra "sekvensen" och sedan f
     width="500px"
 />
 
-Nästa jämförelse blir mellan 77 och 7 och eftersom 7 < 77 kopieras 7 tilld en extra sekvensen på nästa plats. Aktuell position för den högra delen flyttas fram.
+Nästa jämförelse blir mellan 77 och 7 och eftersom 7 < 77 kopieras 7 till den extra sekvensen på nästa plats. Aktuell position för den högra delen flyttas fram.
 <Figure
     src={mergeAlgoritmen005}
     width="500px"
@@ -658,36 +660,36 @@ För mergesort spelar det ingen roll hur elementen är ordnade eftersom arbetet 
 
 Anta att vi har 1000 element som ska sorteras. Beräkning av mittindex ger 2 lika stora delsekvenser med 500 element i de rekursiva anropet Dessa i sin tur resulterar i vardera 2 anrop för sortering av ca 250 element, dvs 4 anrop för sortering av ca 250 element osv. Beräkningen av mittindex är snabb och tar samma tid oavsett hur många element det finns i den aktuella sekvensen. Däremot kommer alla element att behöva jämföras när sammanfogningen görs. I vårt exempel som användes för att illustrera algoritmer ser vi att alla sekvenser med 1 element behöver gås igenom (totalt 8 element som ska jämföras) och alla sekvenser med 2 element (totalt 8 element som ska jämföras) och slutligen alla sekvenser med 4 element (totalt 8 element som ska jämföras). Det blir 3 gånger som 8 element ska jämföras.
 
-För att få lite större jämna och "bra" beräkningar utgår vi från ett exempel med ett antal som är en 2-potens (men ändå inte alltför många element). Antalet är 256 (som är 2<sup>8</sup>). 
+För att få lite större jämna och "bra" beräkningar utgår vi från ett exempel med ett antal som är en 2-potens (men ändå inte alltför många element). Antalet är 256 (som är 2<sup>8</sup>).
 
-sortering av 256 element resulterar i 
-delning med 2 sekvenser med 128 element
-följt av delning med 4 sekvenser med 64 element
-följt av delning med 8 sekvenser med 32 element
-följt av delning med 16 sekvenser med 16 element
-osv
-följt av delning med 256 sekvenser med 1 element
-sammanfogning av 256 delsekvenser med 1 element till 128 delsekvenser med 2 element
-sammanfogning av 128 delsekvenser med 2 element till 64 delsekvenser med 4 element
-sammanfogning av 64 delsekvenser med 4 element till 32 delsekvenser med 8 element
-osv
-följt av 2 sammanfogningar av 128 element till 1 sekvens med 256 element
+Sortering av 256 element resulterar i:  
+delning med 2 sekvenser med 128 element  
+följt av delning med 4 sekvenser med 64 element  
+följt av delning med 8 sekvenser med 32 element  
+följt av delning med 16 sekvenser med 16 element  
+osv  
+följt av delning med 256 sekvenser med 1 element  
+sammanfogning av 256 delsekvenser med 1 element till 128 delsekvenser med 2 element  
+sammanfogning av 128 delsekvenser med 2 element till 64 delsekvenser med 4 element  
+sammanfogning av 64 delsekvenser med 4 element till 32 delsekvenser med 8 element  
+osv  
+följt av 2 sammanfogningar av 128 element till 1 sekvens med 256 element  
 
 
-delningen sker 8 gånger (vilket motsvara log<sub>2</sub>256) där detta kostar konstant tid 
-sammanfogning sker 8 gånger (log<sub>2</sub>256) där varje element, dvs 256, jämförs
+Delningen sker 8 gånger (vilket motsvarar log<sub>2</sub>256) där detta kostar konstant tid.  
+Sammanfogning sker 8 gånger (log<sub>2</sub>256) där varje element, dvs 256, jämförs.
 
 Vi får alltså log<sub>2</sub>8 + log<sub>2</sub>8 * 256. Om vi ersätter 256 med n (som vi vet ska representera ett stort värde) får vi log<sub>2</sub>n + log<sub>2</sub>n * n. Den dominerande termen är log<sub>2</sub>n * n varför vi får **O(nlog<sub>2</sub>n)**.
 
 
 ## Sammanfattningsvis
 
-* Quicksort och Mergesort är två rekursiva algoritmer
-* Quicksort är känslig för hur pivot väljs
-    * värsta fallets tidskomplexitet är O(n<sup>2</sup>)
-    * genomsnittsfallets tidskomplexitet är O(n*log<sub>2</sub>n)
-    * det finns olika algoritmer för partitionering
-    * det finns olika principer för hur pivot-element bestäms
-* Mergesort har alltid tidskomplexiteten O(n*log<sub>2</sub>n)
+* Quicksort och Mergesort är två rekursiva algoritmer.
+* Quicksort är känslig för hur pivot väljs:
+    * värsta fallets tidskomplexitet är O(n<sup>2</sup>).
+    * genomsnittsfallets tidskomplexitet är O(n*log<sub>2</sub>n).
+    * det finns olika algoritmer för partitionering.
+    * det finns olika principer för hur pivot-element bestäms.
+* Mergesort har alltid tidskomplexiteten O(n*log<sub>2</sub>n).
 * Quicksort kräver ingen extra lagringsstruktur under sin bearbetning. Detta kallas att algoritmen är en "in-place"-algoritm.
 * Mergesort behöver extra lagringsstruktur under bearbetningen med att sammanfoga sorterade sekvenser.
