@@ -127,14 +127,14 @@ Det ska även tillföras quicksort i några varianter
 ```csharp
 public static void Quicksort<T>(T[] A, int start, int end) {/*ska implementeras*/}
 public static void QuicksortUsingMedianOfThree<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
-public static void QuicksortUsingInsertionsort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
+public static void QuicksortUsingInsertionsort<T>(T[] A, int start, int end, int limit) where T : IComparable<T> {/*ska implementeras*/}
 ```
 
 **Quicksort**  Utför quicksort där pivot är det sista elementet.
 
 **QuicksortUsingMedianOfThree** Utför quicksort där pivot bestäms enligt principen "medianen-av-tre".
 
-**QuicksortUsingInsertionsort** Utför quicksort där pivot väljs som sista elementet men där insertionsort används när antalet element i en delsekvens är mindre än ett givet antal.
+**QuicksortUsingInsertionsort** Utför quicksort där pivot väljs som sista elementet men där insertionsort används när antalet element i en delsekvens är mindre än limit.
 
 Partitioneringsalgoritmen där sista elementet är pivot får du här:
 
@@ -161,4 +161,63 @@ Du förväntas tillföra fler hjälpmetoder för att lösa uppgiften.
 
 ### Använd sorteringsalgoritmerna
 
-FYLLAS PÅ !!!!
+Nu ska du undersöka hur effektiva algoritmerna är genom att undersöka antalet jämförelser. Du ska göra detta genom att sortera BusStop-objekt.
+
+Filen `TestData1000.txt` innehåller 1000 rader med namn (t.ex "Stop ACF") och nummer (t.ex 1432) vilka är separerade med `:`.   
+Du kan använda följande kod för en metod för att läsa från fil och skapa en array med osorterade BusStop-objekt.  
+Tänk på att anpassa metoden avseende access (private eller public) och om den ska tillhöra klassen eller objekten.   
+Parametern `nrOf` motsvarar det antal du som ska läsas från filen
+
+```csharp
+BusStop[] ReadFromFile(string filename, int nrOf)
+{
+    if (nrOf > 1000)
+        nrOf = 1000;
+    string[] stops = File.ReadAllLines(filename);
+    BusStop[] busStops = new BusStop[nrOf];
+    for (int i=0; i<nrOf; i++)
+    {
+        int index = stops[i].IndexOf(":");
+        busStops[i] = new BusStop(stops[i].Substring(0, index), int.Parse(stops[i]!.Substring(index+1)));
+    }
+    return busStops;
+}
+
+```
+
+#### Insertionsort
+
+Exekvera din implementation av `Insertionsort` med 
+
+1. 10, 100 resp 1000 osorterade BusStop-objekt
+1. 10, 100 resp 1000 omvänt sorterade BusStop-objekt
+1. 10, 100 resp 1000 sorterade BusStop-objekt
+
+och notera resultaten (antalet jämförelser). Är resultaten rimliga/korrekta? Vilket motsvarar bästa fallet? Vilket motsvarar sämsta fallet? 
+
+För att resultatet av sortering ev de osorterade BusStop-objekten ska blir relevant behöver du göra minst 5 olika exekveringar med olika ordning i arrayerna. Ett tips är att blanda objekten inför varje ny sortering. När dessa körningar genomförts bestämmer du medelvärdet av antalet jämförelser.
+
+#### Quicksort - olika varianter
+
+**Quicksort**, **QuicksortUsingMedianOfThree** och **QuicksortUsingInsertionsort**
+
+Exekvera för var och en av dina implementationer av `Quicksort`-varianterna
+
+1. 100 resp 1000 osorterade BusStop-objekt
+1. 100 resp 1000 omvänt sorterade BusStop-objekt
+1. 100 resp 1000 sorterade BusStop-objekt
+
+och notera resultaten (antalet jämförelser). 
+
+Även här gäller det att det behövs mints 5 olika exekveringar som underlag för att beräkna ett medelvärde på antalet jämförelser för de osorterade arrayerna.   
+Är resultaten rimliga/korrekta? Kan du se någon effekt av "medianen-av-tre"?   
+Kan du se någon effekt av användandet av insertionsort? Vilka gränser (limit) har du testat med? 
+
+## DERAS KOD SKA PASSERA TESTER
+
+## VAD SKA DE LÄMNA IN
+- 
+
+
+
+
