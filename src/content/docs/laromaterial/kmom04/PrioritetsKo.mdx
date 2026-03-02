@@ -13,6 +13,7 @@ import prioArrayInsattning from '@assets/img/kmom04/prioArrayInsattning.png';
 import priokoLankning from '@assets/img/kmom04/priokoLankning.png';
 import prioLankningBorttagning from '@assets/img/kmom04/prioLankningBorttagning.png';
 import prioLankningInsattning from '@assets/img/kmom04/prioLankningInsattning.png';
+import prioLankningInsattningMellan from '@assets/img/kmom04/prioLankningInsattningMellan.png';
 
 
 I en prioritetskö (priority queue) spelar insättningsordningen ingen roll, men det som är garanterat är att det objekt osm har högst prioritet av de som finns i kön är det element som kommer att lämna kön vid nästa borttagning. En liknelse från verkligheten som ligger närmast är en sk VIP-kö. Den som är *viktigast*/*har högst status* är den som lämnar kön först oavsett när personen i fråga kom till kön.
@@ -433,7 +434,12 @@ Vi behöver utföra följande steg:
 3) infoga den nya noden *efter* den nod som pekaren *vandrat till*
 4) uppdatera antalet med 1
 
-![Infoga i sorterad lista](/images/InsattningDubbelLankadListaMellan.png)
+
+<Figure
+    src={prioLankningInsattningMellan}
+    caption="Insättning enligt sorteringsordningen"
+    width="400px"
+/>
 
 **Testa dig själv**
  
