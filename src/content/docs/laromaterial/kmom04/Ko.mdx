@@ -1,0 +1,516 @@
+---
+title: Kö 
+description: ADT:n Kö med implementationsalternativ 
+order: 0030
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import ko from '@assets/img/kmom04/ko.png';
+import koMedArray from '@assets/img/kmom04/koMedArray.png';
+import koMedArrayCirkular from '@assets/img/kmom04/koMedArrayCirkular.png';
+import koMedLankning from '@assets/img/kmom04/koMedLankning.png';
+
+En kö (queueu) följer principen **First-In-First-Out** även förkortat **FIFO**. Vi har oftast en ganska klar bild av vad en kö är. Ett exempel från vardagen är en kö till en åkattraktion på ett nöjesfält. Ett annat exempel är när vi ställer oss i en kassakö. Den som kom först är den som lämnar kön först. Man kan bara sätt in nya element sist (den ena änden) och ta ut det element som är först (den andra änden).
+
+I bilden visas en kö där A är det element som placerats i kön före de övriga (och därmed är först). Därefter placerades B i kön osv. Om ett element ska tas bort från kön så blir det A. Nästa borttagning resulterar i B.
+
+
+<Figure
+    src={ko}
+    caption="Illustration av en kö"
+    width="350px"
+/>
+
+
+Köns beteende, dvs uppsättning operationer, motsvaras av
+
+- enqueue - sätt in ett element sist
+- dequeue - ta bort det första elementet
+- peek - "kika" på det första elementet utan att ta bort det
+- empty - avgör om kön är tom eller ej
+
+## Interface för Kö
+
+Vi skapar ett generiskt interface för kö med de metoder som motsvarar köns beteende. För detta kan vi sedan skapa generiska klasser som definierar metoderna 
+
+```csharp
+interface IQueue<T>
+{
+    void Enqueue(T elem);
+    T Dequeue();
+    T Peek();
+    bool Empty();
+}
+```
+Alla klasser som implementerar detta interface måste definiera de metoder som ingår i interfacet.
+
+### Använda ADT Kö
+
+Anta att interfacet `IQueue` har implementerats av den generiska klassen `Queue`. 
+Med samma resonemang som för stacken vet vi att vi kan   
+
+ - skapa en tom kö genom att använda en konstruktor. Vi ska t.ex kunna skapa en kö som hanterar heltal.   
+
+    ```csharp
+    IQueue<int> intQueue = new Queue<int>(); 
+    ```
+
+- Att vi kan placera element (i vårt fall heltal) i slutet av kön.
+    ```csharp
+    // ...
+    intQueue.Enqueue(111); // 111 är elementet som är först och sist i kön
+    intQueue.Enqueue(222); // 222 är elementet som är sist i kön, och efter elementet 111
+    intQueue.Enqueue(333); // 333 är elementet som är sist i kön, och efter elementet 222
+    ```
+
+- Att vi kan ta bort element från början av kön.
+
+    ```csharp
+    // ...
+    int res = intQueue.Dequeue(); // 111 tas bort från kön och returneras till res
+    ```
+
+- Att vi kan kika på det element som finns först i kön utan att ta bort det
+
+    ```csharp
+    // ...
+    int res = intQueue.Peek(); // 222 returneras till res men tas inte bort
+    ```
+Detta är vad vi som användare förväntar oss av ADT:n Kö och vi bekymrar oss inte om hur kön hanterar detta.
+
+**Testa dig själv**
+
+1. Vilken är principen för ADT Kö?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    First-In-First-Out (FIFO), dvs det element som kommit först av de som finns i kön är det som lämnar kön först
+    </details>
+
+**Testa dig själv**
+
+1. Anta att du har tillgång till ADT Kö genom den generiska klassen `Queue` som implementerar det generiska interfacet `IQueue` enligt ovan och att följande utförs:
+
+    ```csharp
+    IQueue<int> queue = new Queue<int>();
+    queue.Enqueue(400);
+    queue.Enqueue(300);
+    queue.Enqueue(700);
+    Console.WriteLine(queue.Peek());
+    queue.Dequeue();
+    Console.WriteLine(queue.Peek());
+    queue.Enqueue(100);
+    queue.Dequeue();
+    Console.WriteLine(queue.Peek());
+    ```
+
+    Vad kommer att skrivas ut?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    
+    400   
+    300   
+    700  
+    </details>
+
+
+## Representera kö
+
+Om vi tänker oss att vi ska implementera en egen ADT Kö där det, förutom tidigare nämnda metoder, ska vara möjligt att 
+
+- skapa en tom Kö
+
+ska vi skapa en klass namngiven `Queue` och i denna klass bestämma vilka medlemsvariabler vi behöver för att 
+
+- hantera vilken datatyp som helst
+- kunna representera den sekvens av element som finns i kön och som möjliggör att uppfylla principen First-In-First-Out, FIFO.
+- hantera att det inte finns någon begränsning avseende hur många element som kan placeras i kön.
+
+### Intern datastruktur
+
+Vi ska använda alternativen **array** respektive **länkning**. 
+
+#### Array 
+
+Kön placerar elementen (som är av datatypen T) i en array. Eftersom principen First-In-First-Out ska uppfyllas behöver vi sätta in element från en "ände" och plocka bort element från den andra "änden". För arrayen och möjligheten att expandera denna, deklarerar vi en array-variabel och en medlemsvariabel för kapaciteten på arrayen samt en heltalsvariabel för antalet element som finns i kön. Därutöver behöver vi heltalsvariabler för att hålla index för var kön börjar respektive var kön slutar. Att
+
+<Figure
+    src={koMedArray}
+    caption="Kö som representeras med en array"
+    width="500px"
+/>
+
+Kön kommer att *slingra sig* mot höger efter hand som element tas bort och sätts in. Vi vill undvika att flytta på elementen i kön (det kostar eftersom alla element då ska flyttas) och väljer därför att använda arrayen cirkulärt. Det innebär att efter sista index följer index 0.
+
+
+<Figure
+    src={koMedArrayCirkular}
+    caption="Kö som representeras med en array"
+    width="600px"
+/>
+
+
+**Testa dig själv**
+ 
+1. I en kö används en array cirkulärt. Kapaciteten är 5 och följande operationer utförs (i den ordning de är angivna) på kön. På vilka index finns de element som ingår i kön när alla operationer är utförda?
+    
+    Enqueue(A), Enqueue(G), Enqueue(T), Dequeue(), Enqueue(W), Dequeue(), Enqueue(S), Dequeue(), enqueue(Y)
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    På index 0 finns Y  
+    På index 3 finns W  
+    På index 4 finns S  
+    </details>
+
+Nu börjar vi med implementationen av klassen `Queue` vilken ska implementera interfacet `IQueue`. Medlemsvariablerna blir (observera att det går att klara sig utan att hålla storleken på kön men det blir till viss del en annan hantering)
+
+```csharp
+public class Queue<T>: IQueue<T>
+{
+    private T[] _elements; 
+    private int _capacity;
+    private int _size;
+    private int _last; 
+    private int _first;
+
+
+    //...
+}
+```
+
+Nu är det dags att fundera över konstruktor och medlemsmetoder. Vi börjar med konstruktor. Vi behöver definierar denna så att tillståndet (värdena på alla medlemsvariabler) för objektet representerar en tom kö. Kapaciteten behöver ges ett startvärde som i detta fall är 10, arrayen allokeras med denna kapacitet, storleken sätts till 0 och variablerna för index motsvarande sist och först i kön sätts till 0.
+
+
+```csharp
+public class Queue<T>: IQueue<T>
+{
+    private T[] _elements; 
+    private int _capacity;
+    private int _size;
+    private int _last; 
+    private int _first;
+
+    public Queue()
+    {
+        this._capacity = 10;
+        this._elements = new T[this._capacity];
+        this._size = 0;
+        this._last = 0;
+        this._first = 0;
+    }
+
+```
+
+Nästa steg blir att implementera `Enqueue`-metoden. Elementet som sätts in ska hamna sist i kön vilket motsvaras av den index-position som `_last` innehåller. Om arrayen är fylld behöver den först utökas. Detta hanterar vi med en privat hjälp-metod `expand()`. När elementet placerats i arrayen ska `_last` räknas upp. Vi behöver hantera cirkulariteten för `_last` vilket lämpligen görs med modulus-beräkning. Storleken på kön har efter insättningen ökat och vi uppdaterar även `_size`.
+
+**Testa dig själv**
+ 
+1. Hur kontrollerar du om arrayen är fylld?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Genom att undersöka om antalet element, dvs storleken (_size) är samma som kapaciteten på arrayen (_capacity)
+    </details>
+
+1. Vad vet vi om index för första elementet (`_first`) och index för sista elementet i kön (`_last`) när arrayen är fylld?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    De har samma värde
+    </details>
+
+1. När en ny större array har skapat och innan denna ersätter den gamla, ska elementen överföras till denna. Hur kan vi hantera detta om vi vill att alla element därefter ska vara placerade från index 0 (det element som är först i kön)och framåt?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Överför först elementen från och med index givet av `first` till index givet av `_size` i den gamla arrayen (använd for-loop) så att dessa placeras från och med index 0 i den nya.  
+    Överför därefter elementen från och med index 0 till index givet av `_last` i den gamla arrayen (använd for-loop) så att dessa placeras efter de som redan först över i den nya arrayen.  
+    </details>
+
+
+```csharp
+public class Queue<T>: IQueue<T>
+{
+    private T[] _elements; 
+    private int _capacity;
+    private int _size;
+    private int _last; 
+    private int _first;
+
+    private void expand() {...}
+
+    public Queue() {...} 
+
+    public void Enqueue(T elem)
+    {
+        if (this._size == this._capacity)
+        {
+            expand(); // antar att denna är implementerad
+        }
+        this._elements[this._last] = elem;
+        this._last = (this._last + 1) % this._capacity;
+        this._size++;
+    }
+    //...
+}
+```
+Vi fortsätter med `Dequeue`-metoden. Elementet som är först i kön ska "tas bort" (inte ingå i kön). Denna nod finns på index `_first`. Vi använder en variabel för att hålla elementet på detta index och flyttar fram `_first` genom att öka denna med 1. Återigen behöver vi hantera cirkulariteten. Vi behöver dessutom minska `_size`. Vi reflekterar över att det bör kastas ett undantag om kön är tom.
+
+**Testa dig själv**
+
+1. Hur blir implementationen i `Dequeue`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    ```csharp
+    public T Dequeue()
+    {
+        if (this._size == 0)
+            throw new Exception();
+        T toDequeue = this._elements[this._first];
+        this._first = (this._first + 1) % this._capacity;
+        this._size--;
+        return toDequeue;
+    }
+ 
+    ```
+    </details>
+
+
+Slutligen har vi `Peek`-metoden och `Empty`-metoden. Vid anrop av Peek ska det element som är på först i kön returneras, men inte tas bort (fortfarande ingå i kön). Elementet hittas på index `_first`. Ett undantag bör kastas om stacken är tom.
+Vid anrop av Empty ska resultatet blir sant eller falskt vilket avgörs av innehållet i `_size` mot innehållet `_capacity`.
+
+**Testa dig själv**
+
+1. Hur blir implementationen i `Peek`-metoden och `Empty`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    
+    ```csharp
+    public T Peek()
+    {
+        if (this._size == 0)
+            throw new Exception();
+        return this._elements[this._first];
+    }
+
+    public bool Empty()
+    {
+        return this._size == 0;
+    }
+            
+    ```
+    </details>
+
+
+Då var vi klara med implementationen av ADT:n Kö där vi använt en array som intern datastruktur.
+
+### Länkning
+
+För att representera en Kö genom läkning används en enkellänkad lista men med två pekare "in i" listan. En pekare *pekar på* det element som är först i kön och en annan pekare *pekar på* det element som är sist i kön. Då blir det snabbt att sätta in element i den ena änden av listan och att ta bort element i den andra änden av listan. 
+<br></br>
+<Figure
+    src={koMedLankning}
+    caption="Kö som representeras med länkning"
+    width="700px"
+/>
+
+
+Precis som när vi definierade klassen Stack, döljer vi klassen Node inom klassen Queue. Som medlemsvariabler behövs dels en som motsvarar pekaren till forsta noden och dels en som motsvarar pekaren till sista noden.
+
+```csharp
+public class Queue<T>: IQueue<T>
+{
+    private class Node<E> {...}
+
+    private Node<T>? _first; // för att peka på första noden
+    private Node<T>? _last; // för att peka på sista noden
+    // ....
+}
+```
+
+Implementationen i de metoder som ingår i kön måste anpassas så att de motsvarar köns beteende, nu genom att använda enkellänkning med pekare på första och pekare på sista noden.
+
+Vi börjar med konstruktorn som ska implementeras så att objektet som skapas motsvarar en tom kö. Det innebär att båda pekarna ges värdet null.
+
+**Testa dig själv**
+ 
+1. Hur blir implementationen i konstrukorn?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```csharp
+    ...
+    public Queue()
+    {
+        this._last = null;
+        this._first = null;
+    }
+    ...
+    ```
+    </details>
+
+Vi fortsätter med `Enqueue`-metoden som ska hantera att det nya elementet placeras sist i kön. Vi behöver skapa ett `Node`-objekt som innehåller elementet. Vidare ska detta `Node`-objekt så att det hamnar efter det `Node`-objekt som last-pekaren *pekar på*. 
+
+Det finns två fall att ta hänsyn till:
+- kön är tom
+- kön innehåller minst ett element
+
+**Testa dig själv**
+ 
+1. Hur kan man kontroller om kön är tom?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>   
+
+    Pekaren till sista noden (och egentligen även pekaren till första noden) är null.
+    </details>
+
+
+Om kön är tom ska ett nytt `Node`-objekt skapas för elementet som placers i kön, vilket kommer vara både det första och det sista `Node`-objektet i kön.  
+Om kön innehåller minst ett element ska ett nytt `Node`-objekt skapas för elementet, vilket placeras efter det som för närvarande är sist. Därefter ska detta nya `Node`-objekt pekas ut som sista.
+
+**Testa dig själv**
+ 
+1. Hur blir implementationen ?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```csharp
+    public void Enqueue(T elem)
+    {
+        if (this._last == null)
+        {
+            this._last = new Node<T>(elem);
+            this._first = this._last;
+        }
+        else
+        {
+            this._last.Next = new Node<T>(elem);
+            this._last = this._last.Next;
+        }
+    }
+    ```
+    
+    </details>
+
+Metoden `Dequeue` ska ta bort och returnera det element som är först i kön. Vi behöver först kontrollera om detta är möjligt - finns inga element i kön kastar vi ett undantag. Om det finns minst ett `Node`-objekt i kön, hämtar vi det element som är placerat i det första `Node`-objektet och håller det med en lokal variabel. Vi ändrar därefter pekaren till första så att det pekar på dessa efterföljare (som kan vara null). Avslutningsvis returnerar vi elementet som vi håller i den lokala variabeln.
+
+**Testa dig själv**
+ 
+1. Hur blir implementationen i `Dequeue`-metoden?  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    
+    ```csharp
+    public T Dequeue()
+    {
+        if (this._first == null)
+            throw new Exception();
+        T toDequeue = this._first.Data;
+        this._first = this._first.Next;
+        if (this._first == null)
+        {
+            this._last = null;
+        }
+        return toDequeue;
+    }
+    ```
+    </details>
+
+
+Återstår `Peek`-metoden som ska leverera första elementet utan att ta bort det och `Empty`-metoden som ska avgöra om kön är tom eller ej. 
+
+**Testa dig själv**
+ 
+1. Hur blir implementationen i `Peek`-metoden och i `Empty`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    
+    ```csharp
+    public T Peek()
+    {
+        if (this._first == null)
+            throw new Exception();
+        return this._first.Data;
+    }
+    public bool Empty()
+    {
+        return this._first == null;
+    }
+    ```
+    </details>
+
+
+## Analys av tidskomplexiteten
+
+Vi analyserar operationerna **Enqueue**. **Dequeue**, **Peek** och **Empty** för de båda alternativ av intern datastruktur som vi gått igenom (array och länkning).
+
+### Array 
+
+Analysen omfattar inte expandering av arrayen.  
+
+- **Enqueue**: Arbetet innebär att placera ett element på ett känt/givet index (behöver inte leta upp detta utan variabeln top har detta index) och att räkna upp index (öka innehållet i variabeln för sista index med 1 modulus kapaciteten). Samma arbete utförs oavsett antalet element i arrayen, vilket ger **O(1)**.
+- **Dequeue**: Arbetet innebär returnera ett element på ett känt/givet index och räkna upp index (även här med modulus). Samma arbete utförs oavsett antalet element i arrayen, vilket ger **O(1)**.
+
+**Testa dig själv**
+ 
+1. Hur blir analysen av **Peek**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Arbetet innebär att returnera ett element från ett känt/givet index där index beräknas genom att utföra en minskning med 1. Samma arbete utförs oavsett antalet element i arrayen, vilket ger O(1).
+    </details>
+
+1. Hur blir analysen av **Empty**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Resultatet ges av en jämförelse (size == 0). Samma arbete utförs oavsett antalet element i arrayen, vilket ger O(1). 
+    </details>
+
+### Länkning
+
+- **Enqueue**: O(1) Arbetet innebär att skapa ett Node-objekt, och infoga det vid last-pekaren och därefter "uppdatera" last-pekare till detta nya Node-objekt. Samma arbete utförs oavsett antalet element i den länkade listan, vilket ger O(1).
+- **Dequeue**: O(1) Arbetet innebär att "hämta" elementet från det Node-objekt som är först i listan, flytta forts-pekaren till nästa Node-objekt och slutligen returnera det "hämtade" elementet. Samma arbete utförs oavsett antalet element i den länkade listan, vilket ger O(1).
+
+**Testa dig själv**
+ 
+1. Hur blir analysen av **Peek**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Arbetet innebär att returnera ett element som finns i det Node-objekt som first pekar på. Samma arbete utförs oavsett antalet element i listan, vilket ger O(1).
+    </details>
+
+1. Hur blir analysen av **Empty**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Resultatet ges av en jämförelse (first == null). Samma arbete utförs oavsett antalet element i listan, vilket ger O(1). 
+    </details>
+
+## Sammanfattning
+
+- ADT Kö följer principen First-In-First-Out
+- Beteendet, dvs de operationer som ADT:n Kö har är
+    - enqueue - sätt in ett element sist i kön
+    - dequeue - ta bort det första elementet i kön
+    - peek - "kika" på det första elementet i kön utan att ta bort det
+    - empty - avgör om kön är tom eller ej
+- För att implementera en kö kan man använda
+    - array - där denna används cirkulär, index för första och sista index behövs
+    - enkellänkning - noder paketerar elementen och en pekare *pekar på* den första noden och en pekare *pekar på* sista noden. All insättning sker vid den pekare som *pekar på* sista noden och borttagning görs vid den pekare som *pekar på* första noden.
+- Alla operationer på ADT:n Kö, oavsett om kön använder en array eller en enkellänkad lista med en pekare till början av kön och en pekare till slutet av kön som intern datastruktur, är O(1), dvs konstant tidskomplexitet.
