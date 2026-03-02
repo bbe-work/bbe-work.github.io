@@ -21,7 +21,7 @@ Det finns flera olika sorteringsalgoritmer. Ofta ger namnet på algoritmen en in
 
 Vi börjar med att kika på några algoritmer som är relativt enkla men inte de mest effektiva. 
 
-## Bubblesort 
+## Bubblesort
 
 Även kallad bubbelsortering, bygger på principen att "höga värden" på element bubblar förbi "lätta värden" på element. Ett tips är att tänka sig att arrayen är "stående" (då kan vi identifiera något som uppåt) och att ett element som är "högt" passerar (och trycker ner) ett element som är "lätt". Elementen jämförs parvis med start på index 0, dvs först de som är på index 0 och index 1, därefter de som är på index 1 och index 2, osv. 
 
@@ -77,12 +77,12 @@ För att hela innehållet i arrayen ska vara garanterat sorterat behövs det sam
 
 **Testa dig själv**
 
-1. Skriv pseudokod för bubblesort, där indata är en array *A* och antalet element i arrayen *n*    
+1. Skriv pseudokod för bubblesort, där indata är en array *A* och antalet element i arrayen *n*.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
-    ```
+    ```text
     bubblesort(A, n)
     for nrOfTimes=1 to n
         for index=0 to n-1
@@ -96,12 +96,12 @@ Har vi tur har alla elementen hamnat på rätt plats utan att vi behöver löpa 
 
 **Testa dig själv**
 
-1. Modifiera pseudokoden för bubblesort så att den avslutas om inga element behöver byta plats   
+1. Modifiera pseudokoden för bubblesort så att den avslutas om inga element behöver byta plats.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
-F
-    ```
+
+    ```text
     bubblesort(A, n)
         for nrOfTimes=1 to n
             madeSwaps = false
@@ -119,14 +119,14 @@ F
 
 **Effektivitet**
 
-Återigen funderar vi över värsta fallet, dvs sämsta tänkbara alternativt. Det är när arrayens element är i omvänd sorterad ordning. Då kommer det att göras n-1 jämförelser vid varje genomlöpning och det genomförs n-1 genomlöpningar. Detta ger oss (i grova drag) en kvadratisk n<sup>2</sup> arbetsinsats. Tidskomplexiteten är därmed *O(n<sup>2</sup>)*.   
+Återigen funderar vi över värsta fallet, dvs sämsta tänkbara alternativt. Det är när arrayens element är i omvänd sorterad ordning. Då kommer det att göras n-1 jämförelser vid varje genomlöpning och det genomförs n-1 genomlöpningar. Detta ger oss (i grova drag) en kvadratisk n<sup>2</sup> arbetsinsats. Tidskomplexiteten är därmed *O(n<sup>2</sup>)*.
 
 *Anm: Det är den dominerande delen i uttrycket som påverkar mest och är den som ger tidkomplexiteten i ordo-notation. I vårt fall blir det (n-1) * (n-1) = n<sup>2</sup>-2n+1 där n<sup>2</sup> är den dominerande termen.*
 
 
 ## Selectionsort
 
-Även kallad urvalssortering, bygger på principen att man identifierar (genom att söka igenom elementen i arrayen) det minsta värdet och när det är hittat byter man plats på det första elementet och det minsta värdet. Detta upprepas men varje gång startar man arbetet med att leta upp det minsta elementet ett steg längre fram i arrayen (den del som är osorterad) och byter dessutom det första elementet i denna del med det minsta värdet. Detta resulterar i att det under bearbetningen finns en sorterad del (som från början är tom), och en osorterad del (som från början är hela arrayen). Ett element i taget (det minsta i den osorterade delen), placeras efter de redan sorterade vid varje pass. 
+Även så kallad urvalssortering, bygger på principen att man identifierar (genom att söka igenom elementen i arrayen) det minsta värdet och när det är hittat byter man plats på det första elementet och det minsta värdet. Detta upprepas men varje gång startar man arbetet med att leta upp det minsta elementet ett steg längre fram i arrayen (den del som är osorterad) och byter dessutom det första elementet i denna del med det minsta värdet. Detta resulterar i att det under bearbetningen finns en sorterad del (som från början är tom), och en osorterad del (som från början är hela arrayen). Ett element i taget (det minsta i den osorterade delen), placeras efter de redan sorterade vid varje pass.
 
 **Exempel**
 
@@ -140,7 +140,7 @@ Det minsta elementet ska vara placerat först. Detta hanteras genom att byta det
     caption="Första passet i selectionsort"
     width="320px"
 />
-Nu fortsätter algoritmen på samma sätt men med sStart på index 1 (här börjar den osorterade delen).
+Nu fortsätter algoritmen på samma sätt men med start på index 1 (här börjar den osorterade delen).
 
 <br></br>
 <Figure
@@ -173,16 +173,16 @@ För att hela innehållet i arrayen ska vara bli sorterat behövs det samma anta
 
 **Algoritm**  
 
-**Idé**: Att hitta det minsta värdet (eller snarare index för var det minsta värdet finns) behöver upprepas n-1 gång om det finns n element. Att hitta index för det minsta värdet *indexOfMinValue* kan lösas genom att utgå från att det första värdet är minst, vilket innebär att vi registrerar detta. Sök igenom resterande del av arrayen från nästa index. När vi hittar ett värde som är mindre uppdaterar vi indexOfMinValue till index för detta. När vi är klara, dvs när vi gått igenom alla värden till sista index, byter vi det minsta med det första. Detta upprepas men varje gång startar vi på nästa index, dvs det index som kommer efter det som var minst och placerades först i den del som genomsöktes.
+**Idé**: Att hitta det minsta värdet (eller snarare index för var det minsta värdet finns) behöver det upprepas n-1 gång om det finns n element. Att hitta index för det minsta värdet *indexOfMinValue* kan lösas genom att utgå från att det första värdet är minst, vilket innebär att vi registrerar detta. Sök igenom resterande del av arrayen från nästa index. När vi hittar ett värde som är mindre uppdaterar vi indexOfMinValue till index för detta. När vi är klara, dvs när vi gått igenom alla värden till sista index, byter vi det minsta med det första. Detta upprepas men varje gång startar vi på nästa index, dvs det index som kommer efter det som var minst och placerades först i den del som genomsöktes.
 
 **Testa dig själv**
 
-1. Skriv pseudokod för selectionsort, där indata är en array *A* och antalet element i arrayen *n*    
+1. Skriv pseudokod för selectionsort, där indata är en array *A* och antalet element i arrayen *n*.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
-    ```
+    ```text
     selectionsort(A, n)
     for currentStartIndex=0 to n-1
         indexOfMinValue = currentStartIndex
@@ -195,7 +195,7 @@ För att hela innehållet i arrayen ska vara bli sorterat behövs det samma anta
 
 **Effektivitet**  
 
-Algoritmen börjar med att jämföra n-1 element, därefter n-2, nästa gång n-3 etc till det endast är 1 element som jämförs. Detta ger oss summan (n-1) + (n-2) + (n-3) + ... + 3 + 2 + 1 som är en aritmetisk summa. Denna beräknas enligt formeln för aritmetisk summa till (n-1)(n)/2. Vi ser, med samma resonemang, som för bubblesort att tidskomplexiteten blir *O(n<sup>2</sup>)*.
+Algoritmen börjar med att jämföra n-1 element, därefter n-2, nästa gång n-3 etc till det endast är 1 element som jämförs. Detta ger oss summan (n-1) + (n-2) + (n-3) + ... + 3 + 2 + 1 som är en aritmetisk summa. Denna beräknas enligt formeln för aritmetisk summa till (n-1)(n)/2. Vi ser, med samma resonemang som för bubblesort, att tidskomplexiteten blir *O(n<sup>2</sup>)*.
 
 
 ## Insertionsort
@@ -204,7 +204,7 @@ Algoritmen börjar med att jämföra n-1 element, därefter n-2, nästa gång n-
 
 **Exempel**  
 
-Anta att vi har elementen 44, 33, 11, 77, 55, 66, 22. Den sorterade delen består initialt av 44 (markeras med grönt) och resterande elementen ingår i den osorterade delen. Vi tar det första elementet i den osorterade delen (markeras med gult) vilket är 33 och jämför det med 44. Eftersom 33 är mindre än 44 så måste det placeras före 44 vilket innebär att vi måste göra plats genom att flytta 44 ett steg åt höger. Men eftersom 33 inte får skrivas över använder vi en hjälpvariabel (markerad med beige) som vi kopierar 33 till. Det finns inte några element före 44 och platsen för 33 är funnen. 33 placeras på index 0.   
+Anta att vi har elementen 44, 33, 11, 77, 55, 66, 22. Den sorterade delen består initialt av 44 (markeras med grönt) och resterande elementen ingår i den osorterade delen. Vi tar det första elementet i den osorterade delen (markeras med gult) vilket är 33 och jämför det med 44. Eftersom 33 är mindre än 44 så måste det placeras före 44 vilket innebär att vi måste göra plats genom att flytta 44 ett steg åt höger. Men eftersom 33 inte får skrivas över använder vi en hjälpvariabel (markerad med beige) som vi kopierar 33 till. Det finns inte några element före 44 och platsen för 33 är funnen. 33 placeras på index 0.
 
 <br></br>
 <Figure
@@ -216,8 +216,8 @@ Nu fortsätter algoritmen på samma sätt men med start på index 2 (här börja
 
 <br></br>
 <Figure
-    src={insertionsortPass01}
-    caption="Första passet i insertionsort"
+    src={insertionsortPass02}
+    caption="Andra passet i insertionsort"
     width="320px"
 />
 
@@ -249,12 +249,12 @@ För att hela innehållet i arrayen ska vara bli sorterat behövs det samma anta
 
 **Testa dig själv**
 
-1. Skriv pseudokod för insertiontionsort, där indata är en array *A* och antalet element i arrayen *n*    
+1. Skriv pseudokod för insertiontionsort, där indata är en array *A* och antalet element i arrayen *n*.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
-    ```
+    ```text
     insertionsort(A, n)
         for index=1 to n
             element = A[index]
@@ -321,10 +321,9 @@ Algoritmen börjar med att jämföra 1 element, därefter som mest 2, nästa gå
 
 ## Sammanfattningsvis
 
-- Bubbelsort, Selectionsort och Insertionsort är tre olika sorteringsalgoritmer 
-- Alla dessa utförs sorteringen genom att "flytta" på elementen i arrayen som ska sorteras, men de följer olika algoritmer. Detta innebär att de är så kallade "in-place" algoritmer (de behöver ingen annan lagringsstruktur under bearbetningen)
-- Bubbelsort jämför element parvis genom att gå igenom arrayen från början till slut och byter plast på elementen om de inte är i rätt ordning sinsemellan
-- Selectionsort letar upp det minsta elementet och placerar det först, med start på index 0 , följt av index 1 osv
+- Bubbelsort, Selectionsort och Insertionsort är tre olika sorteringsalgoritmer.
+- Alla dessa utför sorteringen genom att "flytta" på elementen i arrayen som ska sorteras, men de följer olika algoritmer. Detta innebär att de är så kallade "in-place" algoritmer (de behöver ingen annan lagringsstruktur under bearbetningen).
+- Bubbelsort jämför element parvis genom att gå igenom arrayen från början till slut och byter plats på elementen om de inte är i rätt ordning sinsemellan.
+- Selectionsort letar upp det minsta elementet och placerar det först, med start på index 0 , följt av index 1 osv.
 - Insertionssort tar ett element i taget och placerar in det på rätt plats bland redan sorterade element.
 - Tidskomplexiteten för alla tre algoritmerna är O(n<sup>2</sup>)
-

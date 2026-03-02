@@ -56,13 +56,13 @@ Nu ska vi kika på några fler sorteringsalgoritmer. Det som kännetecknar dessa
 * oftast är effektivare än de vi först bekantat oss med (bubblesort, selectionsort och insertionsort). 
 * är rekursivt definierade
 
-## Quicksort 
+## Quicksort
 
-Som namnet indikerar är detta en snabb sorteringsalgoritm (med ett undantag som vi kommer till lite längre fram). Idén är att man grovsorterar i flera rekursiva omgångar. Grovsorteringen, som kommer att benämnas **partitionering**, utförs genom att man tar ett (1) element, kallat **pivot** eller **pivot-element** i den sekvens som ska sorteras och placerar alla element som är mindre till vänster och alla övriga element till höger om pivot-elementet. 
+Som namnet indikerar är detta en snabb sorteringsalgoritm (med ett undantag som vi kommer till lite längre fram). Idén är att man grovsorterar i flera rekursiva omgångar. Grovsorteringen, som kommer att benämnas **partitionering**, utförs genom att man tar ett (1) element, kallat **pivot** eller **pivot-element** i den sekvens som ska sorteras och placerar alla element som är mindre till vänster och alla övriga element till höger om pivot-elementet.
 
-Från början är sekvensen hela arrayen, dvs alla element från index 0 till index n-1. Några exempel 
+Från början är sekvensen hela arrayen, dvs alla element från index 0 till index n-1. Här kommer några exempel.
 
-Anta arrayen 
+Anta arrayen:
 
 <Figure
     src={partitioneringEx01}
@@ -70,21 +70,22 @@ Anta arrayen
     width="500px"
 />
 
-Vi väljer i detta fall det första elementet som pivot, dvs 12. Efter partitioneringen ska alltså 12 vara placerad så att alla värden < 12 finns till vänster och övriga finns till höger. Det innebär att de 3 element som är mindre än 12 finns "före" 12 och de övriga 5 finns "efter" 12 i arrayen. Det skulle t.ex kunna resultera i (allt beror på hur själv partitioneringen utförs) 
+Vi väljer i detta fall det första elementet som pivot, dvs 12. Efter partitioneringen ska alltså 12 vara placerad så att alla värden < 12 finns till vänster och övriga finns till höger. Det innebär att de 3 element som är mindre än 12 finns "före" 12 och de övriga 5 finns "efter" 12 i arrayen. Det skulle t.ex kunna resultera i denna array (allt beror på hur själv partitioneringen utförs):
 
 <Figure
     src={partitioneringEx01_02}
     caption="Array efter partitionering"
     width="500px"
 />
-Vi tar ett nytt exempel   
+
+Vi tar ett nytt exempel.
 
 <Figure
     src={partitioneringEx02}
     caption="Array innan partitionering"
     width="650px"
 />
-Här blir 53 pivot och efter en partitionering kan det resultera i (återigen beror det på hur partitioneringen utförs):
+Här blir 53 pivot och efter en partitionering kan det resultera i denna array (återigen beror det på hur partitioneringen utförs):
 
 
 <Figure
@@ -95,14 +96,15 @@ Här blir 53 pivot och efter en partitionering kan det resultera i (återigen be
 
 Hur kan detta användas för att få hela arrayen sorterad? Jo, vi utför partitionering på respektive del, dvs på den delsekvens som har lägre värden än pivot-elementet och på den delsekvens som har högre värden än pivot-elementet.
 
-Om vi utför det på det senaste exemplet (där 53 var pivot), dvs på delsekvenserna 
+Om vi utför det på det senaste exemplet (där 53 var pivot) ser delsekvenserna ut så här.
 
 <Figure
     src={partitioneringEx02_03}
     caption="Array i två delsekvenser"
     width="650px"
 />
-resulterar det i att 26 blir pivot i den vänstra delsekvensen och 77 blir pivot i den högra delsekvensen. Partitioneringen kan t.ex resultera i 
+
+Det resulterar i att 26 blir pivot i den vänstra delsekvensen och 77 blir pivot i den högra delsekvensen. Partitioneringen kan t.ex resultera i
 
 <Figure
     src={partitioneringEx02_04}
@@ -125,20 +127,20 @@ Innehållet i hela arrayen är så här långt där element på rätt plats (mar
     width="650px"
 />
 
-Vi kan alltså observera att 
+Vi kan alltså observera att:
 
-* pivot-elementen är på sina rätta platser
-* övriga element hamnar närmare sin rätta plats efter varje partitionering
+* pivot-elementen är på sina rätta platser.
+* övriga element hamnar närmare sin rätta plats efter varje partitionering.
 
-Vi inser att partitionering sker på olika delar av arrayen beroende på var pivot-elementet placerats vid föregående partitionering. För att hantera detta behöver vi hålla reda på startindex och slutindex för den aktuella delen av arrayen. Givet detta (startindex och slutindex) uträttas för varje delsekvens av arrayen 
+Vi inser att partitionering sker på olika delar av arrayen beroende på var pivot-elementet placerats vid föregående partitionering. För att hantera detta behöver vi hålla reda på startindex och slutindex för den aktuella delen av arrayen. Givet detta (startindex och slutindex) uträttas för varje delsekvens av arrayen:
 
-- grovsortera arrayen från startindex till slutindex och registrera var, dvs på vilket index, pivotelementet placerats.
-- uträtta motsvarande bearbetning på den vänstra delsekvensen, dvs fram till pivotelementet
-- uträtta motsvarande bearbetning på den högra delsekvensen, dvs efter pivotelementet
+* grovsortera arrayen från startindex till slutindex och registrera var, dvs på vilket index, pivot-elementet placerats.
+* uträtta motsvarande bearbetning på den vänstra delsekvensen, dvs fram till pivot-elementet.
+* uträtta motsvarande bearbetning på den högra delsekvensen, dvs efter pivot-elementet.
 
 När en delsekvensen endast innehåller ett element är den per automatik sorterad.
 
-Nu är det dags att kontrollera att du förstått grunden i quicksort genom att göra några uppgifter
+Nu är det dags att kontrollera att du förstått grunden i quicksort genom att göra några uppgifter.
 
 **Testa dig själv**
 
@@ -161,25 +163,25 @@ Nu är det dags att kontrollera att du förstått grunden i quicksort genom att 
 **Algoritm för quicksort**  
 
 Som tidigare nämnts är *partitionering* den bearbetning som utför grovsorteringen. Detta kan utföras på några olika sätt men resultatet är alltid att ett pivot-element bestämts och placerats mellan de element som är mindre än detta och övriga element. Det index som pivot-elementet placerats på är relevant eftersom vi behöver veta startindex och slutindex för de delsekvenser som även dessa ska partitioneras.  
-Vi antar att vi redan har definierat denna algoritm benämnd `partition` med parametrar som motsvarar en *array* samt *startindex* och *slutindex* för den delsekvens i arrayen som partitioneringen (grovsorteringen) ska utföras på. Algoritmen returnerar det index där pivot-elementet placerats. 
+Vi antar att vi redan har definierat denna algoritm benämnd `partition` med parametrar som motsvarar en *array* samt *startindex* och *slutindex* för den delsekvens i arrayen som partitioneringen (grovsorteringen) ska utföras på. Algoritmen returnerar det index där pivot-elementet placerats.
 
 ```partition(A, startIndex, endIndex)```
 
-Nu kan vi formulera algoritmen för `quicksort`. Algoritmen är rekursiv och grundtanken är att `quicksort` inleds med att utföra grovsortering, dvs partitionering. När denna är genomförd utförs quicksort på respektive sida om pivot-element för den aktuella delen av arrayen.   
-Det gäller nu att identifiera basfallet (eller basfallen), dvs vilket är den minsta delsekvens om kan sorteras och som vi direkt kan säga är klar?   
+Nu kan vi formulera algoritmen för `quicksort`. Algoritmen är rekursiv och grundtanken är att `quicksort` inleds med att utföra grovsortering, dvs partitionering. När denna är genomförd utförs quicksort på respektive sida om pivot-element för den aktuella delen av arrayen.
+Det gäller nu att identifiera basfallet (eller basfallen), dvs vilket är den minsta delsekvens om kan sorteras och som vi direkt kan säga är klar?
 
-Vi kan konstaterat att en sekvens med ett (1) element är sorterad och så gäller även om det är noll (0) element (kan inträffa om en partitionering resulterar i att pivot-element hamnar först eller sist i delsekvensen). Basfallen identifieras därmed av att startindex >= slutindex. I detta fall ska ingen bearbetning utföras. 
+Vi kan konstaterat att en sekvens med ett (1) element är sorterad och så gäller även om det är noll (0) element (kan inträffa om en partitionering resulterar i att pivot-element hamnar först eller sist i delsekvensen). Basfallen identifieras därmed av att startindex >= slutindex. I detta fall ska ingen bearbetning utföras.
 
-```bash
+```text
 if startIndex >= endIndex
     do nothing (or return)
 else
     ...
 ```
 
-Vi vill inte gärna uttrycka "utför inget" när vi implementera och vänder därför på villkoret, dvs om startindex < slutindex så 
+Vi vill inte gärna uttrycka "utför inget" när vi implementera och vänder därför på villkoret, dvs om startindex < slutindex så:
 
-```bash
+```text
 if starIndex < endIndex
     ...
 ```
@@ -191,7 +193,7 @@ Vi har sett att det första som ska utföras vid sorteringen är att utföra par
 1. Formulera i pseudokod algoritmen för den rekursiva definitionen av quicksort (som matchar anropet med 3 parametrar) givet partitioneringsalgoritmen `partition(A, startIndex, endIndex)` som returnerar index för pivot-elementet.
 .
 
-    ```bash
+    ```text
     quicksort(A, n):
         quicksort(A, 0, n - 1)
     ```
@@ -199,7 +201,7 @@ Vi har sett att det första som ska utföras vid sorteringen är att utföra par
     <details>
     <summary>Klicka här för att visa lösningsförslag</summary>
 
-    ```bash
+    ```text
     quicksort(A, startIndex, endIndex)
         if starIndex < endIdex
             indexOfPivot = partition(A, startIndex, endIndex)
@@ -214,37 +216,37 @@ Vi återkommer till algoritmer för partitioneringen men först ska vi resonera 
 
 Spelar det någon roll vilket element som blir pivot? Ja, faktiskt. Vi kikar tillbaka på arrayen vi hade i vårt exempel: 53 26 13 7 33 61 33 77 9 82 79 95
 
-Här blev 53 pivot vilket resulterade i att vänster delsekvens omfattade 6 element och höger delsekvens 5 element, dvs pivot-elementets placering resulterade i två nästan lika stora delsekvens. Det är "optimalt", och motsvarar det bästa tänkbara fallet, men behöver förmodligen en förklaring. 
+Här blev 53 pivot vilket resulterade i att vänster delsekvens omfattade 6 element och höger delsekvens 5 element, dvs pivot-elementets placering resulterade i två nästan lika stora delsekvens. Det är "optimalt", och motsvarar det bästa tänkbara fallet, men behöver förmodligen en förklaring.
 
-Anta att vi har 1000 element som ska sorteras. Om pivot-elementet alltid hamnar nära  mitten och därmed resulterar i 2 lika stora delsekvenser kommer det rekursiva anropet att innebära sortering av ca 500 element i vardera delsekvens. Dessa i sin tur resulterar i vardera 2 anrop för sortering av ca 250 element, dvs 4 anrop för sortering av ca 250 element osv. Vi vet att partitioneringen som utförs alltid medför jämförelse med alla element i den delsekvens av arrayen som partitioneringen utförs på (alla måste kontrolleras mot pivot-elementet för att avgöra om de ska placeras till vänster eller höger om detta). 
+Anta att vi har 1000 element som ska sorteras. Om pivot-elementet alltid hamnar nära  mitten och därmed resulterar i 2 lika stora delsekvenser kommer det rekursiva anropet att innebära sortering av ca 500 element i vardera delsekvens. Dessa i sin tur resulterar i vardera 2 anrop för sortering av ca 250 element, dvs 4 anrop för sortering av ca 250 element osv. Vi vet att partitioneringen som utförs alltid medför jämförelse med alla element i den delsekvens av arrayen som partitioneringen utförs på (alla måste kontrolleras mot pivot-elementet för att avgöra om de ska placeras till vänster eller höger om detta).
 
-För att få jämna och "bra" beräkningar när det handlar om halvering utgår vi från ett exempel med ett antal som är en 2-potens och inte alltför många element. Antalet är 256 (som är 2<sup>8</sup>) Vi bortser för enkelhetens skull från att pivot-elementet "försvinner" från bearbetningen och får 
+För att få jämna och "bra" beräkningar när det handlar om halvering utgår vi från ett exempel med ett antal som är en 2-potens och inte alltför många element. Antalet är 256 (som är 2<sup>8</sup>) Vi bortser för enkelhetens skull från att pivot-elementet "försvinner" från bearbetningen och får:
 
-- sortering av 256 element resulterar i 256 jämförelser, 
-- följt av 2 sorteringar av 128 element vilket resulterar i 2 * 128 jämförelser
-- följt av 4 sorteringar av 64 element vilket resulterar i 4 * 64 jämförelser 
-- följt av 8 sorteringar av 32 element vilket resulterar i 8 * 32 jämförelser
-- följt av 16 sorteringar av 16 element vilket resulterar i 16 * 16 jämförelser
-- osv
+* sortering av 256 element resulterar i 256 jämförelser,
+* följt av 2 sorteringar av 128 element vilket resulterar i 2 * 128 jämförelser
+* följt av 4 sorteringar av 64 element vilket resulterar i 4 * 64 jämförelser
+* följt av 8 sorteringar av 32 element vilket resulterar i 8 * 32 jämförelser
+* följt av 16 sorteringar av 16 element vilket resulterar i 16 * 16 jämförelser
+* osv
 
-Summerar vi antalet jämförelser får vi att sortering av 256 element ger
+Summerar vi antalet jämförelser får vi att sortering av 256 element ger:
 
-256 + 2 * 128 + 4 * 64 + 8 * 32 + 16 * 16 + 32 * 8 + 64 * 4 + 128 * 2 vilket ger 256 + 235 + 256 + 256 + 256 + 256+ 256 + 256 = 8 * 256 jämförelser totalt
+256 + 2 * 128 + 4 * 64 + 8 * 32 + 16 * 16 + 32 * 8 + 64 * 4 + 128 * 2 vilket ger 256 + 235 + 256 + 256 + 256 + 256+ 256 + 256 = 8 * 256 jämförelser totalt.
 
-dubblar vi antalet till 512 (dvs 2<sup>9</sup>)får vi med samma beräkning 9 * 512 jämförelser totalt
+Om vi dubblar antalet till 512 (dvs 2<sup>9</sup>)får vi med samma beräkning 9 * 512 jämförelser totalt.
 
-dubblar vi återigen till 1024 (dvs 2<sup>10</sup>) får vi istället 10 * 1024 jämförelser
+Om vi återigen dubblar till 1024 (dvs 2<sup>10</sup>) får vi istället 10 * 1024 jämförelser.
 
-Vi ser ett mönster: antalet jämförelser vid n element blir *log<sub>2</sub>n * n*, dvs **O(nlog<sub>2</sub>n)**
+Vi ser ett mönster: antalet jämförelser vid n element blir *log<sub>2</sub>n * n*, dvs **O(nlog<sub>2</sub>n)**.
 
-Om vi i stället utgår ifrån att pivot-elementet alltid är det minsta eller det största elementet i varje delsekvens, får vi det sämsta tänkbara fallet. Efter varje partitionering blir det en "tom" delsekvens och en delsekvens som minskat med ett element (eftersom pivot-elementet är klart och inte bearbetas igen)
+Om vi i stället utgår ifrån att pivot-elementet alltid är det minsta eller det största elementet i varje delsekvens, får vi det sämsta tänkbara fallet. Efter varje partitionering blir det en "tom" delsekvens och en delsekvens som minskat med ett element (eftersom pivot-elementet är klart och inte bearbetas igen).
 
-Vi gör motsvarande exempel med 256 element men där pivot-elementet alltid är det största eller det minsta elementet i den delsekvens som partitioneras (vilket återigen innebär att pivot-elementet jämförs med alla andra element i delsekvensen)
+Vi gör motsvarande exempel med 256 element men där pivot-elementet alltid är det största eller det minsta elementet i den delsekvens som partitioneras (vilket återigen innebär att pivot-elementet jämförs med alla andra element i delsekvensen).
 
-- sortering av 256 element resulterar i 255 jämförelser
-- följt av sortering av 255 element (den ena delsekvensen är ju tom) vilket resulterar i 254 jämförelser
-- följt av sortering av 254 element vilket resulterar i 253 jämförelser
-- osv
+* sortering av 256 element resulterar i 255 jämförelser
+* följt av sortering av 255 element (den ena delsekvensen är ju tom) vilket resulterar i 254 jämförelser
+* följt av sortering av 254 element vilket resulterar i 253 jämförelser
+* osv
 
 Summerar vi antalet jämförelser får vi att antalet jämförelser vid sortering av 256 element blir
 
@@ -581,7 +583,7 @@ så kan vi formulera algoritmen för mergesort. Algoritmen är rekursiv och grun
 
 Vi kan konstatera att en sekvens med endast 1 element (och egentligen även 0) är sorterat och därmed inte ska delas ytterligare. Basfallet är därmed att 1 (och även 0) redan är sorterat och inget ska uträttas. Vi gör som vid quicksort och formulerar detta
 
-```bash
+```text
 if starIndex < endIndex
     ...
 ```
@@ -592,7 +594,7 @@ Vi har sett att det första som ska utföras är att beräkna/använda mittindex
 
 1. Formulera i pseudokod algoritmen för den rekursiva definitionen av merge (som matchar anropet med 3 parametrar) givet sammanfogningsalgoritmen `merge(A, startIndex, midIndex, endIndex)`.
 
-    ```bash
+    ```text
     meregsort(A, n):
         mergesort(A, 0, n - 1)
     ```
@@ -600,7 +602,7 @@ Vi har sett att det första som ska utföras är att beräkna/använda mittindex
     <details>
     <summary>Klicka här för att visa lösningsförslag</summary>
 
-    ```bash
+    ```text
     mergesort(A, startIndex, endIndex)
         if starIndex < endIdex
             midIndex = (startIndex + endIndex)/2
@@ -680,12 +682,12 @@ Vi får alltså log<sub>2</sub>8 + log<sub>2</sub>8 * 256. Om vi ersätter 256 m
 
 ## Sammanfattningsvis
 
-- Quicksort och Mergesort är två rekursiva algoritmer
-- Quicksort är känslig för hur pivot väljs
-    - värsta fallets tidskomplexitet är O(n<sup>2</sup>)
-    - genomsnittsfallets tidskomplexitet är O(n*log<sub>2</sub>n)
-    - det finns olika algoritmer för partitionering
-    - det finns olika principer för hur pivot-element bestäms
-- Mergesort har alltid tidskomplexiteten O(n*log<sub>2</sub>n)
-- Quicksort kräver ingen extra lagringsstruktur under sin bearbetning. Detta kallas att algoritmen är en "in-place"-algoritm.
-- Mergesort behöver extra lagringsstruktur under bearbetningen med att sammanfoga sorterade sekvenser.
+* Quicksort och Mergesort är två rekursiva algoritmer
+* Quicksort är känslig för hur pivot väljs
+    * värsta fallets tidskomplexitet är O(n<sup>2</sup>)
+    * genomsnittsfallets tidskomplexitet är O(n*log<sub>2</sub>n)
+    * det finns olika algoritmer för partitionering
+    * det finns olika principer för hur pivot-element bestäms
+* Mergesort har alltid tidskomplexiteten O(n*log<sub>2</sub>n)
+* Quicksort kräver ingen extra lagringsstruktur under sin bearbetning. Detta kallas att algoritmen är en "in-place"-algoritm.
+* Mergesort behöver extra lagringsstruktur under bearbetningen med att sammanfoga sorterade sekvenser.
