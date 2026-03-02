@@ -1,0 +1,491 @@
+---
+title: ADT Stack
+description: ADT:n Stack med implementationsalternativ 
+order: 0020
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import stack from '@assets/img/kmom04/stack.png';
+import stackMedArray from '@assets/img/kmom04/stackMedArray.png';
+import stackMedLankning from '@assets/img/kmom04/stackMedLankning.png';
+
+En stack följer principen **Last-In-First-Out** även förkortat **LIFO**. Ett exempel från vardagen är en trave tallrikar eller ett rör med tennisbollar. Man placerar en ny tallrik respektive en ny tennisboll ovanpå de befintliga. När man tar en tallrik tar en den översta. På samma sätt får man den översta när man tar en tennisboll från röret. När man illustrera en stack gör man ofta det som en stapel där man refererar till toppen av stacken. 
+
+I bilden visas en stack där F är det element som placerats på stacken sist (och därmed är överst). Om ett element ska tas bort från stacken så blir det F.
+
+
+<Figure
+    src={stack}
+    caption="Illustration av en stack"
+    width="250px"
+/>
+
+
+Stackens beteende, dvs uppsättning operationer, motsvaras av
+
+- push - sätt in ett element överst
+- pop - ta bort det översta noden
+- peek - "kika" på det översta utan att ta bort det
+- empty - avgör om stacken är tom eller ej
+
+ADT:n Heap har operationerna 
+- sätta in ett element
+- ta bort elementet med högst värde/prioritet
+- "kika" på elementet med högst värde/prioritet
+
+**Testa dig själv**  
+
+1. Om du har en Stack med operationerna namngivna `Push(item)`, `Pop()`, `Peek()`och `Empty()`, kan du då formulera en algoritm `ReverseContent(A, n)` som vänder om innehållet i en array genom att använda en stack?
+
+    <details>
+    <summary>Klicka här för att få tips</summary>  
+    Anta att arrayen innehåller 66, 33, 99, 11  
+
+    Om alla element i arrayen läggs in i en stack, vilket element får du då om du anropar Pop() för stacken? Vilket element får du nästa gång Pop() anropas?
+
+    </details>
+
+    <details>
+    <summary>Klicka här för att se ett lösningsförslag</summary>  
+
+    ```
+    ReverseContent(A, n)
+        create stack
+        foreach item in A
+            stack.Push(item)
+        for i = 0 to n
+            A[i] = stack.Pop()
+    ```
+    </details>
+
+
+## Interface för Stack
+
+För att göra det möjligt att välja vilken datatyp en Stack ska hantera kan man som bekant skapa så kallade generiska interface och generiska klasser. Vi gör ett interface för stacken med metoder som motsvarar stackens beteende
+
+```csharp
+interface IStack<T>
+{
+    void Push(T elem);
+    T Pop();
+    T Peek();
+    bool Empty();
+}
+```
+Alla klasser som implementerar detta interface måste definiera de metoder som ingår i interfacet.
+
+### Använda ADT Stack
+
+Anta att interfacet `IStack` har implementerats av den generiska klassen `Stack`. 
+Vad förväntar vi oss av klassen Stack? 
+
+- Att vi kan skapa en tom stack genom att använda en konstruktor.  Vi ska t.ex kunna skapa en stack som hanterar strängar.   
+
+    ```csharp
+    IStack<string> strStack = new Stack<string>(); 
+    ```
+
+- Att vi kan placera element (i vårt fall strängar) på toppen av stacken.
+    ```csharp
+    // ...
+    strStack.Push("one"); // "one" är noden på toppen
+    strStack.Push("two"); // "two" är noden på toppen, placerat ovanför "one"
+    strStack.Push("three"); // "three" är noden på toppen, placerat ovanför "two"
+    ```
+
+- Att vi kan ta bort element (i vårt fall strängar) från toppen av stacken.
+
+    ```csharp
+    // ...
+    string res = strStack.Pop(); // "three" tas bort från toppen och returneras till res
+    ```
+
+- Att vi kan kika på det element som finns överst på stacken utan att ta bort det
+
+    ```csharp
+    // ...
+    string res = strStack.Peek(); // "two" returneras till res men tas inte bort
+    ```
+Detta är vad vi som användare förväntar oss av ADT:n Stack och vi bekymrar oss inte om hur stacken är implementerad. 
+
+**Testa dig själv**
+
+1. Vilken är principen för ADT Stack?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Last-In-First-Out, dvs det element som kommit senast till stacken är det som lämnar stacken först
+    </details>
+
+**Testa dig själv**
+
+1. Anta att du har tillgång till ADT Stack genom den generiska klassen `Stack` som implementerar det generiska interfacet `IStack` enligt ovan och att följande utförs:
+
+    ```csharp
+    IStack<int> stack = new Stack<int>();
+    stack.Push(400);
+    stack.Push(300);
+    stack.Push(700);
+    Console.WriteLine(stack.Peek());
+    stack.Pop();
+    Console.WriteLine(stack.Peek());
+    stack.Push(100);
+    stack.Push(600);
+    Console.WriteLine(stack.Peek());
+    ```
+
+    Vad kommer att skrivas ut?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+     
+    700  
+    300  
+    600  
+    </details>
+
+## Val av implementation
+
+Om vi tänker oss att vi ska implementera en egen ADT Stack där det, förutom tidigare nämnda metoder, ska vara möjligt att 
+
+- skapa en tom stack
+
+ska vi skapa en klass namngiven `Stack` och i denna klass bestämma vilka medlemsvariabler vi behöver för att 
+
+- hantera vilken datatyp som helst
+- kunna representera den sekvens av element som finns i stacken som möjliggör att uppfylla principen Last-In-First-Out.
+- hantera att det inte finns någon begränsning avseende hur många element som kan placeras i stacken.
+
+### Representera stack
+
+Vi ska undersöka alternativen **array** och **länkning**. Array är en datastruktur där vi har indexering från 0 och uppåt där sista index är 1 mindre är arrayens kapacitet. Länkning innebär att objekt kan "peka ut" andra objekt och på så sätt skapa en kedja av objekt där vi bara behöver veta var kedjan börjar, dvs vilket element som är först.
+
+#### Array 
+
+Stacken placerar elementen (som är av datatypen T) i en array. Botten på stacken motsvaras av index 0 i arrayen och toppen växter mot högre index.   
+Vi vet att en array är begränsad i storlek och vi behöver hitta en lösning eftersom stacken inte begränsas men det fixar vi senare.   
+Vi deklarerar förutom en medlemsvariabel för arrayen även en medlemsvariabel som håller kapaciteten på arrayen samt en heltalsvariabel som håller var toppen är i arrayen. 
+<br></br>
+<Figure
+    src={stackMedArray}
+    caption="Stack som representeras med en array"
+    width="500px"
+/>
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private T[] _elements; 
+    private int _capacity;
+    private int _top;
+
+    //...
+}
+```
+
+Nu är det dags att fundera över konstruktor och medlemsmetoder. Vi börjar med konstruktor. Vi behöver definierar denna så att tillståndet (värdena på alla medlemsvariabler) för objektet representerar en tom stack. Kapaciteten behöver ges ett startvärde - i detta fall 10, arrayen allokeras med denna kapacitet och top-variabeln ges värdet 0.
+
+
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private T[] _elements;
+    private int _capacity;
+    private int _top;
+
+    public Stack()
+    {
+        this._top = 0;
+        this._capacity = 10;
+        this._elements = new T[this._capacity];
+    }
+    //...
+}
+```
+
+Nästa steg blir att implementera `Push`-metoden. Elementet som *pushas* ska hamna på toppen vilket motsvaras av den index-position som top innehåller. Därefter behöver top räknas upp. Ännu så länge antar vi att det finns plats i arrayen.
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private T[] _elements;
+    private int _capacity;
+    private int _top;
+
+    public Stack() {...} 
+
+    public void Push(T element)
+    {
+        this._elements[this._top++] = element;
+    }
+    //...
+}
+```
+Vi fortsätter med `Pop`-metoden. Vid anrop av Pop ska det element som är på toppen av stacken "tas bort" (dvs inte ingå i stacken längre) och returneras. Elementet på toppen hittas på index `_top - 1`. Vi behöver alltså först minsta på värdet i `_top` och därefter returnera det som finns på `_top` i arrayen. Vi reflekterar över att det bör kastas ett undantag om stacken är tom.
+
+**Testa dig själv**
+
+1. Hur blir implementationen i `Pop`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    ```csharp
+    public T Pop()
+    {
+        if (this._top == 0)
+            throw new Exception();
+        return this._elements[--this._top];
+    }
+    ```
+    </details>
+
+
+Slutligen har vi `Peek`-metoden och `Empty`-metoden. Vid anrop av Peek ska det element som är på toppen av stacken returneras. Elementet på toppen hittas på index `_top - 1`. Ett undantag bör kastas om stacken är tom.
+Vid anrop av Empty ska resultatet blir sant eller falskt vilket avgörs av innehållet i `_top`.
+
+1. Hur blir implementationen i `Peek`-metoden och `Empty`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    
+    ```csharp
+    public T Peek() 
+    {
+        if (this._top == 0)
+            throw new Exception();
+        return this._elements[this._top - 1];
+    }
+
+    public bool Empty()
+    {
+        return this._top == 0;
+    }
+    ```
+    </details>
+
+
+Då var vi klara med implementationen av ADT:n Stack där vi använt en array som intern datastruktur förutom att stacken är begränsad i storlek. Vi löser detta genom att vid anrop av push() kontrollera om arrayen är fylld och i så fall fixa en större array (på samma sätt som i artikeln om ADT).
+
+- öka innehållet i _capacity
+- allokera en ny större array baserat på den nya kapaciteten
+- kopiera över innehållet från arrayen som _elements refererar till
+- ändra elements så att den refererar till den nya större arrayen
+
+Detta hanteras lämpligen i en privat hjälpmetod:
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private T[] _elements;
+    private int _capacity;
+    private int _top;
+
+    public Stack() {...} 
+
+    private void expand()
+    {
+        this._capacity += 10;
+        T[] temp = new T[this._capacity];
+        for (int i=0; i < this._top; i++)
+        {
+            temp[i] = this._elements[i];
+        }
+        this._elements = temp;
+    }
+    public void Push(T element)
+    {
+        if (this._top == this._capacity)
+        {
+           expand();
+        }
+        this._elements[this._top++] = element;
+    }
+    //...
+}
+```
+
+### Länkning
+
+För att representera en Stack genom läkning används en enkellänkad lista. Det är endast toppen på stacken som är relevant för de operationer (metoder) som man ska kunna utföra på stacken. Man sätter in nya element på toppen (Push), tar bort element från toppen (Pop) och levererar noden toppen utan att ta bort det (Peek).
+
+<br></br>
+<Figure
+    src={stackMedLankning}
+    caption="Stack som representeras med länkning"
+   
+/>
+
+
+Vi definierar klassen Stack och döljer klassen Node för "omvärlden". Det gör vi genom att definiera Node-klassen som privat inom Stack-klassen. Då är det endast inom klassen Stack som Node är tillgänglig.  
+Som medlemsvariabel behövs endast en referens-variabel som motsvarar den pekare som *pekar på* top-noden.
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private class Node<E>
+    {
+        public E Data;
+        public Node<E>? Next;
+        public Node(E data, Node<E>? next = null)
+        {
+            this.Data = data;
+            this.Next = next;
+        }
+    }
+
+    private Node<T>? _top; // för att peka på top-noden
+
+    // ....
+}
+```
+
+Implementationen i de metoder som ingår i stacken måste anpassas så att de motsvarar stackens beteende, nu genom att använda enkellänkning.
+
+Vi börjar med konstruktorn som ska implementeras så att objektet som skapas motsvarar en tom stack. Det innebär att top-pekaren ges värdet null.
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private class Node<E> {...}
+
+    private Node<T>? _top; 
+
+    public Stack()
+    {
+        this._top = null;
+    }
+    // ....
+}
+```
+
+Vi fortsätter med `Push`-metoden som ska hantera att det nya noden placeras på toppen. Vi behöver skapa ett `Node`-objekt som innehåller det nya elementet. Vidare ska detta `Node`-objekt infogas vid top-pekaren. 
+
+
+```csharp
+public class Stack<T>: IStack<T>
+{
+    private class Node<E> {...}
+
+    private Node<T>? _top; 
+
+    public Stack() {...}
+
+    public void Push(T data)
+    {
+        this._top = new Node<T>(data, this._top);
+    }
+
+    // ....
+}
+```
+
+Metoden `Pop` ska ta bort och returnera det element som är överst på stacken. Vi "plockar ut" elementet som är lagrat i top-noden och ändrar top-pekaren så att den pekar på det `Node`-objekt som är top-nodens efterföljare. Vi kastar dessutom ett undantag om stacken är tom.
+
+**Testa dig själv**
+ 
+1. Hur blir implementationen i `Pop`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    
+    ```csharp
+    public T Pop()
+    {
+        if (this._top == null)
+            throw new Exception();
+        T popElement = this._top.Data;
+        this._top = this._top.Next;
+        return popElement;
+    }
+    ```
+    </details>
+
+
+Återstår `Peek`-metoden som ska leverera noden på toppen utan att ta bort det och `Empty`-metoden som ska avgöra om stacken är tom eller ej. 
+
+**Testa dig själv**
+ 
+1. Hur blir implementationen i `Peek`-metoden och i `Empty`-metoden?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    
+    ```csharp
+    public T Peek()
+    {
+        if (this._top == null)
+            throw new Exception();
+        return this._top.Data;
+    }
+
+    public bool Empty()
+    {
+        return this._top == null;
+    }
+    ```
+    </details>
+
+## Analys av tidskomplexiteten
+
+Vi analyserar operationerna **Push**, **Pop**, **Peek** och **Empty** för de båda alternativ av intern datastruktur som vi gått igenom (array och länkning) -
+
+### Array 
+
+Analysen omfattar inte expandering av arrayen.  
+
+- **Push**: Arbetet innebär att placera ett element på ett känt/givet index (behöver inte leta upp detta utan variabeln top har detta index) och att räkna upp index (öka innehållet i top med 1). Samma arbete utförs oavsett antalet element i arrayen, vilket ger **O(1)**.
+- **Pop**: Arbetet innebär returnera ett element på ett känt/givet index och räkna ner index. Samma arbete utförs oavsett antalet element i arrayen, vilket ger **O(1)**.
+
+**Testa dig själv**
+ 
+1. Hur blir analysen av **Peek**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Arbetet innebär att returnera ett element från ett känt/givet index där index beräknas genom -1. Samma arbete utförs oavsett antalet element i arrayen, vilket ger O(1).
+    </details>
+
+1. Hur blir analysen av **Empty**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Resultatet ges av en jämförelse (top == 0). Samma arbete utförs oavsett antalet element i arrayen, vilket ger O(1). 
+    </details>
+
+### Länkning
+
+- **Push**: O(1) Arbetet innebär att skapa ett Node-objekt, och infoga det vid top-pekaren. Samma arbete utförs oavsett antalet element i den länkade listan, vilket ger O(1).
+- **Pop**: O(1) Arbetet innebär att "hämta" elementet från det Node-objekt som är först i listan, flytta top-pekaren till nästa Node-objekt och slutligen returnera det "hämtade" elementet. Samma arbete utförs oavsett antalet element i den länkade listan, vilket ger O(1).
+
+**Testa dig själv**
+ 
+1. Hur blir analysen av **Peek**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Arbetet innebär att returnera det element som finns i det Node-objekt som top pekar på. Samma arbete utförs oavsett antalet element i listan, vilket ger O(1).
+    </details>
+
+1. Hur blir analysen av **Empty**?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Resultatet ges av en jämförelse (top == null). Samma arbete utförs oavsett antalet element i listan, vilket ger O(1). 
+    </details>
+
+## Sammanfattningsvis
+
+- ADT Stack följer principen Last-In-First-Out
+- Beteendet, dvs de operationer som ADT:n Stack har är
+    - push - sätt in ett element överst på stacken
+    - pop - ta bort det översta elementet från stacken
+    - peek - "kika" på det översta elementet på stacken utan att ta bort det
+    - empty - avgör om stacken är tom eller ej
+- För att implementera en stack kan man använda
+    - array -  elementen placeras från 0 och framåt
+    - enkellänkning - noder paketerar elementen och en pekare *pekar på* den första (betraktat som översta) noden. All insättning och borttagning utförs vid denna pekare som motsvarar toppen.
+- Alla operationer på stacken, oavsett om stacken använder en array eller en enkellänkad lista som intern datastruktur, är O(1), dvs konstant tidskomplexitet.
