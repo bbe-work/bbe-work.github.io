@@ -1,0 +1,235 @@
+---
+title: ADT
+description: Konceptet Abstrakt datatyp
+order: 0010
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+**ADT** är en vedertagen förkortning av **Abstrakt Datatyp** (Abstract Data Type). En ADT beskriver en datatyp som definieras av sitt beteende ur en användares synvinkel vilket gäller möjliga värden, möjliga operationer på data av denna typ och vad man kan förvänta sig av beteendet hos dessa operationer.
+
+I tidigare programmeringskurser (Python ch C#) har vi redan stött på ADT:er. Ett exempel är klassen List som representerar den abstrakta datatypen lista. Vi vet egentligen inget om hur denna datatyp (som är en klass) hanterar det vi placerar i listan men vi förväntar oss att elementen i listan motsvarar en sekvens och att varje element finns på en position.
+
+Exempel i C#:
+```csharp
+List<int> intList = new List<int>(); 
+```
+Vi förväntar oss efter denna deklaration att vi kan placera heltal i listan som så här långt är tom.
+
+```csharp
+...
+intList.Add(33); 
+```
+Vi förväntar oss efter detta att det finns ett heltal i listan, 33 och att detta finns på första plats (index 0). Det vi "ser framför oss" är listan med endast 33.
+
+```csharp
+...
+intList.Add(55); // listan innehåller 33, 55
+intList.Add(77); // listan innehåller 33, 55, 77
+intList.Insert(1, 99); // listan innehåller // 33, 99, 55, 77
+intList.RemoveAt(2); // listan innehåller // 33, 99, 77
+intList.RemoveAt(intList.Count - 1); // listan innehåller // 33, 99
+
+```
+Vi vet hur listan "fungerar" (det är en sekvens av element från index 0 och framåt) och att det finns metoder som kan anropas för att arbeta med listan. Däremot behöver vi inte veta hur listan hanterar elementen (vilka medlemsvariabler den använder) och inte hur metoderna är implementerade (hur listan läser uppgiften för metoden). 
+
+Listan är en ADT! Den är implementerad som en klass, den kapslar in data och beteendet och den döljer implementation! Det användaren behöver se är gränssnittet vilket motsvaras av uppsättningen metoder.
+
+## Gränssnitt för ADT - Generiskt Interface i C#
+
+Eftersom många ADT:er har ett väldefinierat gränssnitt men kan implementeras med olika interna datastrukturer är det lämpligt att använda programmerings-konstruktionen Interface som finns i flera objektorienterade programmeringsspråk. Om vi antar att ADT:n SimpleList har uppsättningen operationer (metoder)
+
+- AddLast(elem) som lägger till ett element sist
+- AddFirst(elem) som lägger till ett element först
+- AddAt(index, elem) som lägger till ett element på ett givet index
+- RemoveLast() som tar bort det sista element
+- RemoveFirst() som tar bort det första elementet
+- RemoveAt(index) som tar bort ett element på ett givet index
+- GetLast() som ger sista elementet utan att ta bort det
+- GetFirst() som ger första elementet utan att ta bort det
+- GetAt(index) som elementet på givet index utan att ta bort det
+- Size() som ger antalet element 
+
+kan vi skapa ett interface i C#
+
+```csharp
+interface ISimpleList<T>
+{
+    void AddLast(T elem);
+    void AddFirst(T elem);
+    void AddAt(int index, T elem);
+    void RemoveLast();
+    void RemoveFirst();
+    void RemoveAt(int index);
+    T GetLast();
+    T GetFirst();
+    T GetAt(int index);
+    int Size();
+}
+```
+
+Detta kan sedan implementeras av en eller flera klasser som måste definiera alla metoder i interfacet. 
+
+```csharp
+public class SimpleList<T>: ISimpleList<T>
+{
+    // medlemsvariabler som motsvarar
+    // den interna datastrukturen för
+    // att uppfylla listans beteende
+    // samt eventuella hjälpmetoder
+
+    public void AddLast(T elem) {...}
+    public void AddFirst(T elem) {...}
+    public void AddAt(int index, T elem) {...}
+    public void RemoveLast() {...}
+    public void RemoveFirst() {...}
+    public void RemoveAt(int index) {...}
+    public T GetLast() {...}
+    public T GetFirst() {...}
+    public T GetAt(int index) {...}
+    public int Size() {...}
+}
+```
+
+I andra delar av den applikation (det program) som ska använda en enkel lista kan man deklarera variabeln som ska referera till objektet av typen ISimpleList för den aktuella datatypen.
+
+Exempel
+
+
+```csharp
+...
+ISimpleList<int> lyckyNrList;
+ISimpleList<string> nameList;
+ISimpleList<Car> carList;
+
+// objekt av en konkret klasstyp måste skapas för dessa variabler, men all övrig implementation kan skrivas baserat på de metoder som finns i interfacet
+lyckyNrList.AddFirst(55);
+int value = lyckyNrList.GetAt(0);
+
+nameList.AddLast("Bella");
+nameList.AddFirst("Anna");
+string name = nameList.GetLast();
+
+carList.AddFirst(new Car("Lexus", 2019)); // förutsatt att klassen Car finns och motsvarande konstruktor
+int nrOfCars = carList.Size();
+...
+```
+
+**Testa dig själv**
+ 
+1. Vad står förkortningen ADT för?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    Abstrakt Datatyp (Abstract Data Type)
+    </details>
+
+1. Vad är en ADT?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+     En datatyp som definieras av sitt beteende ur en användares synvinkel vilket gäller möjliga värden, möjliga operationer på data av denna typ och vad man kan förvänta sig av beteendet hos dessa operationer utan att behöva känna till implementation.
+    </details>
+
+1. Implementera en ADT SpecialList givet genom interfacet 
+
+    ```csharp
+    interface ISpecialList<T>
+    {
+        void AddFirst(T elem);
+        void RemoveLast();
+        T GetAt(int index);
+        int Size();
+    }
+    ```
+
+    där du använder en array som intern datastruktur.  
+
+    Tips:
+    - Medlemsvariabler 
+        - _capacity: en heltalsvariabel som håller arrayens kapacitet/storlek
+        - _nrOf: en heltalsvariabel som håller antalet element i arrayen
+        - _elements: en array
+    - Vid insättning först i en array ska befintliga element flyttas åt höger för att göra plats för det element som ska in först, dvs på index 0 i arrayen.
+    - Hantering behövs om arrayen blir fylld (skapa en ny större array till vilken innehållet kopieras och uppdatera kapaciteten), vilket kan utföras enligt följande pseudokod
+        - öka innehållet i _capacity
+        - allokera en ny större array baserat på den nya kapaciteten
+        - kopiera över innehållet från arrayen som _elements refererar till
+        - ändra elements så att den refererar till den nya större arrayen
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```csharp
+    public class SpecialList<T>: ISpecialList<T>
+    {
+        private T[] _elements; 
+        private int _capacity;
+        private int _nrOf;
+
+        public SpecialList()
+        {
+            this._capacity = 10;
+            this._nrOf = 0;
+            this._elements = new T[this._capacity];
+        }
+        private void Expand()
+        {
+            this._capacity += 10;
+            T[] temp = new T[this._capacity];
+            for (int i=0; i < this._nrOf; i++)
+            {
+                temp[i] = this._elements[i];
+            }
+            this._elements = temp;
+        }
+
+        private void MoveRight()
+        {
+            for (int i = this._nrOf; i > 0; i--)
+            {
+                this._elements[i] = this._elements[i-1];
+            }
+        }
+  
+        public void AddFirst(T elem)
+        {
+            if (this._nrOf == this._capacity)
+            {
+            Expand();
+            }
+            MoveRight();
+            this._nrOf++;
+            this._elements[0] = elem;
+        }
+        
+        public void RemoveLast()
+        {
+            if (this._nrOf == 0) 
+                throw new Exception();
+            this._nrOf--;
+        }
+        
+        public T GetAt(int index)
+        {
+            if (this._nrOf == 0 || index >= this._nrOf) 
+                throw new Exception(); 
+            return this._elements[index];
+        }
+        public int Size()
+        {
+            return this._nrOf;
+        }
+    }
+
+     ```
+    </details>
+
+## Sammanfattningsvis
+
+- ADT är en vedertagen förkortning för abstrakt datatyp
+- En ADT beskriver en datatyp genom dess beteende men inte alls dess implementation. Den specificerar vad som kan göras men inte hur.
+- Ett exempel som vi stött på tidigare är datatypen List i C# (och motsvarande i Python)
+- Interface är användbara när det gäller ADT:er då dessa specificerar den uppsättning metoder som ADT:n ska ha
+- Klasser kan implementera Interface och man kan därmed göra flera klasser för samma interface men med olika intern datastruktur
