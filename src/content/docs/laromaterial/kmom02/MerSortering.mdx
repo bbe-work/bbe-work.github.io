@@ -250,7 +250,7 @@ Vi gör motsvarande exempel med 256 element men där pivot-elementet alltid är 
 
 Summerar vi antalet jämförelser får vi att antalet jämförelser vid sortering av 256 element blir
 
-255 + 254 + 253 + 252 + .... + 3 + 2 + 1 = (aritmetiska summan) = 255 * (255 - 1) / 2 
+255 + 254 + 253 + 252 + .... + 3 + 2 + 1 = (aritmetiska summan) = 255 * (255 - 1) / 2
 
 Om vi formulerar detta med antalet n får vi (n - 1) * (n - 2) / 2 = (n<sup>2</sup> - 3n + 2)/2 som vi vet motsvarar **O(n<sup>2</sup>)**.
 
@@ -261,7 +261,7 @@ Om vi formulerar detta med antalet n får vi (n - 1) * (n - 2) / 2 = (n<sup>2</s
 
     <details>
     <summary>Klicka här för att visa svaret</summary>
-    Till exempel   
+    Till exempel:  
     11 22 33 44 55 66 77  
     "qq" "ss" "rr" "aa"
     </details>
@@ -276,9 +276,9 @@ Det finns några olika principer som används för att bestämma pivot-element:
 
 Alternativ 1 (första eller sista noden) är enklast. Eftersom vi inte vet något om ordningen i arrayen så är det första (eller det sista) elementet i delsekvensen ett lika bra/dåligt val som vilket annan element som helst i arrayen.
 
-Alternativ 2 (slumpa index) innebär endast ett tillägg som innebär att elementet på den slumpade index-positionen byter med det sista elementet i delsekvensen (enligt Lomutos och Hoares). 
+Alternativ 2 (slumpa index) består endast av ett tillägg där elementet på den slumpade indexpositionen byts med det sista elementet i delsekvensen (enligt Lomutos och Hoares).
 
-För både alternativ 1 och 2 finns det en risk att pivot-elementet blir det minsta eller det största elementet, vilket vi vet ger det värsta fallet om det inträffar väldigt ofta. 
+För både alternativ 1 och 2 finns det en risk att pivot-elementet blir det minsta eller det största elementet, vilket vi vet ger det värsta fallet om det inträffar väldigt ofta.
 
 För att undvika detta finns alternativ 3 (median av tre). Då kan det aldrig bli det minsta eller det största (förutom om det finns många av samma värde).
 
