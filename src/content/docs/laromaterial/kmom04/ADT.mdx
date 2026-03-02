@@ -18,13 +18,11 @@ List<int> intList = new List<int>();
 Vi förväntar oss efter denna deklaration att vi kan placera heltal i listan som så här långt är tom.
 
 ```csharp
-...
 intList.Add(33); 
 ```
 Vi förväntar oss efter detta att det finns ett heltal i listan, 33 och att detta finns på första plats (index 0). Det vi "ser framför oss" är listan med endast 33.
 
 ```csharp
-...
 intList.Add(55); // listan innehåller 33, 55
 intList.Add(77); // listan innehåller 33, 55, 77
 intList.Insert(1, 99); // listan innehåller // 33, 99, 55, 77
@@ -36,7 +34,7 @@ Vi vet hur listan "fungerar" (det är en sekvens av element från index 0 och fr
 
 Listan är en ADT! Den är implementerad som en klass, den kapslar in data och beteendet och den döljer implementation! Det användaren behöver se är gränssnittet vilket motsvaras av uppsättningen metoder.
 
-## Gränssnitt för ADT - Generiskt Interface i C#
+### Gränssnitt för ADT - Generiskt Interface i C#
 
 Eftersom många ADT:er har ett väldefinierat gränssnitt men kan implementeras med olika interna datastrukturer är det lämpligt att använda programmerings-konstruktionen Interface som finns i flera objektorienterade programmeringsspråk. Om vi antar att ADT:n SimpleList har uppsättningen operationer (metoder)
 
@@ -226,7 +224,7 @@ int nrOfCars = carList.Size();
      ```
     </details>
 
-## Sammanfattningsvis
+### Sammanfattningsvis
 
 - ADT är en vedertagen förkortning för abstrakt datatyp
 - En ADT beskriver en datatyp genom dess beteende men inte alls dess implementation. Den specificerar vad som kan göras men inte hur.
