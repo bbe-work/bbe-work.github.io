@@ -1,0 +1,153 @@
+---
+title: "Kmom04 - ADT"
+description: Kmom04 inlämningsuppgift om ADT
+order: 0040
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import bild01 from '@assets/img/kmom04/uppgift/Bild01.png';
+import bild02 from '@assets/img/kmom04/uppgift/Bild02.png';
+import bild03 from '@assets/img/kmom04/uppgift/Bild03.png';
+import bild04 from '@assets/img/kmom04/uppgift/Bild04.png';
+import bild05 from '@assets/img/kmom04/uppgift/Bild05.png';
+import bild06 from '@assets/img/kmom04/uppgift/Bild06.png';
+import bild07 from '@assets/img/kmom04/uppgift/Bild07.png';
+import bild08 from '@assets/img/kmom04/uppgift/Bild08.png';
+import bild09 from '@assets/img/kmom04/uppgift/Bild09.png';
+import bild10 from '@assets/img/kmom04/uppgift/Bild10.png';
+import bild11 from '@assets/img/kmom04/uppgift/Bild11.png';
+
+I denna uppgift ska du implementera en ADT:n Cirkulär Lista. Denna lista ska därefter användas för att illustrera en "uträknings"-ramsa.
+
+### Förberedelser
+
+I `kmom04` skapar du ett dotnet console-projekt namngivet `CircularList` och ett dotnet nunit-projekt namngivet `CircularList.Tests`. Precis om i tidigare uppgifter ska CircularList och CircularList.Tests vara på samma nivå i katalogstrukturen (se Kort repetition/sammanställning i tidigare uppgifter).
+
+### Implementation av en ADT Cirkulär lista
+
+Klassen ska namnges `CircularList` och implementera det generiska interfacet `ICircularList`
+
+```csharp
+public interface ICircularList<T>
+{
+    public void InsertAfterCurrent(T item);
+    public void InsertBeforeCurrent(T item);
+    public T GetCurrent();
+    public void RemoveCurrentAndMoveForward();
+    public void RemoveCurrentAndMoveBackward();
+    public bool Contains(T item);
+    public int Size();
+    public void MoveCurrentForward(int nrOfSteps);
+    public void MoveCurrentBackward(int nrOfSteps);
+    public void Clear();
+}
+```
+
+`CircularList` ska använda dubbellänkning som intern datastruktur. 
+Vid försöka att utföra orimliga operationer på listan ska undantag kastas. Listan har alltid en pekare `current` som pekar på den nod i listan som betraktas som aktuell. Förutom denna pekare har listan även en räknare (heltalsvariabel) som håller antalet element som finns i listan.
+
+När listan är tom har `current` värdet null. 
+
+Klassen som definierar en nod i listan ska vara en inre klass. Denna ska bl.a ha en pekare som pekar på efterföljaren (Next) och en som pekar på föregångaren (Prev). 
+
+
+#### Beskrivning av listans metoder
+
+Med riktning framåt avses att följa Next-pekaren och på motsvarande sätt avser riktningen bakåt att följa Prev-pekaren. 
+
+
+`InsertAfterCurrent`- placerar elementet som efterföljare till det som current pekar på men current ändras inte. 
+Om listan däremot är tom blir det nya elementet det enda i listan och current ska peka på detta.
+
+`InsertBeforeCurrent`- placerar elementet som föregångare till det som current pekar på men current ändras inte. 
+Om listan däremot är tom blir det nya elementet det enda i listan och current ska peka på detta.
+
+`GetCurrent` - returnerar aktuellt element.
+
+`RemoveCurrentAndMoveForward`- tar bort det element som current pekar på och ser till att current pekar på det borttagna elementets efterföljare.
+
+`RemoveCurrentAndMoveBackward`- tar bort det element som current pekar på och ser till att current pekar på det borttagna elementets föregångare.
+
+`Contains` - avgör om elementet finns i listan eller ej.
+
+`Size` - returnerar antalet element som finns i listan.
+
+`MoveCurrentForward` - flyttar current framåt det antal steg parametern innehåller.
+
+`MoveCurrentBackward` - flyttar current bakåt det antal steg parametern nrOfSteps innehåller.
+
+`Clear` - tömmer listan.
+
+#### Några illustrationer
+
+Utgå från att vi skapat en tom lista genom `ICircularList<string> circList = new CircularList<string>()`;
+
+Därefter utförs anropen nedan med illustrationer. Den cirkulära listan motsvaras av den ofyllda cirkeln, elementen är de svarta fyllda cirklarna och den gula fyllda cirkeln motsvarar aktuellt element (som motsvaras av current-pekaren).
+
+circList.InsertAfterCurrent("A")
+
+<Figure
+    src={bild01}
+    width="90px"
+/> 
+circList.InsertAfterCurrent("E");
+
+<Figure
+    src={bild02}
+    width="100px"
+/> 
+circList.InsertBeforeCurrent("H");
+<Figure
+    src={bild03}
+    width="120px"
+/> 
+circList.MoveForWard(1);
+<Figure
+    src={bild04}
+    width="120px"
+/> 
+circList.MoveBackWard(2);
+<Figure
+    src={bild05}
+    width="120px"
+/> 
+circList.InsertBeforeCurrent("X");
+<Figure
+    src={bild06}
+    width="120px"
+/> 
+circList.InsertAfterCurrent("O");
+<Figure
+    src={bild07}
+    width="130px"
+/> 
+circList.MoveForWard(3);
+<Figure
+    src={bild08}
+    width="130px"
+/> 
+circList.MoveBackWard(7);
+<Figure
+    src={bild09}
+    width="130px"
+/>
+circList.RemoveCurrentAndMoveBackward();
+<Figure
+    src={bild10}
+    width="120px"
+/>
+circList.RemoveCurrentAndMoveForward();
+<Figure
+    src={bild11}
+    width="110px"
+/>
+
+### Använda ADT Cirkulär lista
+
+Inom datavetenskap och matematik är **Josephus-problemet** (eller Josephus-permutation) ett teoretiskt problem som motsvarar en sorts ”uträkningsspel”, ex-vis *elle-belle-bi-nu-är-du-så-sant-som-fri*. Just *elle-belle-osv* kan ersättas med att man räknar från 1 tom ett bestämt tal X där den som blir nummer X är den som får lämna. Därefter börjar man på nytt från 1 och nästa person som blir nr X får lämna. Detta fortsätter tills det bara finns en person kvar.
+
+Om vi exempelvis har 
+
+
