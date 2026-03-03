@@ -48,11 +48,11 @@ public interface ICircularList<T>
 ```
 
 `CircularList` ska använda dubbellänkning som intern datastruktur. 
-Vid försöka att utföra orimliga operationer på listan ska undantag kastas. Listan har alltid en pekare `current` som pekar på den nod i listan som betraktas som aktuell. Förutom denna pekare har listan även en räknare (heltalsvariabel) som håller antalet element som finns i listan.
+Vid försök att utföra orimliga operationer på listan ska undantag kastas. Listan har alltid en pekare `current` som pekar på den nod i listan som betraktas som aktuell. Förutom denna pekare har listan även en räknare (heltalsvariabel) som håller antalet element som finns i listan.
 
 När listan är tom har `current` värdet null. 
 
-Klassen som definierar en nod i listan ska vara en inre klass. Denna ska bl.a ha en pekare som pekar på efterföljaren (Next) och en som pekar på föregångaren (Prev). 
+Klassen som definierar en nod i listan ska vara en inre klass. Denna ska bl.a ha en pekare som pekar på efterföljaren (Next) och en pekare som pekar på föregångaren (Prev). 
 
 
 #### Beskrivning av listans metoder
@@ -143,7 +143,7 @@ circList.RemoveCurrentAndMoveBackward();
 circList.RemoveCurrentAndMoveForward();
 <Figure
     src={bild11}
-    width="120px"
+    width="110px"
 
 />
 
