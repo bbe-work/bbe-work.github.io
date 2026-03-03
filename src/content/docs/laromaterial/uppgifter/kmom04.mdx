@@ -18,6 +18,8 @@ import bild08 from '@assets/img/kmom04/uppgift/Bild08.png';
 import bild09 from '@assets/img/kmom04/uppgift/Bild09.png';
 import bild10 from '@assets/img/kmom04/uppgift/Bild10.png';
 import bild11 from '@assets/img/kmom04/uppgift/Bild11.png';
+import josephusStart from '@assets/img/kmom04/uppgift/JosephusStart.png';
+import josephusAllaSteg from '@assets/img/kmom04/uppgift/JosephusAllaSteg.png';
 
 I denna uppgift ska du implementera en ADT:n Cirkulär Lista. Denna lista ska därefter användas för att illustrera en "uträknings"-ramsa.
 
@@ -82,23 +84,23 @@ Om listan däremot är tom blir det nya elementet det enda i listan och current 
 
 #### Några illustrationer
 
-Utgå från att vi skapat en tom lista genom `ICircularList<string> circList = new CircularList<string>()`;
+Utgå från att vi skapat en tom lista namngiven `circList`
 
 Därefter utförs anropen nedan med illustrationer. Den cirkulära listan motsvaras av den ofyllda cirkeln, elementen är de svarta fyllda cirklarna och den gula fyllda cirkeln motsvarar aktuellt element (som motsvaras av current-pekaren).
 
-circList.InsertAfterCurrent("A")
+circList.InsertAfterCurrent(A)
 
 <Figure
     src={bild01}
     width="90px"
 /> 
-circList.InsertAfterCurrent("E");
+circList.InsertAfterCurrent(E);
 
 <Figure
     src={bild02}
     width="100px"
 /> 
-circList.InsertBeforeCurrent("H");
+circList.InsertBeforeCurrent(H);
 <Figure
     src={bild03}
     width="120px"
@@ -113,12 +115,12 @@ circList.MoveBackWard(2);
     src={bild05}
     width="120px"
 /> 
-circList.InsertBeforeCurrent("X");
+circList.InsertBeforeCurrent(X);
 <Figure
     src={bild06}
     width="120px"
 /> 
-circList.InsertAfterCurrent("O");
+circList.InsertAfterCurrent(O);
 <Figure
     src={bild07}
     width="130px"
@@ -141,7 +143,8 @@ circList.RemoveCurrentAndMoveBackward();
 circList.RemoveCurrentAndMoveForward();
 <Figure
     src={bild11}
-    width="110px"
+    width="120px"
+
 />
 
 ### Använda ADT Cirkulär lista
@@ -150,4 +153,20 @@ Inom datavetenskap och matematik är **Josephus-problemet** (eller Josephus-perm
 
 Om vi exempelvis har 
 
+<Figure
+    src={josephusStart}
+    width="250px"
+/>
 
+och hela tiden tar 4 steg framåt och när vi tar bort så flyttar vi current till efterföljaren så kommer ordningen på de som "räknas ut" att bli,
+
+E J D K G C B F I A
+
+och den som är kvar är H.
+
+<Figure
+    src={josephusAllaSteg}
+    width="700px"
+/>
+
+## HUR REDOVISA ??
