@@ -1,0 +1,154 @@
+---
+title: Övningsuppgifter länkad lista, Stack och Kö
+description: Uppgifter länkning, Stack och Kö
+order : 0010
+hidden: true
+---
+
+
+1. Beskriv principen för ADT:n Stack och vad operationerna push, pop och peek resulterar i.  
+
+1. Beskriv principen för ADT:n Kö och vad operationerna enqueue, dequeue och peek resulterar i.  
+
+1. Visa innehållet i stacken om följande operationer utförs i tur och ordning på en från början tom Stack  
+
+    push(W), push(R), push(Q), pop(), pop(), push(H), push(Y), pop()
+
+1. En Kö implementeras med en array med kapaciteten 6 som intern datastruktur. Vilket innehåll har arrayen efter det att följande operationer har utförts på en från början tom kö?
+
+    enqueue(X)  
+    enqueue(M)  
+    enqueue(A)  
+    dequeue()  
+    dequeue()  
+    enqueue(K)  
+    enqueue(W)   
+    dequeue()  
+    enqueue(S)  
+    enqueue(T)  
+    dequeue()  
+    enqueue(P)  
+
+1. Redogör för hur operationerna på en Kö hanteras om en enkellänkad lista används. Tidskomplexiteten för respektive operation förutsätts vara O(1).
+
+1. Anta att en dubbellänkad cirkulär lista använder klassen `Node` för att representera noder där
+- `data` används för att lagra ett element
+- `next` används för att peka ut efterföljande nod
+- `prev` används för att peka ut föregående nod  
+
+Pekaren current pekar på en nod (Node-objektet) i den cirkulära länkade
+listan. 
+
+Skriv pseudokod för att bestämma antalet noder i listan.
+
+1. Med samma förutsättningar som i föregående uppgift, skriv pseudokod för att ta bort den nod som `current` pekar på. `current` ska efter borttagningen peka på efterföljaren.
+
+1. Anta att en dubbellänkad lista använder klassen `Node` för att representera noder där
+- `data` används för att lagra ett element
+- `next` används för att peka ut efterföljande nod
+- `prev` används för att peka ut föregående nod  
+
+Pekaren `first` pekar på den första noden (Node-objektet) i den dubbellänkade
+listan. Vidare är är listan sorterad från minsta till största element.
+
+Skriv pseudokod för att sätt in ett element på rätt plats enligt sorteringen. Den nya elementet finns i noden (node-objektet) som pekaren `toInsert` pekar på. Denna nods båda pekare är satta till none.
+
+## Lösningsförslag
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Principen LIFO  
+    push: placera ett element överst  
+    pop: ta bort det översta elementet  
+    peek: ge tillgång till det översta elementet  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Principen FIFO  
+    enqueue: placera ett element sist  
+    dequeue: ta bort det första elementet  
+    peek: ge tillgång till det första elementet  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    W H Y där W är underst och Y är överst
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    Kön är WSTP där W är först och P är sista. Arrayen innehåller  
+    på index 0 finns T  
+    på index 1 finns P  
+    på index 4 finns W  
+    på index 5 finns S  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    Två pekare, `first`, används där en pekare pekar på den första noden i den enkellänkade listan och en annan pekare, `last`, pekar på den sista noden. Vid borttagning från kön tas noden som `first` pekar på bort och `first`  "flyttas till" nästa nod.  
+    Vi insättning i kön placeras det efter den nod som `last` pekar på och `last` flyttas till den nya noden.
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    ```
+    if current is none
+        return 0
+    walker = current.next
+    counter = 1
+    while walker != current
+        counter = counter + 1
+        walker = waler.next
+    return counter
+    ```
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    ```
+    if current.next is none
+        current = none
+    else
+        temp = current
+        current = current.next
+        temp.prev.next = current
+        current.prev = temp.prev
+    ```
+    </details> 
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    ```
+    if first is none or toInsert.data < first.data
+        toInsert.next = first
+        first.prev = toInsert
+        first = toInsert
+    else
+        walker = first
+        while walker.next is not node and toInsert.data > walker.next.data
+            walker = walker.next
+        toInsert.next = walker.next
+        toInsert.prev = walker
+        walker.next.prev = toInsert
+        walker.next = toInsert
+    ```
+    </details>
