@@ -15,7 +15,7 @@ import insattningDubbelLankadLista from '@assets/img/kmom03/insattningDubbelLank
 import cirkularEnkelLankning from '@assets/img/kmom03/cirkularEnkelLankning.png';
 import cirkularDubbelLankning from '@assets/img/kmom03/cirkularDubbelLankning.png';
 
-Genom att skapa objekt som kan *peka ut* andra objekt av samma sort kan vi bland annat skapa kedjor av objekt - så kallade länkade listor. Objekten kallas ofta *listelement* eller *noder*.   
+Genom att skapa objekt som kan *peka ut* andra objekt av samma sort kan vi bland annat skapa kedjor av objekt - så kallade länkade listor. Objekten kallas ofta *listelement* eller *noder*.  
 
 <br></br>
 <Figure
@@ -23,19 +23,19 @@ Genom att skapa objekt som kan *peka ut* andra objekt av samma sort kan vi bland
     width="500px"
 />
 
-På bilden ser vi en **enkellänkad lista**. Det framgår att det finns en variabel, i detta fall namngiven *first*, som pekar på den första noden vilken innehåller datan/informationen A. Denna nod pekar i sin tur på ett annan nod som innehåller B o.s.v. Det sista noden som innehåller F pekar inte vidare på något annan nod. 
+På bilden ser vi en **enkellänkad lista**. Det framgår att det finns en variabel, i detta fall namngiven *first*, som pekar på den första noden som innehåller datan/informationen A. Den första noden pekar i sin tur på ett annan nod som innehåller B o.s.v. Det sista noden, som innehåller G, pekar inte vidare på något annan nod.
 
-Det är möjligt att nå den första noden via *first*. För att nå den andra noden behöver man börja från *first* och gå via den första noden genom att använda *pekaren* i denna. Listan vi ser är riktad (pekarna går åt ett håll) och kallas för en **enkellänkad lista**.
+Det är möjligt att nå den första noden via variabeln *first*. För att nå den andra noden behöver vi börja från *first* och gå via den första noden genom att använda *pekaren* i denna. Pekaren i första noden pekar på den andra noden. Listan vi ser är riktad (pekarna går åt ett håll) och kallas för en **enkellänkad lista**.
 
-Vid länkning behöver man definiera en klass (eller motsvarande) som ska användas för att representera objekt:  
+Vid länkning behöver vi definiera en klass (eller motsvarande) som ska användas för att representera objekt:  
 
 - kan hålla data/info och 
 - kan peka ut ett (eller flera) objekt som är av samma klasstyp
 
 ## Enkellänkad lista med heltal
 
-I detta fall kommer vi låta medlemsvariablerna vara publika - dels för att direkt (utan metodanrop) kunna ändra på den referens som motsvarar *pekaren* och dels för att vi senare kan se att det är ok om man kapslar in klassen och döljer den inom den klass som ska skapa länkade konstruktioner. Den yttre klassen "äger" då den inre klassen och har förtroendet att accessa medlemsvariablerna i denna.  
-Låt oss börja med att definiera en klass som kan hålla ett heltal och länka till ett annat objekt av samma sort. 
+I detta fall kommer vi låta medlemsvariablerna vara publika - dels för att direkt (utan metodanrop) kunna ändra på den referens som motsvarar *pekaren* och dels för att vi senare kan se att det är ok om vi kapslar in klassen och döljer den inom den klass som ska skapa länkade konstruktioner. Den yttre klassen "äger" då den inre klassen och har förtroendet att accessa medlemsvariablerna i denna.  
+Låt oss börja med att definiera en klass som kan hålla ett heltal och länka den till ett annat objekt av samma sort.
 
 ```csharp
 public class Node
@@ -49,7 +49,7 @@ public class Node
     }
 }
 ```
-Nu kan man skapa objekt.
+Nu kan vi skapa objekt.
 
 ```csharp
 Node first = new Node(10); 
@@ -73,8 +73,8 @@ Nu kan vi fixa så att det blir en kedja med dessa noder enligt bilden, dvs en e
 />
 
 
-Ändra Next i det objekt first pekar på till referensen till objektet med med 20. Denna referens finns i variabeln second.
-Ändra Next i det objekt second pekar på till referensen till objektet med med 30. Denna referens finns i variabeln third.
+Ändra `Next` i det objekt `first` pekar på till referensen som objektet med värdet 20 pekar på. Denna referens finns i variabeln `second`.
+Ändra `Next` i det objekt `second` pekar på till referensen som objektet med värdet 30 pekar på. Denna referens finns i variabeln `third`.
 
 I C# blir detta:
 
@@ -84,9 +84,10 @@ second.Next = third;
 second = null; // bara för att tydligt släppa referensen till objektet
 third = null; 
 ```
+
 Vi observerar återigen att kedjan löper på ett håll. Det går till exempel att komma från noden med värdet 10 till noden med värdet 20 men inte tvärtom.
 
-För att skriva ut värdet som finns i Data i det andra noden behöver vi börja i `first`, använda punkt-notation för att accessa `Next` i objektet som `first` pekar på, dvs  `first.Next`. Här finns referensen till nästa objekt så vi använder återigen punk-notation, för att accessa Data, dvs `first.Next.Data`. Det blir alltså
+För att skriva ut värdet som finns i Data i det andra noden behöver vi börja i `first`, använda punkt-notation för att accessa `Next` i objektet som `first` pekar på, dvs  `first.Next`. Här finns referensen till nästa objekt så vi använder återigen punkt-notation, för att accessa Data, dvs `first.Next.Data`. Det blir alltså
 
 ```csharp
     Console.Write(first.Next.Data);
@@ -151,18 +152,18 @@ För att skriva ut värdet som finns i Data i det andra noden behöver vi börja
     <details>
     <summary>Klicka här för att visa svaret</summary>
 
-    Variabeln first *pekar på* ett nytt Node-objekt med Data = 77 och Next = null.   
-    Variabeln temp *pekar på* samma objekt som first.  
-    Next i det objekt som temp *pekar på* ändras så att det *pekar på* ett nytt Node-objekt med Data = 11 och Next = null.  
-    temp *pekar på* nästa Node-objekt i kedjan, dvs det som har Data = 11 och Next = null  
-    Next i det objekt som temp *pekar på* ändras så att det *pekar på* ett nytt Node-objekt med Data = 55 och Next = null.   
+    Variabeln `first` *pekar på* ett nytt Node-objekt med Data = 77 och `Next` = null.  
+    Variabeln temp *pekar på* samma objekt som `first`.  
+    `Next` i det objekt som temp *pekar på* ändras så att det *pekar på* ett nytt Node-objekt med Data = 11 och `Next` = null.  
+    temp *pekar på* nästa Node-objekt i kedjan, dvs det som har Data = 11 och `Next` = null  
+    `Next` i det objekt som temp *pekar på* ändras så att det *pekar på* ett nytt Node-objekt med Data = 55 och `Next` = null.  
 
-    Det är nu en kedja där first pekar på noden med 77 som pekar på noden med 11 som pekar på noden med 55.   
+    Det är nu en kedja där `first` pekar på noden med 77 som pekar på noden med 11 som pekar på noden med 55.  
     </details>  
 
-För att gå igenom alla element i en lista behöver man använda en variabel av samma datatyp som first och initialt ge den samma referens som first (den ska också *peka på* första noden). Denna variabel uppdaterar sin referens så att den *pekar på* nästa nod när arbetet med den aktuella noden är klart. Detta ska fortgå så länge variabeln inte fåt referensen null (då är ju listan slut).
+För att gå igenom alla element i en lista behöver vi använda en variabel av samma datatyp som `first` och initialt ge den samma referens som `first` (den ska också *peka på* första noden). Denna variabel uppdaterar sin referens så att den *pekar på* nästa nod när arbetet med den aktuella noden är klart. Detta ska fortgå så länge variabeln inte fått referensen null (då är ju listan slut).
 
-För att skriva ut alla heltals-värden i den länkade listan vi skapat kan vi skriva
+För att skriva ut alla heltals-värden i den länkade listan vi skapat kan vi skriva.
 
 ```csharp
     Node walker = first;
@@ -202,7 +203,7 @@ För att skriva ut alla heltals-värden i den länkade listan vi skapat kan vi s
 
     </details>
 
-1. Skriv C# kod för att lägga till en nod för värdet 33 mellan den nod som lagrar 77 och den nod som lagrar 11.
+1. Skriv C# kod för att lägga till en nod med värdet 33 mellan den nod som lagrar 77 och den nod som lagrar 11.
 
     <details>
     <summary>Klicka här för att visa svaret</summary>
@@ -241,14 +242,15 @@ public class Node<E>
 }
 ```
 
-För att skapa objekt för att hantera strängar skriver vi
+För att skapa objekt för att hantera strängar skriver vi.
 
 ```csharp
 Node<string> elemOne = new Node<string>("A");
 Node<string> elemTwo = new Node<string>("B");
 ```
 
-För att länka ihop dessa så att ordningen blir "A" följt av "B" skriver vi
+För att länka ihop dessa så att ordningen blir "A" följt av "B" skriver vi.
+
 ```csharp
 elemOne.Next = elemTwo;
 ```
@@ -256,7 +258,6 @@ elemOne.Next = elemTwo;
 ## Dubbellänkade listor
 
 Vi kan skapa länkade listor där noderna *pekar på* noden före (previus) och noden efter (next). Det ger oss möjlighet att vandra i listan i båda riktningarna.
-
 
 <br></br>
 <Figure
@@ -291,7 +292,7 @@ public class Node<E>
     width="500px"
 />
 
-    Skriv kod för att infoga den nod som temp *pekar på* så att den hamnar som 4:e nod i listan. 
+    Skriv kod för att infoga den nod som `temp` *pekar på* så att den hamnar som 4:e nod i listan.
     <details>
     <summary>Klicka här för att visa svaret</summary>   
 
@@ -305,9 +306,9 @@ public class Node<E>
     ``` 
     </details>
 
-##  Cirkulära länkade listor
+## Cirkulära länkade listor
 
-Genom att låta "slutelementet" i en enkellänkad list *peka på* "startlement" kan vi skapa en cirkulär enkellänkad lista.
+Genom att låta "slutelementet" i en enkellänkad list *peka på* "startlementet" kan vi skapa en cirkulär enkellänkad lista.
 
 <br></br>
 <Figure
@@ -325,14 +326,14 @@ På motsvarande sätt kan vi skapa en cirkulär dubbellänkad lista.
 
 ## Länkade listor med huvud
 
-Man kan använda en nod som ett så kallat huvud. Noden lagrar inget som är relevant för listan i övrigt. Detta gör man för att undvika specialfall och istället få implementationer som är enhetliga. 
+Vi kan använda en nod som ett så kallat huvud. Noden lagrar inget som är relevant för listan i övrigt. Detta gör vi för att undvika specialfall och istället få implementationer som är enhetliga.
 
 **Testa dig själv**
 
 1. Vilken fördel kan du se vid insättning av element i en enkellänkad lista som har en huvud-nod mot en som inte har det?  
 
     <details>
-    <summary>Klicka här för att visa svaret</summary>   
+    <summary>Klicka här för att visa svaret</summary>  
 
     Det behövs inget specialfall när ett element ska placeras först eftersom "första-pekaren" inte kommer att påverkas.
     </details>
@@ -340,19 +341,19 @@ Man kan använda en nod som ett så kallat huvud. Noden lagrar inget som är rel
 1. Vi har en metod med returtypen void som tar emot pekaren till en enkellänkad lista och i denna metod ska det första av de element som finns i listan tas bort. Kommer detta att vara möjligt för både listor med och listor utan huvud?
 
     <details>
-    <summary>Klicka här för att visa svaret</summary>   
+    <summary>Klicka här för att visa svaret</summary>  
 
     Det kommer bara att fungera för listor med huvud.
     </details>
 
 ## Annan länkning
 
-Det behöver inte vara listor som bildas när man länkar noder. Senare i kursen kommer vi att se att länkning även kan användas för att skapa andra strukturer såsom träd och grafer.
+Det behöver inte vara listor som bildas när vi länkar noder. Senare i kursen kommer vi att se att länkning även kan användas för att skapa andra strukturer såsom träd och grafer.
 
 
-## Sammanfattningvis
+## Sammanfattning
 
 En länkad lista är en följd av noder/element där varje nod "pekar på" en eller flera andra noder.  
-I C# skapas en klass för att representera en nod. Klassen gös dessutom generisk för att möjliggöra för olika datatyper i de länkade listorna.  
-Det behövs (minst) en separat pekar som pekar det första elementet i en länkad lista. Därefter kan man följa nodernas pekare för att nå andra noder.  
+I C# skapas en klass för att representera en nod. Klassen görs dessutom generisk för att möjliggöra för olika datatyper i de länkade listorna.  
+Det behövs (minst) en separat pekar som pekar det första elementet i en länkad lista. Därefter kan vi följa nodernas pekare för att nå andra noder.  
 I cirkulära listor finns ingen börjar eller slut, men det behövs en separat pekare för att ha någon "ingång" till noderna i listan.
