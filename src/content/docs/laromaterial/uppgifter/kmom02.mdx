@@ -163,22 +163,22 @@ Du förväntas tillföra fler hjälpmetoder för att lösa uppgiften.
 
 Nu ska du undersöka hur effektiva algoritmerna är genom att undersöka antalet jämförelser. Du ska göra detta genom att sortera BusStop-objekt.
 
-Filen `TestData1000.txt` innehåller 1000 rader med namn (t.ex "Stop ACF") och nummer (t.ex 1432) vilka är separerade med `:`.   
-Du kan använda följande kod för en metod för att läsa från fil och skapa en array med osorterade BusStop-objekt.  
+Filen `stops.txt` innehåller hållplatser för Blekingetrafiken.   
+Du kan använda följande kod för att läsa från fil och skapa en array med osorterade BusStop-objekt.  
 Tänk på att anpassa metoden avseende access (private eller public) och om den ska tillhöra klassen eller objekten.   
-Parametern `nrOf` motsvarar det antal du som ska läsas från filen
+Parametern `nrOf` motsvarar det antal som ska läsas från filen
 
 ```csharp
-BusStop[] ReadFromFile(string filename, int nrOf)
+private BusStop[] ReadFromFile(string filename, int nrOf = -1)
 {
-    if (nrOf > 1000)
-        nrOf = 1000;
     string[] stops = File.ReadAllLines(filename);
+    if (nrOf == -1 || nrOf > stops.Length)
+        nrOf = stops.Length - 1;
     BusStop[] busStops = new BusStop[nrOf];
     for (int i=0; i<nrOf; i++)
     {
-        int index = stops[i].IndexOf(":");
-        busStops[i] = new BusStop(stops[i].Substring(0, index), int.Parse(stops[i]!.Substring(index+1)));
+        string[] parts = stops[i+1].Split(",");
+        busStops[i] = new BusStop(parts[1], int.Parse(parts[0].Substring(8)));
     }
     return busStops;
 }
