@@ -53,11 +53,11 @@ Implementera en generisk klass `BusStop` som representerar en busshållplats och
     width="400px"
 />
 
-När BusStop-objekt jämförs ska det vara `_nr` som jämförelsen baseras på. Anta exempelvis att följande objekt skapas:
+När BusStop-objekt jämförs ska det vara `_name` som jämförelsen baseras på. Anta exempelvis att följande objekt skapas:
 
 ```
 BusStop busStopA = new BusStop("Traryd", 134, "Hög kant");
-BusStop busStopB = new BusStop("Älmhult", 122, "Ingen busskur för närvarande");
+BusStop busStopB = new BusStop("Ljungby", 122, "Ingen busskur för närvarande");
 ```
 då resulterar 
 - `busStopA.CompareTo(busStopB)` i 1
@@ -109,15 +109,15 @@ public class SearchAlgorithms
 
 ### Tester för att säkerställa att algoritmerna fungerar
 
-När du implementerat sökalgoritmerna ska du göra tester för att säkerställa att algoritmerna fungerar såsom avsett.  
+När du implementerat sökalgoritmerna ska du göra tester för att säkerställa att algoritmerna fungerar såsom avsett. 
 
-Byt namn på UnitTest1.cs i Searching.Tests till SearchAlgorithmTests.cs och implementera tester för både linjär och binärsökning i denna fil.   
+Byt namn på `UnitTest1.cs` i Searching.Tests till `SearchAlgorithmTests.cs` och implementera tester i denna fil.   
 
-Använd `TestCase` för att testa olika scenarion och datatyper. Det är viktigt att du inte bara testar att algoritmerna ger rätt svar utan också att de gör det på ett effektivt sätt, dvs. att de gör rätt antal jämförelser och att jämförelserna sker på rätt element i arrayen.  
+Använd `TestCase` för att testa olika scenarion och datatyper. Det är viktigt att du inte bara testar att algoritmerna ger rätt svar utan också att de gör det på ett effektivt sätt, dvs. att de gör rätt antal jämförelser och att jämförelserna sker på rätt element i arrayen. 
 
 Några tips på vägen:
 
-1. Fungerar algoritmen på för olika datatyper (int, string, BusStop)?
+1. Fungerar algoritmen för olika datatyper (int, string, BusStop)?
 1. Ger algoritmen korrekt svar på 
     - en tom array?
     - om det som söks är placerat först?
