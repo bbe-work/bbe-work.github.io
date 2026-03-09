@@ -9,7 +9,7 @@ import Figure from '@components/CustomFigure.astro';
 
 import klassdiagram from '@assets/img/kmom01/KlassdiagramKmom01Uppgift.png';
 
-I denna uppgift ska du implementera linjär- och binärsökning och undersöka deras prestanda genom att mäta antalet jämförelser som görs under sökning. Du ska även skapa en generisk klass som kan jämföras samt testprogram för att säkerställa att dina sökalgoritmer fungerar korrekt och effektivt.
+I denna uppgift ska du implementera linjär- och binärsökning och undersöka algoritmernas prestanda genom att mäta antalet jämförelser som görs under sökning. Du ska även skapa en generisk klass som definierar en klasstyp vars objekt kan jämföras samt testprogram för att säkerställa att dina sökalgoritmer fungerar korrekt och effektivt.
 
 ### Förberedelser
 
@@ -70,11 +70,11 @@ Filen ska namnges BusStop.cs och ingå i dotnet-projektet Searching. Klassen ska
 
 Algoritmerna ska vara generiska men kräva att elementen som sökningen utförs på implementerar `IComparable`-gränssnittet så att de kan jämföras med varandra.
 
-Det innebär att det bl. a ska vara möjligt att utföra sökning i en array av heltal, en array av strängar och en array anpassade objekt av typen `BusStop` som implementerar `IComparable`-gränssnittet (denna har du gjort).
+Det innebär att det bl. a ska vara möjligt att utföra sökning i en array av heltal, en array av strängar och en array anpassade objekt av typen `BusStop` som implementerar `IComparable`-gränssnittet (enligt klassdiagrammet ovan).
 
 I en fil namngiven SearchAlgorithms.cs ska du implementera klassen `SearchAlgorithms` med de två sökalgoritmerna `LinearSearch` och `BinarySearch` (se nedan). Klassen ska ingå i samma namespace (`Searching`) som `BusStop`.   
 
-Det finns för båda sökalgoritmerna en extra parameter som är en lista (datatypen `List<int>`) vilken ska användas för att registrera indexen där jämförelser görs. Detta för att kunna analysera hur många jämförelser som görs och var i arrayen de sker.
+Det finns för båda sökalgoritmerna en *extra parameter* som är en lista (datatypen `List<int>`) vilken ska användas för att registrera de index där element finns som det sökta har jämförts med. Detta för att kunna analysera hur många jämförelser som görs och var i arrayen de jämförelser gjorts.
 
 Parameterlistan ska vara anpassad efter följande anrop:
 ```
@@ -82,11 +82,11 @@ Parameterlistan ska vara anpassad efter följande anrop:
 int index = SearchAlgorithms.LinearSearch(nrs, 10, target, indexes);
 ```
 ```
-// Sökning targetStr i arrayen words med 100 strängar
+// Sökning av targetStr i arrayen words med 100 strängar
 int index = SearchAlgorithms.BinarySearch(words, 100, target, indexes);
 ``` 
 ```
-// Sökning targetBusStop i arrayen busStops med 1000 BusStop-objekt
+// Sökning av targetBusStop i arrayen busStops med 1000 BusStop-objekt
 int index = SearchAlgorithms.LinearSearch(busStops, 1000, targetBusStop, indexes);
 ```
 
