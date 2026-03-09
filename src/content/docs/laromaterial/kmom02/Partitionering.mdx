@@ -1,0 +1,221 @@
+---
+title: Partitioneringsalgoritmer 
+description: Lomutos och Hoares 
+order: 0050
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import lomuto001 from '@assets/img/kmom02/lomuto001.png';
+import lomuto002 from '@assets/img/kmom02/lomuto002.png';
+import lomuto003 from '@assets/img/kmom02/lomuto003.png';
+import lomuto004 from '@assets/img/kmom02/lomuto004.png';
+import lomuto005 from '@assets/img/kmom02/lomuto005.png';
+import lomuto006 from '@assets/img/kmom02/lomuto006.png';
+import lomuto007 from '@assets/img/kmom02/lomuto007.png';
+import lomuto008 from '@assets/img/kmom02/lomuto008.png';
+import lomuto009 from '@assets/img/kmom02/lomuto009.png';
+
+import hoares001 from '@assets/img/kmom02/hoares001.png';
+import hoares002 from '@assets/img/kmom02/hoares002.png';
+import hoares003 from '@assets/img/kmom02/hoares003.png';
+import hoares004 from '@assets/img/kmom02/hoares004.png';
+import hoares005 from '@assets/img/kmom02/hoares005.png';
+import hoares006 from '@assets/img/kmom02/hoares006.png';
+import hoares007 from '@assets/img/kmom02/hoares007.png';
+import hoares008 from '@assets/img/kmom02/hoares008.png';
+import hoares009 from '@assets/img/kmom02/hoares009.png';
+import hoares010 from '@assets/img/kmom02/hoares010.png';
+
+
+
+Det finns bl.a de båda partitioneringsalgoritmerna **Lomuto** och **Hoares** vilka vi ska kika lite närmare på.
+
+**Lomuto**  
+
+Här används en *pekare* (som vid implementation representeras av en heltalsvariabel), som går igenom elementen systematiskt från och med första elementet i den delsekvens i arrayen som är aktuell. Detta markeras med blått i arrayen. Dessutom används en *pekare* (även denna en heltalsvariabel vid implementation), för att markera gränsen mot de element som så långt har kontrollerats och som är mindre än pivot-elementet. Denna markeras med rosa i arrayen. Pivot-elementet är det sista i delsekvensen och markeras med gult.
+
+Anta att arrayen innehåller 6 88 90 55 44 78 9 94 70. 
+
+Vid start är gränsen innan själva arryen (därför syns inte rosa markering). Pekaren som används för att stega igenom elementen (blå) är på första elementet, dvs 6. 
+
+<Figure
+    src={lomuto001}
+    width="500px"
+/>
+Eftersom 6 < 70 ska 6 tillhöra den del som innehåller element mindre är pivot, dvs den vänstra delen. Detta hanteras genom att gränsen flyttas fram och markerar att gränsen sträcker sig till och med index 0.  
+
+Nu flyttas den blå pekaren till nästa element, dvs 88.  
+
+<Figure
+    src={lomuto002}
+    width="500px"
+/>
+Eftersom 88 inte är < 70 är 88 på rätt sidan om gränsen.
+Den blå pekaren flyttas och pekar nu på 90. 
+
+<Figure
+    src={lomuto003}
+    width="500px"
+/>
+Eftersom 90 inte är < 70 är 90 på rätt sidan om gränsen.
+
+Nästa element som den blå pekaren träffar på är 55.  
+
+<Figure
+    src={lomuto004}
+    width="500px"
+/>
+Eftersom 55 < 70 ska 55 vara på den vänstra delen. Det fixas genom att elementet till höger om gränsen (som ju ska tillhöra den högra sidan) byter plats med 55 och gränsen flyttas fram.  
+
+Den blå pekaren flyttas till nästa element, dvs 44. 
+
+<Figure
+    src={lomuto005}
+    width="500px"
+/>
+44 < 70 ska 55 vara på den vänstra delen och på samma sätt som tidigare byter denna gång 44 plats med 90 och gränsen flyttas fram.
+
+(Observera att det är denna hantering som egentligen gjordes när det första elementet som var 6 var mindre är pivot, men bytet innebar att elementet bytte med med sig själv.)
+
+Den blå pekaren flyttas till 78.
+
+<Figure
+    src={lomuto006}
+    width="500px"
+/>
+Eftersom 78 inte är < 70 är 78 på rätt sidan om gränsen.
+
+Nästa element som den blå pekaren träffar på är 9.
+
+<Figure
+    src={lomuto007}
+    width="500px"
+/>
+När alla element i delsekvensen i arrayen har passerats och därmed delats upp i en del som innehåller element mindre än pivot (vänster) och en del som innehåller övriga element (höger) så ser det ut så här.
+
+<Figure
+    src={lomuto008}
+    width="500px"
+/>
+Nu återstår att placera pivot-elementet mellan dessa delar.
+
+Detta görs genom att i den högra delen ta det element som är längst till vänster (precis intill den vänstra delen som innehåller alla element som är mindre än pivot) och byta detta med pivot-elementet (som är placerat sist).
+
+<Figure
+    src={lomuto009}
+    width="500px"
+/>
+På så vis hamnar pivot-elementet efter det som är mindre och före resterande (som ju är större eller lika med pivot-elementet).
+
+**Testa dig själv**
+ 
+1. Utför partitioner med Lomutos algoritm på sekvensen 43  28  64  83  21  97  12  55 där pivot-elementet är det sista i sekvensen och visa hur innehållet har ändrats?  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    43  28  21  12  55  97  83  64  
+    </details>
+
+  
+1. Utför partitioner med Lomutos algoritm på sekvensen 96  12  87  15  63  4  19 där pivot-elementet är det sista i sekvensen och visa hur innehållet har ändrats?  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    12  15  4  19  63  87  96 
+    </details>
+
+
+**Hoares**  
+
+Här används en pekare (heltalsvariabel) som "vandrar" från vänster med början på första noden i delsekvensen och en pekare som "vandrar" från höger (det sista noden i delsekvensen frånsett pivot sin är placerat sist). Pekaren som vandrar från vänster passerar alla element som är mindre än pivot-elementet och stannar så snart ett element som är större eller lika med pivot-elementet upptäcks. Pekaren som vandrar från höger (mot vänster) passerar istället alla element som är större eller samma som pivot-elementet och stannar i sin tur så snart ett element som är mindre än pivot-elementet upptäcks. Nu byter elementen som gjort att pekarna stannat plats och proceduren upprepas. När de båda pekarna möts har innehållet delats upp i en vänster del innehållande de element som är mindre ämn pivot-elementet och en höger del med övriga element.
+För att placera pivot-elementet mellan de mindre och övriga görs på samma sätt som partitionering enligt Lomutos.
+
+Anta att arrayen innehåller 6 88 90 55 44 78 9 94 70.
+
+För att markera pekaren som går från vänster och ska passera alla mindre element används rosa. För att markera *pekaren* som går från höger och ska passera alla större och lika element används blå färg. Pivot-elementet är det sista vilket markeras med gult.
+
+Båda pekarna är markerade i arrayen.
+
+<Figure
+    src={hoares001}
+    width="500px"
+/>
+Den pekare som börjar är den som går från vänster.  
+
+<Figure
+    src={hoares002}
+    width="500px"
+/>
+
+6 < 70 och pekaren går till nästa element.  
+
+<Figure
+    src={hoares003}
+    width="500px"
+/>
+Eftersom 88 inte är < än 70 stannar pekaren här.  
+
+Nu är det dags för den pekare som går från höger att passera alla element som är ≥ 70.
+
+<Figure
+    src={hoares004}
+    width="500px"
+/>
+Det blir i detta fall ingen fortsättning eftersom 50 < 70 och pekaren stannar.
+<Figure
+    src={hoares005}
+    width="500px"
+/>
+Nu har den pekare som går från vänster för att passerar element mindre än pivot (70) stannat eftersom den stött på ett element som är ≥ 70 och dessutom har den pekare som går från höger för att passera de element som är större eller lika med pivot (70) stannat eftersom den stött på ett element som är < 70.  
+Då ska elementen byta plats och båda pekarna röra sig ett steg framåt i sin förutbestämda riktning.
+<Figure
+    src={hoares006}
+    width="500px"
+/>
+Den blå får stanna direkt och den rosa tar ett steg innan den stannar.
+<Figure
+    src={hoares007}
+    width="500px"
+/>
+Då blev det byte av element igen och ett steg framåt för båda pekarna därefter.
+<Figure
+    src={hoares008}
+    width="500px"
+/>
+Den vänstra pekaren upptäcker att 44 < 70.  
+<Figure
+    src={hoares009}
+    width="500px"
+/>
+Men samtidigt möter den den högra pekaren när det ska stega fram. Det innebär att alla element har kontrollerats och att alla element som som är < 70 finns till vänster om gränsen för den blå pekaren.
+
+Nu återstår att placera pivot-elementet mellan dessa delar.
+
+Detta görs genom att i den högra delen ta det element som är längst till vänster (precis intill den vänstra delen som innehåller alla element som är mindre än pivot) och byta detta med pivot-elementet (som är placerat sist).
+<Figure
+    src={hoares010}
+    width="500px"
+/>
+Nu är pivot-elementet på rätt plats.
+
+
+**Testa dig själv**
+ 
+1. Utför partitioner med Hoares algoritm på sekvensen 43  28  64  83  21  97  12  55 där pivot-elementet är det sista i sekvensen och visa hur innehållet har ändrats?  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    43  28  12  21  55  97  64  83  
+    </details>
+
+  
+  
+1. Utför partitioner med Hoares algoritm på sekvensen 96  12  87  15  63  4  19 där pivot-elementet är det sista i sekvensen och visa hur innehållet har ändrats?  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    4  12  15  19  63  96  67  
+    </details>
+
