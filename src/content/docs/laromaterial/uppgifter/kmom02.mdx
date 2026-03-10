@@ -74,7 +74,7 @@ Kontrollera att du får rätt resultat.
 
 ```csharp
 BusStop busStopA = new BusStop("Traryd", 134, "Hög kant");
-BusStop busStopB = new BusStop("Älmhult", 122, "Ingen busskur för närvarande");
+BusStop busStopB = new BusStop("Ljungby", 122, "Ingen busskur för närvarande");
 
 Console.WriteLine($"Antalet jämförelser vid start {BusStop.GetNrOfComparisons()}");
 if (busStopA.CompareTo(busStopB) > 0)
@@ -104,7 +104,6 @@ Console.WriteLine($"Antalet jämförelser efter Reset {BusStop.GetNrOfComparison
 
 Algoritmerna ska vara generiska men kräva att elementen som sorteras implementerar   
 `IComparable`-gränssnittet så att de kan jämföras med varandra.
- alla finnas i filen SortingAlgorithms.cs   
 
 Du ska implementera insertionsort och quicksort i lite olika varianter. Dessa ska finnas i filen SortingAlgorithms.cs som ska tillhöra namespace `Sorting`. 
 
@@ -127,14 +126,14 @@ Det ska även tillföras quicksort i några varianter
 ```csharp
 public static void Quicksort<T>(T[] A, int start, int end) {/*ska implementeras*/}
 public static void QuicksortUsingMedianOfThree<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
-public static void QuicksortUsingInsertionsort<T>(T[] A, int start, int end, int limit) where T : IComparable<T> {/*ska implementeras*/}
+public static void QuicksortUsingInsertionsort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
 ```
 
 **Quicksort**  Utför quicksort där pivot är det sista elementet.
 
 **QuicksortUsingMedianOfThree** Utför quicksort där pivot bestäms enligt principen "medianen-av-tre".
 
-**QuicksortUsingInsertionsort** Utför quicksort där pivot väljs som sista elementet men där insertionsort används när antalet element i en delsekvens är mindre än limit.
+**QuicksortUsingInsertionsort** Utför quicksort där pivot väljs som sista elementet och där insertionsort används när antalet element i en delsekvens är mindre än 10.
 
 Partitioneringsalgoritmen där sista elementet är pivot får du här:
 
@@ -159,6 +158,28 @@ private static int Partition<T>(T[] A, int start, int end) where T : IComparable
 
 Du förväntas tillföra fler hjälpmetoder för att lösa uppgiften.
 
+#### Kontrollera att dina algoritmer är korrekta
+
+Prova att sortera med olika datatyper (t.ex int och string).   
+Kontrollera att arrayen verkligen är sorterad när algoritmen är klar.
+
+<details>
+<summary>Ett förslag hittar du här</summary>
+
+```csharp
+bool CheckSorted<T>(T[] arr, int n) where T: IComparable<T>
+{
+    for (int i=1; i<arr.Length-1; i++)
+    {
+        if (arr[i].CompareTo(arr[i+1])>0)
+            return false;
+    }
+    return true;
+}
+
+```
+</details>
+
 ### Använd sorteringsalgoritmerna
 
 Nu ska du undersöka hur effektiva algoritmerna är genom att undersöka antalet jämförelser. Du ska göra detta genom att sortera BusStop-objekt.
@@ -172,10 +193,10 @@ stop_id,stop_name,stop_lat,stop_lon,location_type,parent_station,platform_code
 9021010001015000,Polhemsgatan,56.176723,15.590546,1,,
 ...
 ```
-Du kan använda följande kod för att läsa från fil och skapa en array med osorterade BusStop-objekt, där de 8 sista siffrorna i stop_id blir nr och `_name` blir stop_name.
+Du kan använda följande kod för att läsa från fil och skapa en array med osorterade BusStop-objekt, där de 8 sista siffrorna i stop_id blir nummer (`_nr`) och stop_name blir namnet (`_name`).
 
 Tänk på att anpassa metoden som ska läsa från fil avseende access (private eller public) och om den ska tillhöra klassen eller objekten.   
-Parametern `nrOf` motsvarar det antal som ska läsas från filen mne om dess värde är -1 läses hela filen.
+Parametern `nrOf` motsvarar det antal som ska läsas från filen men om dess värde är -1 läses hela filen.
 
 ```csharp
 BusStop[] ReadFromFile(string filename, int nrOf = -1)
@@ -204,7 +225,7 @@ Exekvera din implementation av `Insertionsort` med
 
 och notera resultaten (antalet jämförelser). Är resultaten rimliga/korrekta? Vilket motsvarar bästa fallet? Vilket motsvarar sämsta fallet? 
 
-För att resultatet av sortering ev de osorterade BusStop-objekten ska blir relevant behöver du göra minst 5 olika exekveringar med olika ordning i arrayerna. Ett tips är att blanda objekten inför varje ny sortering. När dessa körningar genomförts bestämmer du medelvärdet av antalet jämförelser.
+För att resultatet av sortering av de osorterade BusStop-objekten ska blir relevant behöver du göra minst 5 olika exekveringar med olika ordning i arrayerna. Ett tips är att blanda objekten inför varje ny sortering. När dessa körningar genomförts bestämmer du medelvärdet av antalet jämförelser.
 
 #### Quicksort - olika varianter
 
@@ -212,9 +233,9 @@ För att resultatet av sortering ev de osorterade BusStop-objekten ska blir rele
 
 Exekvera för var och en av dina implementationer av `Quicksort`-varianterna
 
-1. 100 resp 1000 osorterade BusStop-objekt
-1. 100 resp 1000 omvänt sorterade BusStop-objekt
-1. 100 resp 1000 sorterade BusStop-objekt
+1. 10, 100 resp 1000 osorterade BusStop-objekt
+1. 10, 100 resp 1000 omvänt sorterade BusStop-objekt
+1. 10, 100 resp 1000 sorterade BusStop-objekt
 
 och notera resultaten (antalet jämförelser). 
 
@@ -224,7 +245,7 @@ Kan du se någon effekt av användandet av insertionsort? Vilka gränser (limit)
 
 ## DERAS KOD SKA PASSERA TESTER
 
-## VAD SKA DE LÄMNA IN
+## VAD SKA DE LÄMNA IN ? En tabell med resultaten och en reflektion över dessa som kan användas som del i kodintervjun?
 - 
 
 
