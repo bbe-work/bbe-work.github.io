@@ -1,0 +1,383 @@
+---
+title: Träd
+description:  Introduktion av träd generellt
+order: 0010
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import trad from '@assets/img/kmom05/Trad.png';
+import tradfargrotlov from '@assets/img/kmom05/TradFargRotLov.png';
+import tradforalderbarn from '@assets/img/kmom05/TradForalderBarn.png';
+import binaratrad from '@assets/img/kmom05/BinaraTrad5.png';
+import vansterhogerdeltrad from '@assets/img/kmom05/BinartTradVansterHogerDeltrad.png';
+
+import tradfortraversering from '@assets/img/kmom05/TradForPreorder.png';
+
+import preorder01 from '@assets/img/kmom05/PreOrder01.png';
+import preorder02 from '@assets/img/kmom05/PreOrder02.png';
+import preorder03 from '@assets/img/kmom05/PreOrder03.png';
+import preorder04 from '@assets/img/kmom05/PreOrder04.png';
+import preorder05 from '@assets/img/kmom05/PreOrder05.png';
+import preorder06 from '@assets/img/kmom05/PreOrder06.png';
+import preorder07 from '@assets/img/kmom05/PreOrder07.png';
+import preorder08 from '@assets/img/kmom05/PreOrder08.png';
+import preorder09 from '@assets/img/kmom05/PreOrder09.png';
+import preorder10 from '@assets/img/kmom05/PreOrder10.png';
+import preorder11 from '@assets/img/kmom05/PreOrder11.png';
+import preorder12 from '@assets/img/kmom05/PreOrder12.png';
+import preorder13 from '@assets/img/kmom05/PreOrder13.png';
+import preorder14 from '@assets/img/kmom05/PreOrder14.png';
+import preorder15 from '@assets/img/kmom05/PreOrder15.png';
+import preorder16 from '@assets/img/kmom05/PreOrder16.png';
+import preorder17 from '@assets/img/kmom05/PreOrder17.png';
+
+
+Inom datavetenskap är träd en hierarkisk struktur för att organisera element.
+
+## Terminologi
+
+Ett (rotat) träd består av en mängd **noder (eng. node)** vilka är förbundna med varandra med **kanter (eng. edge)** på ett hierarkiskt sätt. I bilden nedan illustreras ett träd där noderna visa som svarta fyllda cirklar och kanter visas som linjer mellan noderna.
+<br></br>
+<Figure
+    src={trad}
+    caption="Illustration av en träd"
+    width="300px"
+/>
+
+Det finns en nod som kallas **rot (eng. root)**. Den är i bilden nedanför markerad med rött. Det finns även noder som kallas **löv (eng. leaf)**. Dessa är i trädet nedanför markerade med grönt. Det som identifierar löv är att dessa inte har några förgreningar nedåt. Övriga noder (de som är markerade med svart) kallas **interna noder (eng. internal nodes)**.  
+Roten finns på **nivå (eng. level)** 0, rotens barn på nivå 1, osv. Det nedersta lövet finns på nivå 3 i trädet.  
+<br></br>
+<Figure
+    src={tradfargrotlov}
+    caption="Illustration av träd med rot, löv och interna noder"
+    width="300px"
+/>
+
+
+Noderna är förbundna med varandra på ett bestämt sätt. Det är nämligen så att det finns en relation mellan noderna beroende på hur de är placerade och förbundna med varandra. Man pratar om **föräldrar (eng. parent)** och **barn (eng. child)**. 
+<br></br>
+<Figure
+    src={tradforalderbarn}
+    caption="Illustration av förälder och barn"
+    width="300px"
+/>
+
+I bilden ovan har roten (den röda noden) 4 barn vilka är noderna med färgerna grön, svart, gul och blå. Även den svarta noden är förälder och dess barn är den orange noden och den grå noden. 
+Man kan även uttrycka att den gula nodens förälder är den röda noden och att den grå nodens förälder är den svarta noden.
+Dessutom säger man att den grå och den orange noden är **syskon (eng. siblings)**. På samma sätt är den gröna, svarta, gula och blå noden syskon.   
+
+Andra begrepp som är relevanta är **höjd (eng. height)**, **djup (eng. depth)** och **väg (eng path)**. En väg innebär att man använder kanterna för att ta sig från en nod till en annan nod. En kant får bara användas en gång. Det innebär att det finns en unik väg mellan varje par av noder.
+
+Det finns t.ex en väg från den grå noden till den blå noden där man passerar den svarta noden följt av den röda noden. Vägen blir (med färgangivelse på noderna) grå - svart - röd - blå. Det finns ingen annan alternativ väg från grå till blå nod. 
+
+**Längden (eng. length)** på en väg motsvarar antalet använda kanter. I vårt exempel på väg från den grå till den blå noden blir längden 3.
+
+Höjden på ett träd är den längsta vägen som finns i trädet från ett löv till roten. I vårt exempel är höjden 2 (från det orange lövet eller det grå lövet till roten).
+
+Alla noder finns på ett djup vilket bestäms av längden på vägen från noden till roten. I vårt exempel så är till exempel den röda noden (roten) på djupet 0, den blå på djupet1 och den orange på djupet 2.
+
+Ett **tomt träd (eng. empty tree)** är ett träd som inte innehåller några noder.
+
+## Binära träd
+Binära träd (eng binary tree)
+- har en rot 
+- varje nod har 0, 1 eller 2 barn
+
+Vidare namnger man barnen som **vänster barn (eng. left child)** och **höger barn (eng. right child)**. Det träd som har vänster barn som rot kallas **vänster delträd (eng. left subtree)** och det träd som har höger barn som rot kallas **höger delträd (eng. right subtree)**. 
+
+
+Några exempel:
+<br></br>
+<Figure
+    src={binaratrad}
+    caption="Exempel på binära träd"
+/>
+
+Vi konstaterar till exempel att *Träd 1* har höjden 4, att det har 4 löv (2 löv på djupet 2, 1 löv på djupet 3 och 1 löv på djupet 4). Det finns 3 noder som har 2 barn och 3 noder som har 1 barn. Det högra delträdet till roten har höjden 2.
+
+När det gäller *Träd 2* så har alla noder, förutom det enda lövet, 1 barn. Höjden på trädet är 3.
+
+*Träd 3* består av endast 1 nod som därmed är både rot och löv. Höjden på trädet är 0. Både vänster och höger delträd är tomma träd.
+
+Avseende *Träd 4* ser vi att alla noder, förutom löven, har 2 barn. Ett sådant träd kallas ett **fullt binärt träd (eng. full binary tree)**. Benämning **fullt träd (eng. full tree)** gäller även träd som inte är binära men kravet är att alla noder förutom löven har maximalt antal möjliga barn. 
+
+*Träd 5* är ett **komplett binärt träd (eng. complete binary tree)** vilket definieras av att alla nivåer är fyllda förutom möjligen den sista som är fylld till viss del från vänster. På motsvarande sätt som för fullt träd finns **kompletta träd (eng. complete tree)** med samma regel men för det antal barn noderna max kan ha.
+
+# Traversering av binära träd
+Man kan behöva gå igenom noderna i ett binärt träd för att t.ex uppdatera eller söka efter värden. Det finns olika algoritmer som utför detta och vi ska gå igenom 3 av dessa:
+- preorder
+- inorder 
+- postorder
+
+Vi konstaterar att för alla noder i ett binärt träd gäller att de har ett vänster delträd (som är ett binärt träd) och ett höger delträd (som är ett binärt träd). Delträden kan vara tomma binära träd.
+
+<br></br>
+<Figure
+    src={vansterhogerdeltrad}
+    caption="Vänster och höger delträd"
+    width="350px"
+/>
+
+Detta innebär att vi kan definiera rekursiva traverseringsalgoritmer. 
+
+Alla traverseringsalgoritmer börjar i roten.
+
+## Preorder
+
+*Pre* betyder innan/före och syftar på att själva besöket av noden utförs innan både vänster delträd och höger delträd traverseras. 
+
+```
+preorder(currentNode)
+    if currentNode is not null
+        visit(currentNode)
+        preorder(currentNode.leftChild)
+        preorder(currentNode.rightChild)
+```
+
+Vi utgår från följande träd, där noderna har fått bokstavs-etiketter, och utför preorder-traversering på trädet. Ett besök (visit i algoritmen) innebär i detta fall att nodens etikett presenteras:  
+<br></br>
+<Figure
+    src={tradfortraversering}
+    caption="Binärt träd som ska traverseras"
+    width="300px"
+/>
+
+I första anropet av preorder är argumentet roten, dvs noden med R, som därmed "blir" `currentNode` (visas med röd cirkel).  
+<br></br>
+<Figure
+    src={preorder01}
+    width="300px"
+/>
+
+Denna är inte null och visit-utförs på R vilket innebär att R presenteras (markeras med grön cirkel). Nytt anrop utförs nu med R's vänster barn. `currentNode` blir i detta anrop noden O.  
+<br></br>
+<Figure
+    src={preorder02}
+    width="300px"
+/>
+
+Denna är inte null och visit-utförs vilket innebär att O presenteras.  
+Nytt anrop utförs nu med O's vänster barn. `currentNode` blir i detta anrop noden P.  
+<br></br>
+<Figure
+    src={preorder03}
+    width="300px"
+/>
+
+Denna är inte null och visit-utförs vilket innebär att P presenteras. 
+Nu anropas preorder med P's vänsterbarn men det är tomt (null) och algoritmen avslutas direkt. Därefter är det dags för anrop av höger barn till P men även detta är tomt (null) och anropet avslutas. Detta innebär att för noden P är preorder klar. Detta markeras med grön fylld cirkel. 
+
+<br></br>
+<Figure
+    src={preorder04}
+    width="300px"
+/>
+Algoritmen fortsätter därmed på föregående anrop vilket är anropet med `currentNode` O (markeras med röd cirkel).  
+
+<br></br>
+<Figure
+    src={preorder05}
+    width="300px"
+/>
+För denna nod är vänster delträd klart (preorder har utförts på hela dess vänster delträd) och det är dags för höger barn som är noden med H.  
+<br></br>
+<Figure
+    src={preorder06}
+    width="300px"
+/>
+
+På motsvarande sätt som för noden med P blir preorder klar för denna nod.  
+
+<br></br>
+<Figure
+    src={preorder07}
+    width="300px"
+/>
+Föregångaren är noden med O.  
+<br></br>
+<Figure
+    src={preorder08}
+    width="300px"
+/>
+
+Denna är besökt och båda dess delträd är avklarade och hela trädet med O som rot är klart. 
+
+<br></br>
+<Figure
+    src={preorder09}
+    width="300px"
+/>
+
+Föregående anrop är med R som `currentNode`. 
+<br></br>
+<Figure
+    src={preorder10}
+    width="300px"
+/>
+
+Här återstår att utföra preorder på höger barn, dvs för noden X.  
+
+<br></br>
+<Figure
+    src={preorder11}
+    width="300px"
+/>
+
+Noden besöks. Dess vänster delträd är tomt och preorder fortsätter med höger barn som är noden med S.
+<br></br>
+<Figure
+    src={preorder12}
+    width="300px"
+/>
+
+Noden besöks och preorder utförs på vänster barn, dvs noden med W.
+<br></br>
+<Figure
+    src={preorder13}
+    width="300px"
+/>
+
+Noden med W besöks. Denna har inga barn och preorder återgår till föregående anrop, dvs där `currentNode` är noden med S.
+
+<br></br>
+<Figure
+    src={preorder14}
+    width="300px"
+/>
+
+Eftersom noden med S inte har något häger barn är algoritmen klar för delträdet med S som rot. Föregående anrop motsvarar att X är `currentNode`.
+
+<br></br>
+<Figure
+    src={preorder15}
+    width="300px"
+/>
+
+Även detta träd är klart och algoritmen är tillbaka till `currentNode` som R.
+
+<br></br>
+<Figure
+    src={preorder16}
+    width="300px"
+/>
+
+Och nu är hela trädet traverserat.
+<br></br>
+<Figure
+    src={preorder17}
+    width="300px"
+/>
+Besöksordningen blev:  R O P H X S W 
+
+Förhoppningsvis har vi nu klart för oss hur besöksordningen blir.
+
+**Testa dig själv**
+ 
+1. Om vi lägger till ett höger barn med F till noden med P och ett vänster barn med A till noden H. Hur blir då traverseringsordningen ?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    ROPFHAXSW
+    </details>
+
+## Inorder
+
+Vi fortsätter med **inorder**, *in* betyder i detta fall mellan och syftar på att själva besöket av noden utförs mellan traverseringen av vänster delträd och traverseringen av höger delträd. 
+
+```
+inorder(currentNode)
+    if currentNode is not null
+        inorder(currentNode.leftChild)
+        visit(currentNode)
+        inorder(currentNode.rightChild)
+```
+
+Vi utgår från samma träd som tidigare. Ett besök (visit i algoritmen) innebär även här att nodens etikett presenteras:  
+
+<br></br>
+<Figure
+    src={tradfortraversering}
+    caption="Binärt träd som ska traverseras"
+    width="300px"
+/>
+
+
+Vi följer den rekursiva algoritmen på motsvarande sätt som för inorder, men inte lika detaljerat:
+
+Algoritmen startar i R som inte är null.  
+Nästa steg i algoritmen är ett anrop med vänster barn, dvs O.  
+Noden är inte null och anrop görs med vänster barn som är P. 
+Noden är inte null och anrop görs med vänster barn som är null. 
+Vi är tillbaka i algoritmen för P där nästa steg är besöket, varvid P presenteras. Därefter är det anrop med höger barn till O, dvs H.  
+Anropet för H resulterar i att anrop med H's vänster barn som är null.  
+Nästa steg är besöket och H presenteras.
+Anropet av höger barn till H blir ett anrop med null.
+Trädet med H som rot är klart och vi är tillbaka till anropet av trädet med roten O. Detta är klart och vi vänder tillbaka till R.
+Och så vidare.
+
+**Testa dig själv**
+ 
+1. Vilken är den slutliga ordningen av noderna som inorder-algoritmen resulterar i?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    POHRXWS
+    </details>
+
+## Postorder
+
+Sista traverserings-algoritmen är **postorder**, *post* betyder efter(sist) och syftar på att själva besöket av noden utförs efter traverseringen av vänster delträd och höger delträd. 
+
+```
+postorder(currentNode)
+    if currentNode is not null
+        postorder(currentNode.leftChild)
+        postorder(currentNode.rightChild)
+        visit(currentNode)
+```
+
+Vi utgår från samma träd som tidigare. Ett besök (visit i algoritmen) innebär även här att nodens etikett presenteras:  
+
+<br></br>
+<Figure
+    src={tradfortraversering}
+    caption="Binärt träd som ska traverseras"
+    width="300px"
+/>
+
+Vi följer den rekursiva algoritmen på motsvarande sätt som för inorder:
+
+Algoritmen startar i R som inte är null.  
+Nästa steg i algoritmen är ett anrop med vänster barn, dvs O.  
+Noden är inte null och anrop görs med vänster barn som är P.
+Nästa anrop är vänster barn til P som är null följt av höger barn till P som också är null. Det är nu dags för besöket och P presenteras.  
+Trädet med P som rot är klart.  
+Vi är tillbaka i algoritmen för O där nästa steg är anrop med höger barn, dvs H.
+Anropet för H resulterar i att anrop med H's vänster barn som är null följt av ett anrop med H's höger barn som också är null. Det innebär att nästa steg genomförs vilket är besöket och H presenteras. Nu är algoritmen för trädet med H som rot klar.   
+Vi återgår till trädet med O som rot och där återstår endast besöket vilket resulterar i att O presenteras. 
+Och så vidare.
+
+**Testa dig själv**
+ 
+1. Vilken är den slutliga ordningen av noderna i presentationen?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+    PHOWSXR
+    </details>
+
+
+## Sammanfattningsvis
+
+Träd är en hierarkisk struktur vilken byggs upp av noder och kanter, där kanterna förbinder noder
+Det finns en specifik nod som kallas rot som är överst i hierarkin. Noder utan bran kassas löv ovh övriga noder kallas interna noder.
+Höjden på ett träd är längden på vägen från roten till det löv som finns längst ifrån roten.
+I binära träd har alla noder 0, 1 eller 2 barn. Barnen benämns vänster respektive höger barn.
+De träd vars rötter är barnen till en nod kallas höger respektive vänster delträd.
+Dte finns några olika rekursiva algoritmer för att traversera binära träd - preorder, inorder samt postorder.
+
+
+
+
