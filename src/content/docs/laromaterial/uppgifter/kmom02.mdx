@@ -160,25 +160,26 @@ Du förväntas tillföra fler hjälpmetoder för att lösa uppgiften.
 
 #### Kontrollera att dina algoritmer är korrekta
 
-Prova att sortera med olika datatyper (t.ex int och string).   
-Kontrollera att arrayen verkligen är sorterad när algoritmen är klar.
+- Prova att sortera med olika datatyper (t.ex int och string).  
 
-<details>
-<summary>Ett förslag hittar du här</summary>
+- Kontrollera att arrayen verkligen är sorterad när algoritmen är klar.
 
-```csharp
-bool CheckSorted<T>(T[] arr, int n) where T: IComparable<T>
-{
-    for (int i=1; i<arr.Length-1; i++)
+    <details>
+    <summary>Ett förslag hittar du här</summary>
+
+    ```csharp
+    bool CheckSorted<T>(T[] arr, int n) where T: IComparable<T>
     {
-        if (arr[i].CompareTo(arr[i+1])>0)
-            return false;
+        for (int i=1; i<arr.Length-1; i++)
+        {
+            if (arr[i].CompareTo(arr[i+1])>0)
+                return false;
+        }
+        return true;
     }
-    return true;
-}
 
-```
-</details>
+    ```
+    </details>
 
 ### Använd sorteringsalgoritmerna
 
@@ -195,22 +196,29 @@ stop_id,stop_name,stop_lat,stop_lon,location_type,parent_station,platform_code
 ```
 Du kan använda följande kod för att läsa från fil och skapa en array med osorterade BusStop-objekt, där de 8 sista siffrorna i stop_id blir nummer (`_nr`) och stop_name blir namnet (`_name`).
 
-Tänk på att anpassa metoden som ska läsa från fil avseende access (private eller public) och om den ska tillhöra klassen eller objekten.   
+Tänk på att du eventuellt kan behöva anpassa metoden som ska läsa från fil avseende access (private eller public) och om den ska tillhöra en klass eller objekt.   
 Parametern `nrOf` motsvarar det antal som ska läsas från filen men om dess värde är -1 läses hela filen.
 
 ```csharp
 BusStop[] ReadFromFile(string filename, int nrOf = -1)
 {
-    string[] stops = File.ReadAllLines(filename);
-    if (nrOf == -1 || nrOf > stops.Length)
-        nrOf = stops.Length - 1;
-    BusStop[] busStops = new BusStop[nrOf];
-    for (int i=0; i<nrOf; i++)
+    try 
     {
-        string[] parts = stops[i+1].Split(",");
-        busStops[i] = new BusStop(parts[1], int.Parse(parts[0].Substring(8)));
+        string[] stops = File.ReadAllLines(filename);
+            if (nrOf == -1 || nrOf > stops.Length)
+        nrOf = stops.Length - 1;
+        BusStop[] busStops = new BusStop[nrOf];
+        for (int i=0; i<nrOf; i++)
+        {
+            string[] parts = stops[i+1].Split(",");
+            busStops[i] = new BusStop(parts[1], int.Parse(parts[0].Substring(8)));
+        }
+        return busStops;
     }
-    return busStops;
+    catch(Exception e)
+    {
+        return null;
+    }
 }
 
 ```
@@ -239,14 +247,11 @@ Exekvera för var och en av dina implementationer av `Quicksort`-varianterna
 
 och notera resultaten (antalet jämförelser). 
 
-Även här gäller det att det behövs mints 5 olika exekveringar som underlag för att beräkna ett medelvärde på antalet jämförelser för de osorterade arrayerna.   
+Även här gäller det att det behövs minst 5 olika exekveringar som underlag för att beräkna ett medelvärde på antalet jämförelser för de osorterade arrayerna.   
 Är resultaten rimliga/korrekta? Kan du se någon effekt av "medianen-av-tre"?   
 Kan du se någon effekt av användandet av insertionsort? Vilka gränser (limit) har du testat med? 
 
-## DERAS KOD SKA PASSERA TESTER
 
-## VAD SKA DE LÄMNA IN ? En tabell med resultaten och en reflektion över dessa som kan användas som del i kodintervjun?
-- 
 
 
 
