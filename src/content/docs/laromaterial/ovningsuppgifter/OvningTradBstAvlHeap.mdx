@@ -1,0 +1,259 @@
+---
+title: Övningsuppgifter Träd, BST, AVL och Heap
+description: Uppgifter Träd, BST, AVL och Heap
+order: 0010
+hidden: true
+---
+
+
+1. Givet trädet 
+
+    ![Träd](/images/ovningar/trad01.png)
+
+    A: Vilken färg har rot-nod?  
+    B: Vilka färger har löven?  
+    C: Vilken färg har föräldern till den grå noden?  
+    D: Vilka färger har barnen till den gula noden?  
+    E: Vilken höjd har trädet?  
+    F: På vilket djup finns den rosa noden?  
+    G: Vilka färger på noderna (i den ordningen de passeras) är det på vägen med start i den grå noden och slut i den rosa noden?  
+    H: Vilken längd har vägen i uppgift G?  
+
+1. Sätt in följande element (i den ordning de är angivna) i ett från början tomt BST
+
+    45, 67, 21, 41, 15, 77, 33, 20, 10
+
+    A: Hur ser trädet ut efter insättningarna?  
+    B: Kan elementen sättas in i någon annan ordning men ändå resultera i samma träd?  
+    C: Ange en ordning på elementen som gör att trädet blir så högt som möjligt.  
+    D: Ange en ordning på elementen som gör att trädet blir så lågt som möjligt.  
+
+1. Utgå från trädet som insättningen resulterade i från föregående uppgift (A:) och sätt in följande element (i den ordning de är angivna) 
+
+    90, 27, 80, 93, 85  
+    
+    A: Hur ser trädet ut insättningarna?  
+    B: Ta bort 77 från trädet. Hur ser trädet ut därefter?  
+    C: Ta bort 21 från trädet. Hur ser trädet ut nu?  
+
+1. Hur högt är det högsta BST som innehåller exakt 20 noder?
+
+1. Hur högt är det lägsta BST som innehåller exakt 20 noder?
+
+1. Givet trädet nedan.   
+
+    ![Binärt träd](/images/ovningar/binartTrad01.png)
+
+    Vilken ordning besöks noderna om trädet traverseras i  
+    A: preorder  
+    B: postorder  
+    C: inorder  
+
+1. Vad är det som gäller för ett AVL-träd?  
+
+1. Rita ett AVL träd som är så högt som möjligt och som innehåller elementen 33, 55, 66, 44, 22, 99, 77
+
+1. Vad är ett komplett binärt träd?  
+
+1. Hur lagras ett komplett binärt träd i en array?
+
+1. Om en ett element finns på index k i ett komplett binärt träd, var finns då  
+
+    A: Föräldern  
+    B: Vänster barn   
+    C: Höger barn  
+
+1. Vad är det som gäller för en Heap?  
+
+1. Vilken höjd har heapen (dvs trädet) om den innehåller 45 element?  
+
+1. Sätt in följande element (i den ordning de är angivna) i en från början tom Heap.  
+
+    29, 48, 12, 10, 35, 22, 56, 40, 23  
+
+    A: Hur ser trädet ut efter insättningarna?   
+    B: Vilket innehåll har den array som representerar heapen (trädet)?
+
+1. Ta ut ett element från den heap som föregående uppgift resulterade i. Hur ser trädet ut nu?  
+
+1. Ta ut ytterligare ett element från heapen. Hur ser trädet ut nu?  
+
+1. Vilken är tidskomplexiteten i ordo-notation för värsta fallet för operationen att sätta in ett nytt element i en heap? Motivera
+
+1. Vilken är tidskomplexiteten i ordo-notation för värsta fallet för operationen att ta bort ett element från en heap? Motivera
+
+# Lösningsförslag
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A: svart  
+    B: svart, lila, grön, orange, grå  
+    C: blå  
+    D: brun, lila, grön  
+    E: 4  
+    F: 3  
+    G: grå - blå - svart - gul - brun - rosa  
+    H: 5  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A:  
+
+    ![BST](/images/ovningar/BST01.png)
+
+    B: Ja, t.ex 45, 21, 67, 41, 15, 33, 20, 10, 77, 17  
+    C: t.ex 10, 15, 17, 20, 21, 33, 41, 45, 67, 77  
+    D: t.ex 21, 17, 45, 10, 20, 15, 41, 67, 33, 77   
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A:  
+
+    ![BST](/images/ovningar/BST02.png)
+
+    B:   
+
+    ![BST](/images/ovningar/BST03.png) 
+
+    C:  
+
+    ![BST](/images/ovningar/BST04.png)
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    19
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    4
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A: XHRQMSWLJ    
+    B: QSMRWHJLX  
+    C: QRSMHWXLJ  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Det är ett BST som är balanserat så att det för varje nod gäller att höjden på vänster och höger delträd skiljer med högst 1.  
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    T.ex
+
+    ![AVL exempel](/images/ovningar/AVL01.png)
+
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Det är ett binärt träd som är fullt på alla nivåer förutom möjligen den sista (nedersta) som kan vara delvis fylld med löv från vänster till höger.
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Roten placeras på index 0 och därefter fylls arrayen på nivå för nivå i trädet från vänster till höger. T.ex finns rotens vänstra barn på index 1 och rotens högra barn på index 2.  
+
+    </details>
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A: (k-1)/2  
+    B: 2k + 1  
+    C: 2k + 2  
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Det är ett komplett binärt träd där alla noder har ett värde större än sina barn. Detta gäller för en max-heap. För en min-heap gäller att alla noder har mindre värde än sina barn.
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    5
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A:   
+    ![Heap](/images/ovningar/Heap01.png)  
+    B: Innehållet från index 0 och framåt  56, 40, 48, 35, 29, 12, 22, 10, 23  
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ![Heap](/images/ovningar/Heap02.png)  
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ![Heap](/images/ovningar/Heap03.png)  
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    O(logn)  
+    Elementet placeras som ett löv och jämförs därefter uppåt med föräldern och byter plats tills dess att heap-regeln är uppfylls. Det kan bli som mest log<sub>2</sub> jämförelser eftersom det motsvarar höjden på trädet.  
+
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    O(logn)  
+    Elementet i roten tas bort och ersätts med det löv som är längs till höger på nedersta nivån. Därefter kontrolleras detta mot det största av de båda barnen och byter plats tills dessa att regeln för heap är uppfylld. Det kan bli som mest log<sub>2</sub> jämförelser eftersom det motsvarar höjden på trädet.  
+
+    </details>
