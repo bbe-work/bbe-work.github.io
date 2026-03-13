@@ -1,0 +1,45 @@
+---
+title: AVL-träd
+description:  Introduktion och  definition av AVL
+order: 0030
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import avlexempel from '@assets/img/kmom05/AVLExempel.png';
+
+AVL-täd är ett binärt sökträd BST, som är självbalanserande. Benämningen AVL kommer från  efternamnen på de båda forskare George **A**delson-**V**elsky och Evgenii **L**andis, som 1962 "uppfann" det självbalanserade binära sökträdet. 
+
+*Anm. Det finns fler självbalanserande sökträd som t.ex Röd-Svarta träd.*
+
+## Balanserat träd
+
+Ett balanserat träd är ett träd där höjden på vänster och höger delträd (oavsett var i trädet man tittar) skiljer sig med väldigt lite. Det innebär att höjden är låg i förhållande till antalet noder. Ett komplett träd är t. ex ett välbalanserat träd. Höjden på ett balanserat träd är O(log<sub>2</sub>n). 
+
+Om trädet t.ex innehåller 8 noder (nivå 0: 1 nod, nivå 1 : 2 barn, nivå 2 : 4 barn och på nivå 3: 1 barn) så har det höjden 3 (som är log<sub>2</sub>8).
+
+Innehåller det 16 noder blir höjden 4 (som är log<sub>2</sub>16).
+
+Ett AVL träd har balanseringskravet att det får skilja högst 1 mellan höjden på höger och höjden på vänster delträd. Detta gäller alla noder i trädet.
+<br></br>
+<Figure
+    src={avlexempel}
+    caption="Exempel på AVL-träd"
+
+/>
+
+
+Bilden visar 4 olika AVL-träd. Förvissa dig om att uppfyller kravet på BST och kravet på balans.
+
+## Självbalansering
+
+Ett träd som är självbalanserande är ett träd som åtgärdar obalans vid insättning och borttagning. Ett AVL-träd fixar alltså till balansen så att det skiljer högst 1 avseende höjden på höger och vänster delträd vid insättning och vid borttagning. Detta utförs genom **rotationer**. 
+
+Om du är intresserad av hur detta utförs kan du börja med att titta på videon [video AVL](https://www.youtube.com/watch?v=zP2xbKerIds)
+
+och du kan även använda visualisera hur trädet förändras med [visualisering av AVL-träd](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html)
+
+## Sammafattningsvis
+
+Ett AVL-träd är ett balanserat BST som är självjusterande. Balanseringskravet som gäller för alla noder är att höjden på vänster och höger delträd får skilja med högst 1. Självjustering innebär att trädet efter varje insättning och varje borttagning balanserar sig själv om det blir obalanserat.

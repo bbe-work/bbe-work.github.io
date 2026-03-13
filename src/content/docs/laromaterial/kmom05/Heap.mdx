@@ -1,0 +1,341 @@
+---
+title: Heap
+description:  Introduktion och definition av Heap
+order: 0040
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import heaparray from '@assets/img/kmom05/HeapArray.png';
+import heapexempel from '@assets/img/kmom05/HeapExempel.png';
+import heapborttagning from '@assets/img/kmom05/HeapBorttagning.png';
+import heapinsattning01 from '@assets/img/kmom05/HeapInsattning01.png';
+import heapsvaruppgift from '@assets/img/kmom05/HeapSvarUppgift.png';
+import heapsvaruppgiftinsattning from '@assets/img/kmom05/HeapSvarUppgiftInsattning.png';
+
+En heap är ett **komplett binärt träd** som har regeln att **varje nod har högre värde än sina barn**. Detta gäller för en **max-heap** (vilket är det vi normalt avser). För en **min-heap** gäller det omvända avseende regeln, dvs att föräldern har lägre värde än sina barn.
+
+Nedan ser du tre exempel på heapar.
+
+<br></br>
+<Figure
+    src={heapexempel}
+    caption="Exempel på heap"
+/>
+
+
+Kontrollera att träden uppfyller både kravet på att vara kompletta och regeln för max-heap. 
+
+Genom att använda heap:ar kan vi alltid vara säkra på att vi har det högsta (mest prioriterade) elementet i roten, vilket vi snabbt kan komma åt. Detta är relevant när akuta/prioriterade fall/ärenden måste identifieras. Det är även relevant vid vissa algoritmer i samband med grafer som vi kommer att behandla senare.
+
+ADT:n Heap har operationerna 
+- sätta in ett element
+- ta bort elementet med högst värde/prioritet
+- "kika" på elementet med högst värde/prioritet
+
+**Testa dig själv**  
+
+1. Om du har en Heap med operationerna namngivna `Insert(item)`, `Remove()` och `Peek()`, kan du då formulera en algoritm `SortUsingHeap(A, n)` som sorterar en array genom att använda en heap?
+
+    <details>
+    <summary>Klicka här för att få tips</summary>  
+    Anta att arrayen innehåller 66, 33, 99, 11  
+
+    Om alla element i arrayen läggs in i en heap, vilket element får du då om du anropar Remove() för heapen? Vilket element får du nästa gång Remove() anropas?
+
+    </details>
+
+    <details>
+    <summary>Klicka här för att se ett lösningsförslag</summary>  
+
+    ```
+    sortUsingHeap(A, n)
+        create heap
+        foreach item in A
+            heap.Insert(item)
+        for i = n-1 to 0
+            A[i] = heap.Remove()
+    ```
+    </details>
+
+
+## Insättning
+
+Vi sätter in ett nytt värde som nästa löv i det kompletta trädet. Nu kan detta nya värde göra så att regeln att föräldern har ett högre värde än barnen inte är uppfyllt. Alla övriga noder i trädet uppfyller detta så det är bara värdet i den nya noden som kan göra att regeln bryts. 
+Detta måste åtgärdas i så fall. Vi kontrollerar den nya nodens värde mot dessa förälder. Om regeln inte är uppfylld byter vi värdet. Vi vet med säkerhet att efter bytet så har föräldern ett större värde än båda barnen (eftersom det nya värdet var större än den tidigare föräldern).  
+Nu behöver vi kontrollera mot den nya föräldern (en nivå högre) och vi byter återigen värdet om regeln inte är uppfylld. Detta fortgår tills dessa att regeln uppfylls. Detta kan innebära att vi når roten vilket inträffar om det nya värdet är det största av alla.
+
+Första värdet blir automatisk roten. 
+
+Vi gör en insättning i en heap som redan har en del värden för att se hur förfarandet genomförs.
+
+<br></br>
+<Figure
+    src={heapsvaruppgift}
+    caption="Exempel på heap"
+    width="300px"
+/>
+
+Vi börjar med att sätta in 450 (värdet markeras med rött).
+<br></br>
+<Figure
+    src={heapinsattning01}
+    caption="Insättning av 45"
+
+/>
+
+Värdet placeras i ett löv (a).  
+Eftersom föräldern har ett lägre värde (200 < 450) byter vi 200 med 450, så att 200 blir barn till 450 (b).  
+Återigen jämför vi värdet med föräldern som visar sog ha ett lägre värde (400 < 450) och vi behöver byta så att 400 blir barn till 450 (c).  
+Nästa jämförelse mot föräldern ger att regeln är uppfylld (600 > 450) och insättningen är klar. 
+
+**Testa dig själv**
+
+1. Fortsätt på den heap som insättningen av 450 resulterade i och sätt in 30 följt av 750 och slutligen 100. Hur ser trädet ut efter dessa insättningar?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    <br></br>
+    <Figure
+        src={heapsvaruppgiftinsattning}
+        width="300px"
+    />
+    
+    </details>
+
+
+## Borttagning av högsta värdet
+
+Högsta värdet finns alltid i roten. Tar vi bort detta behöver vi återställa strukturen så att trädet blir komplett och dessutom följer regeln för heapen. 
+
+När rotens värde är borttaget ersätts det med det löv som finns längst till höger på nedersta nivå. På så sätt bibehålls strukturen av det kompletta trädet.
+Nu återstår att se till att regeln uppfylls. Vi vet att det enda värde som gör att regeln bryts är det nya rotvärdet. Nu börjar vi uppifrån och kontrollerar det nya värdet mot de båda barnen. Är det nya värdet mindre än det största av barnens värden behöver vi byta med detta (då blir den nya nodens värde större än båda barnen vilket måste gälla).  
+När det är gjort fortsätter vi på samma sätt med de nya barnen och byter med det största av dessa om regeln inte är uppfylld.
+
+Vi gör en borttagning från följande heap
+<br></br>
+<Figure
+    src={heapsvaruppgiftinsattning}
+    caption="Exempel på heap"
+    width="300px"
+/>
+
+Värdet 750 tas bort.
+
+<br></br>
+<Figure
+    src={heapborttagning}
+    caption="Borttagning av 750"
+/>
+
+Rotens värde ersätts med värdet i det högraste lövet på nedersta nivån, 50. Detta markeras med med rött (a).   
+Det största av de båda barnen har värdet 600 och regeln för heapen är inte uppfylld. Byte görs av värdet i noden och värdet i det största barnet (b).  
+Det största värdet i barnen är 450 vilket är större än 50. Byte görs (c).  
+Återigen är det största värdet av barnens större och ett byte utförs (d).  
+Nu finns inga fler barn och regeln är uppfylld.
+
+Observera att det inte alltid är så att värdet som ersätter roten vandrar ända ner till ett löv.  
+
+## "Kika" på det största värdet
+
+Detta är trivial då det största värdet är i roten och detta är hittas direkt och levereras.
+
+## Representation
+
+En heap lämpar sig väl att lagra i en array. Anledningen är att det binära trädet är komplett. Om vi placerar roten index 0, dess vänstra barn på index 1, dess högra barn på index 2 osv så att vi fyller på arrayen nivå för nivå i trädet så blir det inga "luckor" i arrayen.
+
+<br></br>
+<Figure
+    src={heaparray}
+    caption="Lagring i array"
+
+/>
+
+
+I bilden ser vi "samma" kompletta träd där ett är svart och ett är rött. Det svarta innehåller heapens värden i noderna och det röda innehåller index. Under de båda träden ser vi hur heapen lagras i arrayen.
+
+Det finns ett mönster avseende var (vilket index) en nods förälder och en nods barn är placerade. 
+
+Om noden finns på index `k` beräknas index för 
+- **föräldern** genom `(k-1)/2`
+- **vänster barn** genom `2*k + 1`
+- **höger barn** genom` 2*k + 2`
+
+Observera att vid (k-1)/2 är det heltalsdivision som gäller.
+
+Vi utgår t.ex från noden med värdet 20 som är lagrat på index 3.  
+- Vi hittar dess förälder på index (3-1)/2 = 1. 
+- Vänster barn finns på index 3*2 + 1 = 7
+- Höger barn finns på index 3*2 + 2 = 8
+
+**Testa dig själv**
+ 
+1. Rita den heap som innehållet i arrayen representerar   
+    600, 400, 80, 200, 140, 50, 70, 150  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    <br></br>
+    <Figure
+        src={heapsvaruppgift}
+        width="300px"
+    />
+
+    </details>
+
+1. Vilken/Vilka av följande sekvenser motsvarande innehållet i en array kan representera en heap?  
+
+    A. 900, 800, 700, 600, 500, 400, 300, 200, 100  
+    B. 700, 800, 600, 500, 900, 400, 300, 200, 100  
+    C. 900, 700, 800, 300, 500, 400, 600, 300, 100  
+    D. 900, 600, 800, 500, 200, 700, 100, 400, 300
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    A och D.
+    </details>
+
+1. På vilket index finns föräldern, vänster barn respektive höger barn till elementet som är placerat på index 500?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    249, 1001 respektive 1002
+    </details>
+
+1. Hur högt är det träd som representerar en heap innehållande 38 element?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    5
+    </details>
+
+
+Vi behöver förutom en array `heapItems` som kan lagra de element som ska placeras i heapen en variabel som håller arrayens kapacitet `capacity`och en variabel som håller index för var slutet på heapen är `endOfHeap`.
+
+**Testa dig själv**  
+
+1. Vilket innehåll har `heapItems`, `capacity` och `endOfHeap` innan några element placerats i heapen?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>   
+
+    ```csharp
+    capacity har den initiala kapaciteten, t.ex 10
+    enOfHeap har värdet 0 (kan även vara -1)
+    heapItems pekar på den array som allokerats med kapaciteten enligt capacity
+    ```
+    </details>
+
+### Insättning
+
+När man sätter in ett nytt element, placeras det som löv. 
+Detta ska vandra uppåt i arrayen och byta med föräldern om deras inbördes ordning inte uppfyller regeln (föräldern > barn). Denna del är lämplig att hantera i en hjälpmetod, t.ex kallad `perculateUp()`.
+
+Vad vet vi och vad behöver vi utföra för att lösa detta?
+
+Vi vet att 
+- `endOfHeap` har index för platsen där det nya elementet ska placeras och detta ska därefter räknas upp med 1
+- vi behöver en variabel `current` för att kunna vandra uppåt i heapen vilken sätts till index för det nya elementet
+- vi kan beräkna index för föräldern
+- vi behöver jämföra elementet på index `current` med föräldern om regeln är uppfylld eller ej
+- om regeln inte är uppfylld kan vi byta elementen och ändra `current` så att den får det index som beräknades för föräldern 
+- vi fortsätter tills det nya elementet hamnat i roten eller om relationen med föräldern följer regeln  
+
+**Testa dig själv**  
+
+1. Skriv psedokod för `perculateUp()`  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>   
+
+    ```
+    current = endOfHeap - 1
+    parent = (current - 1)/2
+    while current > 0 and heapItems[current] > heapItems[parent]
+        swap(heapItems[current], heapItems[parent])
+        current = parent
+        parent = (current - 1)/2
+    ```
+    </details>
+### Borttagning
+
+Det är alltid rot-elementet som tas bort. Detta ersätts med det högraste lövet på nedersta nivån. Lövet ska vandra nedåt i arrayen och byta med det största av de båda barnen om detta inte uppfyller regeln (föräldern > barn). Denna del är också lämplig att hantera i en hjälpmetod, t.ex kallad `perculateDown()`.
+
+Vad vet vi och vad behöver vi utföra för att lösa detta?
+
+Vi vet att 
+- `endOfHeap` har index för platsen efter det som lövet hämtas ifrån och ska minskas med 1
+- vi behöver en variabel `current` för att kunna vandra nedåt i heapen, vilken sätts till 0 (roten-index)
+- vi kan beräkna index för vänster och höger barn
+- vi behöver bestämma det barn som har högst värde (obs kan vara endast ett barn när current är på näst nedersta nivån)
+- vi behöver jämföra elementet på index `current` med det största barnet
+- om regeln inte är uppfylld kan vi byta elementen och ändra `current` så att den får det index som beräknades för det största barnet
+- vi fortsätter tills det nya elementet hamnat som löv eller uppfyller regeln till barnen
+
+**Testa dig själv**  
+
+1. Skriv psedokod för `perculateDown()`  
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>   
+
+    ```
+    current = 0
+    leftChild = 2*current + 1
+    biggest = leftChild
+    while not done and leftChild < endOfHeap // endOfHeap har räknats ner innan
+        if heapItems[2*current + 2] > heapItems[leftChild]
+            biggest = 2*current + 2
+        if heapItems[biggest] > heapItems[parent]
+            swap(heapItems[biggest], heapItems[parent])
+            current = biggest
+        else
+            done = true
+    ```
+    </details>
+
+**Testa dig själv**
+
+1. Hur ser den generisk klassen `Heap` ut i C# innan medlemmar (variabler och metoder) har tillförts?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>   
+
+    ```csharp
+    public class Heap<T> where T: IComparable<T>
+    {
+
+    }
+    ```
+    </details>
+
+1. Deklarera de medlemsvariabler som behövs i Heap-klassen.
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    ```csharp
+    int capacity;
+    T[] heapItems;
+    int endOfHeap;
+    ```
+    </details>
+
+## Sammanfattningsvis
+
+En Heap är ett binärt träd som lämpar sig att använda när man snabbt behöver få tag i det element som har högst värde/prioritet.   
+En (max)-Heap uppfyller två regler  
+- det binära trädet är komplett
+- för alla noder gäller att föräldern har ett större/högre värde än båda sina barn  
+
+För en min-Heap gäller det omvända när det gäller regeln mellan förälder och barn.  
+En heap använder en array/sekvens som intern datastruktur vilket är ger snabb access till förälder och barn till en nod eftersom index för dessa enkelt beräknas
+    - förälder finns på (index - 1)/2
+    - vänster barn finns på 2*index + 1
+    - höger barn finns på 2*index + 2
+
+
+
+
