@@ -194,9 +194,9 @@ stop_id,stop_name,stop_lat,stop_lon,location_type,parent_station,platform_code
 9021010001015000,Polhemsgatan,56.176723,15.590546,1,,
 ...
 ```
+
 Du kan använda följande kod för att läsa från fil och skapa en array med osorterade BusStop-objekt, där de 8 sista siffrorna i stop_id blir nummer (`_nr`) och stop_name blir namnet (`_name`).
 
-Tänk på att du eventuellt kan behöva anpassa metoden som ska läsa från fil avseende access (private eller public) och om den ska tillhöra en klass eller objekt.   
 Parametern `nrOf` motsvarar det antal som ska läsas från filen men om dess värde är -1 läses hela filen.
 
 ```csharp
@@ -223,36 +223,40 @@ BusStop[] ReadFromFile(string filename, int nrOf = -1)
 
 ```
 
-#### Insertionsort
+#### Undersök algoritmernas effektivitet
 
-Exekvera din implementation av `Insertionsort` med 
-
-1. 10, 100 resp 1000 osorterade BusStop-objekt
-1. 10, 100 resp 1000 omvänt sorterade BusStop-objekt
-1. 10, 100 resp 1000 sorterade BusStop-objekt
-
-och notera resultaten (antalet jämförelser). Är resultaten rimliga/korrekta? Vilket motsvarar bästa fallet? Vilket motsvarar sämsta fallet? 
-
-För att resultatet av sortering av de osorterade BusStop-objekten ska blir relevant behöver du göra minst 5 olika exekveringar med olika ordning i arrayerna. Ett tips är att blanda objekten inför varje ny sortering. När dessa körningar genomförts bestämmer du medelvärdet av antalet jämförelser.
-
-#### Quicksort - olika varianter
-
-**Quicksort**, **QuicksortUsingMedianOfThree** och **QuicksortUsingInsertionsort**
-
-Exekvera för var och en av dina implementationer av `Quicksort`-varianterna
+Exekvera dina implementation av `Insertionsort` och de tre olika varianterna av `Quicksort` med 
 
 1. 10, 100 resp 1000 osorterade BusStop-objekt
 1. 10, 100 resp 1000 omvänt sorterade BusStop-objekt
 1. 10, 100 resp 1000 sorterade BusStop-objekt
 
-och notera resultaten (antalet jämförelser). 
+och notera resultaten (antalet jämförelser). Är resultaten rimliga/korrekta? Vilket motsvarar bästa fallet? Vilket motsvarar sämsta fallet? Är någon algoritm effektivare under vissa omständigheter? Verkar ordo-notationen för algoritmerna stämma när antalet element ökar? 
 
-Även här gäller det att det behövs minst 5 olika exekveringar som underlag för att beräkna ett medelvärde på antalet jämförelser för de osorterade arrayerna.   
-Är resultaten rimliga/korrekta? Kan du se någon effekt av "medianen-av-tre"?   
-Kan du se någon effekt av användandet av insertionsort? Vilka gränser (limit) har du testat med? 
+Blir det någon skillnad för quicksort om pivot-elementet väljs som "medianen av tre" jämfört med om pivot-elementet bestäms som sista? Påverkas antalet jämförelser om insertionsort används i quicksort om antalet element är färre än 10?
 
+Obs: För att resultatet av sortering av de osorterade BusStop-objekten ska blir relevant behöver du göra minst 5 olika exekveringar med olika ordning i arrayerna. Ett tips är att blanda objekten inför varje ny sortering. När dessa körningar genomförts bestämmer du medelvärdet av antalet jämförelser.
 
+<details>
+<summary>Ett förslag på hur du kan blanda hittar du här</summary>
 
+```csharp
+void Shuffle<T>(T[] arr, int n) where T: IComparable<T>
+{
+    for (int times=1; times<n; times++)
+    {
+        int i = random.Next(0, n);
+        int j = random.Next(0, n);
+        (arr[i], arr[j]) = (arr[j], arr[i]);
+    }
+}
 
+```
+</details>
 
+## Resultat
+
+Notera resultateten i en tabell där det tydligt framgår för varje sorteringsalgoritm vilket underlag det varit på elementen som sorterats (slumpade, sorterade resp omvänt sorterade) och hur många jämförelser som genomförts.
+
+Notera dina slutsatser och redogör för dessa genom att relatera till de resultat du fått. Utgå från de frågor som finns i texten med rubriken "Undersök algoritmernas effekivitet"
 
