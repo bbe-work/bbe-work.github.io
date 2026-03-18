@@ -28,3 +28,7 @@ pnpm-debug.log*
 **/api/
 
 *:Zone.Identifier
+
+# Untracked directories
+dangerous-doppler/
+**/.vscode/
