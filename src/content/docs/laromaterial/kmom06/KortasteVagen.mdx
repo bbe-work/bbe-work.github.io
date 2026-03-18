@@ -1,0 +1,141 @@
+---
+title: Kortaste vägen i en graf
+description:  Dijkstras algoritm
+order: 0030
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import grafdijkstras01 from '@assets/img/kmom06/GrafDijkstras01.png';
+import grafdijkstrasallasteg from '@assets/img/kmom06/GrafDijkstrasAllaSteg.png';
+import uppgiftdijkstras from '@assets/img/kmom06/UppgiftDijkstras.png';
+
+# Kortaste vägen
+
+Ett vanligt förekommande graf-problem är att bestämma kortaste vägen (egentligen lägsta kostnaden) mellan två noder där det finns flera olika möjliga vägar. En algoritm för att lösa detta är **Dijkstras algoritm**. 
+
+## Dijkstras algoritm - introduktion
+
+Strategin är att alltid välja den nod som för närvarande har det kortaste kända avståndet till start-noden.  
+Det innebär att det första som kontrolleras är vilka noder som kan nås från start-noden och vad det kostar (vikten). Det billigaste alternativet väljs. Nu kan vi komma vidare från den nyss valda till dess grannar. Vi undersöker vilka grannarna är och som inte ansluter till redan valda noder och registrera den totala kostnaden till dessa. Nu väljer vi den billigaste totala kostnaden av de som vi har registrerat, dvs av de som går direkt från start-noden och de som går via den nyss valda. Detta upprepas tills det inte finns fler möjliga noder att komma till.
+
+Vi gör ett exempel där Dijkstras algoritm tillämpas för att finna kortaste vägen från nod X till varje annan nod. 
+<br></br>
+<Figure
+    src={grafdijkstras01}
+/>
+
+Det vi behöver hantera under algoritmens gång är
+- veta vilka noder som är valda/klara -dessa markeras med grönt
+- vilka noder som är möjliga att nå från de som är valda/klara - dessa markeras med blå
+- vilken kostnaden är till de noder som är möjliga att nå - siffran visas vid noden men om det inte finns någon siffra ska det tolkas det som att kostnaden är "oändlig" 
+
+Vi börjar i nod X och markerar den som möjlig att nå (visas i grafen med blått) och vi sätter också kostnaden för att komma till X till 0 (a).  
+
+Nu ska vi avgöra vilka noder som är tillgängliga/valbara och vad det kostar att nå dessa så billigt som möjligt. I detta fall finns bara noden X med kostnaden 0. X väljs (markeras med grönt i grafen). 
+Vi kontrollerar vilka grannar X har
+- B med kantvikten 10
+- M med kantvikten 5  
+
+Noderna B och M markeras som nåbara (blå i grafen) och kostnaden för att ta sig till respektive nod noteras och beräknas enligt (kostnaden till X + kant-kostnaden). Det blir  
+- B med total kostnad 0 + 10 = 10
+- M med total kostnad  0 + 5 = 5  
+
+Eftersom B och M inte var nåbara tidigare var kostnaden tidigare "oändlig" och de beräknade kostnaderna är billigare och registreras (b).  
+
+Nu undersöks återigen vilka noder som är tillgängliga/valbara och vad det kostar att nå dessa så billigt som möjligt I detta fall finns två möjliga alternativ: noden B med kostnaden 10 och noden M med kostnaden 5. Billigast är alternativet M (markeras med grönt). Det är dags att undersöka grannarna till M vilka är 
+- B med kantvikt 3
+- K med kantvikt 9
+- T med kantvikt 2  
+
+Nu ska vi beräkna kostnaden från M till dessa och se om det kan vara ett billigare alternativ än det som hittills registrerats. 
+- B med total kostnad 5 + 3 = 8 vilket är billigare än tidigare registrerade 10  
+- K med total kostnad 5 + 9 = 14  
+- T med total kostnad 5 + 2 = 7  
+
+Vi uppdaterar detta (blå markering) (c).
+
+
+Vi upprepar samma förfarande och finner att det billigaste alternativet är
+T med kostnaden 7 varför denna väljs (markeras grön). De grannar som nås via T är K och X men eftersom X redan ingår bland de valda ska denna inte beaktas.
+Vi beräknar kostnaden till K
+- K med total kostnad 7 + 6 = 13 vilket är billigare än tidigare registrerade 14  
+
+Vi uppdaterar detta (blå markering) (d)
+
+Samma förfarande igen där det billigaste alternativet nu är
+B med kostnaden 8 varför denna väljs (markeras grön). De grannar som nås via B är K och M men eftersom M redan ingår bland de valda ska denna inte beaktas.
+Vi beräknar kostnaden till K  
+- K med total kostnad 8 + 1 = 9 vilket är billigare än tidigare registrerade 13  
+
+Vi uppdaterar detta (blå markering) (e)  
+
+Slutligen finns det ett alternativ kvar (som därmed också är det billigaste) och det är K som väljs (markeras grön). Inga fler noder finns att undersöka eftersom alla noder nu är valda och vi är klara (f)
+<br></br>
+<Figure
+    src={grafdijkstrasallasteg}
+    height="450px"
+    width="800px"
+/>
+
+
+Resultatet ger följande billigaste vägar från noden X  
+X -> M : 5  
+X -> M -> B: 8  
+X -> M -> T: 7  
+X -> M -> B -> K: 9  
+
+**Testa dig själv**
+
+1. Bestäm kortaste vägen från noden O till varje annan nod genom att använda Dijkstras algoritm.
+
+    <br></br>
+    <Figure
+        src={uppgiftdijkstras}
+        width="510px"
+        height="300px"
+    />
+
+    <details>
+    <summary>Klicka här för lösningsförslag</summary>  
+    Bågarna väljs i ordning:  
+    (0,X), (X,M), (O,B), (X,G), (G,K), (G,R), (R,T)
+
+    </details>
+
+1. För samma graf bestäm kortaste vägen från noden G till varje annan nod genom att använda Dijkstras algoritm.
+
+    <details>
+    <summary>Klicka här för lösningsförslag</summary>  
+    (G,K), (G,X), (G,M), (G,R), (X,O), (R,T), (O,B)
+
+    </details> 
+## Dijkstras algoritm
+
+Ett utkast till algoritmen kan formuleras
+
+```text
+Set the distance to the start node = 0
+Set the distance to all other nodes = ∞
+
+Insert the start node into a min-heap
+
+While the heap is not empty
+    Extract the node u with the smallest distance
+    If u has not been visited
+        Mark u as visited
+        For each neighbor v of u
+            if distance to u + weight(u,v) < distance to v
+                update distance to v
+                record that we reached v via u
+                insert v into the heap
+```
+
+Målsättningen är att implementera Dijkstras algoritm och vi behöver fundera över och klargöra en del saker:
+
+- Vi förutsätter att grafen är representerad genom grannlistor. Det innebär att vi vet att vi kan hitta en nods grannar genom att löpa igenom grannlistan för noden.
+- Vi vill ha effektivitet och känner till att hash-tabell är snabbt när det gäller att hitta info
+- Vi behöver effektivt kunna avgöra om en nod har valts 
+- Vi behöver notera kostnaden till noder och uppdatera kostnaden med billigare alternativ när det är aktuellt.
+- Vi behöver effektivt kunna hitta den nod som kan nås till lägsta kostnad
