@@ -1,0 +1,202 @@
+---
+title: Graf
+description:  Introduktion till Grafer
+order: 0010
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import grafex from '@assets/img/kmom06/GrafEx.png';
+import graf01 from '@assets/img/kmom06/Graf01.png';
+import graf01_04 from '@assets/img/kmom06/Graf01_04.png';
+import graf01_04narhetslistor from '@assets/img/kmom06/Graf01_04Narhetslistor.png';
+import graf01_04narhetsmatris from '@assets/img/kmom06/Graf01_04Narhetsmatris.png';
+import graf02_04 from '@assets/img/kmom06/Graf02_04.png';
+import grafdijkstras01 from '@assets/img/kmom06/GrafDijkstras01.png';
+import grafdijkstrasallasteg from '@assets/img/kmom06/GrafDijkstrasAllaSteg.png';
+
+
+
+Grafer används för att modellera relationer mellan objekt. En graf kan te.x användas för att modellera vägnät där städer är förbundna genom vägar (GPS och kartor). Ett annat exempel är webbsidor (sidor och länkar).   
+Grafer används för att problem som rör sökningar, ruttplaneringar och beroenden.
+
+
+## Terminologi
+
+En graf består, precis som för träd, av **noder** och **kanter** där kanterna förbinder noderna. 
+
+<br></br>
+<Figure
+    src={grafex}
+    caption="Illustration av en graf"
+/>
+
+
+Bilden visar två grafer *Graf 1* och *Graf 2*. Båda graferna har 10 noder (de fyllda cirklarna). *Graf 1* har 12 kanter (linjerna som förbinder noder) och *Graf 2* har 9 kanter. Den observante ser förhoppningsvis att Graf 2 även motsvarar ett träd, dvs ett träd är också en graf.
+
+Vi tittar på en annan bild på en graf där noderna fått etiketter (bokstäver).
+<br></br>
+<Figure
+    src={graf01}
+    caption="Illustration av en graf"
+/>
+
+Grafen har fyra noder (S, P, E och X) och fyra kanter. En kant mellan två noder anger att det finns en direkt förbindelse mellan noderna. 
+Grafen är i detta fall **oriktad** vilket innebär att kanterna kan användas i båda riktningarna. Det innebär t.ex att man kan gå direkt från S till P och från P till S. Kanten mellan S och P skrivs {S,P} för att tydliggöra att kanten är oriktad men det är också möjligt att skriva (S,P) om vi vet att det är en oriktad graf och underförstått innebär det att kanten kan användas i båda riktningarna.  
+
+Man använder begreppet **granne** för de noder som en nod har kant till. I grafen ovan är t.ex P granne till S. Vidare är E och P  grannar till X.  
+
+Grafen visar att det går att ta sig från S till P och vidare till E, vilket motsvarar att det finns en **väg** från S till P. Vägen har en **längd** som i detta fall motsvarar antalet kanter. Vi får att längden på vägen från S via P till E är 2. En annan väg från S till E är S -> P -> X -> E. Denna väg är längre då den använder 3 kanter.
+
+I en graf, till skillnad mot träd, kan det finnas det **cykler**. En cykel är en väg, med längden > 0, som börjar och slutar i samma nod och där varje kant endast används en gång. I grafen ovan (Graf 1) finns en cykel genom vägen E -> P -> X -> E. Denna cykel har längden 3. En cykel tar inte hänsyn till start-nod, det är alltså samma cykel som beskrivs genom P -> X -> E -> P.
+
+Antalet kanter som ansluter till en nod kallas nodens **grad**. Vi ser att graden för S är 1 vilket skrivs grad(S) = 1 (eller degree(S) = 1). För övriga noder gäller grad(P) = 3, grad(E) = 2 och grad(X) = 0. 
+
+En **komplett graf** är en graf där varje nod har en kant till varje annan nod. En komplett graf med 3 noder har 3 kanter. 
+
+**Testa dig själv**
+
+1. Hur många kanter har en komplett graf med 4 respektive 5 noder?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    6 respektive 10.
+    </details>
+
+
+1. Vilken grad har varje nod i en komplett graf med 10 noder?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    9.
+    </details>
+
+
+1. Kan en graf som också är ett träd innehålla cykler?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    Nej
+    </details>
+
+
+Förutom förbindelser mellan noder kan man ange riktning på kanter och man kan sätta vikt på kanter.
+
+![Olika grafexempel](/images/Graf02_04.png)
+
+I bilden ovan har kanterna i Graf 2 en **vikt** vilket kan tolkas som att kanten är förknippad med en kostnad. Grafen beskrivs då som en **viktad graf**.  
+
+I en graf som beskriver ett vägnät kan vikten vara avståndet. Ett intressant problem som kan lösas baserat på att vikten motsvarar avstånden är att finna kortaste vägen mellan två orter. Vikten kan även motsvara körtiden och då kan vi bestämma snabbaste rutten mellan två orter.
+
+**Kostnaden** för vägen S -> P -> E är 9 (4 + 5). Kostnaden för cykeln E -> X -> P -> E är 14 (3 + 6 + 5).  
+
+I bilden ovan har Graf 3 riktade kanter vilket beskriver i vilken riktning kanten kan användas. Grafen kallas då för en **riktad graf**. Det är t.ex möjligt att gå från P till S men inte från S till P. Det finns en (riktad) cykel i Graf 3, P -> X -> E -> P.
+
+Den sista grafen i bilden (Graf 4) är både riktad och viktad.
+
+**Testa dig själv**
+
+1. För grafen
+    
+    ![Graf 01](/images/UppgiftsGraf01.png)
+    
+    Vilken grad har noden O respektive noden T?  
+    Vad är kostnaden för den billigaste/kortaste vägen från M till O och vilken är vägen som ger denna kostnad?  
+    Hur stor är kostnaden för den billigaste/kortaste vägen från M till T och vilken är vägen som ger denna kostnad?
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    grad(O) = 2 och grad(T) = 1  
+    Vägen är M -> X -> O och kostar 3  
+    Vägen är M -> G -> R -> T och kostar 8  
+    </details>
+
+## Representera graf
+
+Det finns två vedertagna sätt att representera grafer:
+- **närhetsmatris (adjacencyMatrix)**
+- **närhetslistor (adjacensyLists)**
+
+Närhetsmatris är en 2-dim-matris där varje nod motsvarar en rad och en kolumn. Den cell i matrisen där rad-nod och kolumn-nod möts motsvarar kanten mellan rad-nod och kolumn-nod. Om närhetsmatrisen är namngiven `adjacencyMatrix` når vi en kant genom `adjacencyMatrix[<row-node>][<column-node>]`. Matrisen är kvadratisk eftersom alla noder finns på varje rad och varje kolumn.
+
+Närhetslistor är en sekvens där varje nod förekommen en gång och för varje nod finns en lista med alla noder som är grannar till noden. Om sekvensen för närhetslistorna är namngiven `adjacencyLists` når vi listan med alla grannar till en nod genom `adjacencyLists[<the-node>]`.
+### Intern datastruktur
+
+#### Närhetsmatris
+
+I bilden nedan ser vi närhetsmatriser för respektive graf.
+
+![Närhetsmatriser alla grafer](/images/Graf01_04Narhetsmatris.png)
+
+När man tolkar en närhetsmatris kan man läsa rad som *från* och kolumn som *till*. Om vi tittar i Närhetsmatris 1 (som är en representation av den oriktade grafen Graf 1) ser vi att det från S (rad) till P (kolumn) finns en 1:a. det innebär att det finns en kant från S till P. Vi ser också att det från E (rad) till S (kolumn) finns en 0:a eftersom det inte finns någon kant från E till S.  
+Vi observerar att närhetsmatrisen för den oriktade grafen Graf 1 är speglad över diagonalen - finns det en kant från S till P så finns den även från P till S.  
+
+I närhetsmatrisen för Graf 2 (som är oriktad och viktad) ser vi att vikten för kanten finns i matrisen. Bland annat ser vi att från P (rad) till X (kolumn) finns en kant med kostnaden 6. 
+
+Vi går vidare med riktade grafer (Graf 3 och Graf 4). Här ser vi att matrisen inte är symmetrisk över diagonalen. T.ex finns det en kant från P till S (en 1:a) men inte från S till P (en 0:a). I närhetsmatrisen för Graf 4 har 1:orna ersatts med vikten på kanterna.
+
+*Anm: I exemplen ovan har 0 använts för att markera att det inte finns någon kant, men det finns även andra alternativ, som t.ex det största möjliga talet eller ett negativt tal.*
+
+**Testa dig själv**
+
+1. Givet grafen
+
+    ![Graf 02](/images/UppgiftsGraf02.png)
+
+    A. Hur många celler blir det i den närhetsmatris som representerar grafen?  
+    B. Hur många celler kommer att representera en kant?   
+    C. Hur hittar man vikten på kanten från G till X?  
+    D. Hur mycket arbete är det förknippat med att avgöra om det finns en kant eller ej mellan två givna noder?    
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A. 8*8 = 64  
+    B. 12  
+    C. genom att gå in på "index" motsvarande noden G och "index" motsvarande noden X, konceptuellt matris[G][X]   
+    D. Det motsvarar konstant tid eftersom det innebär att indexera vilket är oberoende av antalet noder och antalet kanter.  
+    </details>
+
+
+#### Närhetslistor
+
+I bilden nedan ser vi närhetslistor för respektive graf.
+
+![Närhetslistor alla grafer](/images/Graf01_04Narhetslistor.png)
+
+Här hittar vi alla grannar till en nod i en lista. Det är ingen inbördes ordning på noderna i listorna. Om en nod finns i en lista så innebär det att det finns en kant till denna nod.
+
+I närhetslistan för Graf 1 hittar vi för nod S endast P i listan och vi utläser att det finns en kant från S till P. I närhetslistan för X hittar vi P och E vilket innebär att det finns en kant från X til P och en kant från X till E. 
+
+För Graf 2 (som är viktad) hittar vi motsvarande listor men för varje granne i närhetslistan finns även vikten.
+
+I närhetslistorna för de riktade graferna (Graf 3 och Graf 4) ser vi t.ex att det inte finns några grannar till S eftersom det inte finns någon lista (alternativt att det finns en tom lista).
+
+**Testa dig själv**
+
+1. Givet grafen
+
+    ![Graf 02](/images/UppgiftsGraf02.png)
+
+    A. Hur många element blir det totalt i listorna som representera grafen?     
+    B. Hur hittar man vikten på kanten från G till X?  
+    C. Hur mycket arbete är det förknippat med att avgöra om det finns en kant eller ej mellan två givna noder?    
+
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A. 12  
+    B. genom att gå in på "index" motsvarande noden G söka efter X i listan med grannar.  
+    C. Det motsvarar arbetet att gå igenom listan med grannar som ofta är litet i förhållande till antalet kanter och antalet noder.  
+    </details>
+
+## Sammanfattningsvis
+
+En graf kan användas för att modellera hur objekt relaterar till varandra. En graf är uppbyggd av noder och kanter där varje kant förbinder två noder.  
+Ett träd (som vi har tittat på tidigare) är också en graf, men det finns inga cykler i ett träd.  
+Grafer kan vara riktade grafer, vilket innebär att alla kanter har en riktning.  
+Grafer kna även vara viktade, vilket innebär att en varje kant har en vikt/kostnad.  
+För att representera en graf används antingen närhetsmatris eller närhetslistor.
+
+
