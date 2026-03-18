@@ -32,3 +32,8 @@ pnpm-debug.log*
 # Untracked directories
 dangerous-doppler/
 **/.vscode/
+
+# Specific files
+.vscode/settings.json
+package-lock.json
+package.json
