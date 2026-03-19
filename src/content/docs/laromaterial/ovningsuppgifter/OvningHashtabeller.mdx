@@ -1,0 +1,115 @@
+---
+title: Övningsuppgifter Hashtabeller
+description: Uppgifter Hashtabeller
+hidden: true
+---
+
+1. Vad är en hashtabell?
+
+1. Vilka operationer finns på en hashtabell?
+
+1. Vad är en hash-funktion?  
+
+1. Vilken tidskomplexitet har respektive operation på hash-tabell?  
+
+1. Vad innebär kollision i sammanhanget hashtabell?
+
+1. Beskriv två olika sätt att hantera kollision vid hashning.
+
+1. Vad menas med fyllnadsgrad (belastningsgrad) för en hashtabell?
+
+1. Vilken gräns på fyllnadsgrad gäller för en hashtabell?  
+
+1. Vad innebär rehashing (om-hashning)?
+
+1. Anta en hashtabell med 11 ingångar/slots och att hashfunktionen `h(key) = key mod 11`
+används och att element med nycklarna 38, 46, 55, 65, 33, 76 sätts in i tur och
+ordning.  
+    Visa innehållet i arrayen när alla element lagts in om
+
+    A: linjär sondering används  
+    B: kedjning används
+
+
+## Lösningsförslag
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    En datastruktur som sparar data tillsammans med en nyckel och som ger snabb (konstant tid)
+åtkomst vid framförallt sökning.
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Insättning, sökning och borttagning.
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    En funktion som givet nyckeln beräknar index för var nyckeln/elementet ska placeras i arrayen
+som representerar tabellen.
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    O(1)   
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    När flera nycklar får samma index från hash-funktionen.  
+ 
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Linjär sondering: utgår från den index hashfunktionen ger och kontrollera med steget 1 (index för index) till en ledig plats hittas. Där placeras elementet.
+    Kedjning: Om det blir flera olika nycklar som får samma index placeras dess i en lista (eller motsvarande) som finns på detta index. 
+ 
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Hur stor del av tabellen som är fylld (0.3 innebär 30% av arrayens kapacitet.)
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Vid linjär sondering mellan 07 och 0.8. Därefter behövs rehashing.  
+    Vid kedjning är gränsen 1.0.
+ 
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    Utförs när tabellen blivit för fylld. Ny större array skapas och hash-funktionen anpassas så att nycklarna sprids över hela tabellen. Därefter tas element för element från den "gamla" arrayen och den nya hash-funktionen används för att beräkna index för den nya arrayen där elementen placeras.
+ 
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+
+    A: 38 på index,  46 på index 2, 55 på index 0, 65 på index 10, 33 på index 1, 76 på index 3  
+    B: 38 på index,  46 på index 2, 55 på index 0, 65 på index 10, 33 på index 0, 76 på index 10 (element på samma index finns i samma lista eller motsvarande)  
+ 
+    </details>
+

@@ -5,10 +5,25 @@ order: 0010
 hidden: true
 ---
 
+import Figure from '@components/CustomFigure.astro';
+
+import trad01 from '@assets/img/ovningar/trad01.png';
+import binarttrad01 from '@assets/img/ovningar/binartTrad01.png';
+import bst01 from '@assets/img/ovningar/BST01.png';
+import bst02 from '@assets/img/ovningar/BST02.png';
+import bst03 from '@assets/img/ovningar/BST03.png';
+import bst04 from '@assets/img/ovningar/BST04.png';
+import heap01 from '@assets/img/ovningar/Heap01.png';
+import heap02 from '@assets/img/ovningar/Heap02.png';
+import heap03 from '@assets/img/ovningar/Heap03.png';
+import avl01 from '@assets/img/ovningar/AVL01.png';
 
 1. Givet trädet 
-
-    ![Träd](/images/ovningar/trad01.png)
+    <Figure
+        src={trad01}
+        caption=""
+        width="300px"
+    />
 
     A: Vilken färg har rot-nod?  
     B: Vilka färger har löven?  
@@ -41,8 +56,11 @@ hidden: true
 1. Hur högt är det lägsta BST som innehåller exakt 20 noder?
 
 1. Givet trädet nedan.   
-
-    ![Binärt träd](/images/ovningar/binartTrad01.png)
+    <Figure
+        src={binarttrad01}
+        caption=""
+        width="300px"
+    />
 
     Vilken ordning besöks noderna om trädet traverseras i  
     A: preorder  
@@ -103,8 +121,12 @@ hidden: true
     <summary>Klicka här för att visa svaret</summary>  
 
     A:  
-
-    ![BST](/images/ovningar/BST01.png)
+    <Figure
+        src={bst01}
+        caption=""
+        width="300px"
+    />
+  
 
     B: Ja, t.ex 45, 21, 67, 41, 15, 33, 20, 10, 77, 17  
     C: t.ex 10, 15, 17, 20, 21, 33, 41, 45, 67, 77  
@@ -117,16 +139,25 @@ hidden: true
     <summary>Klicka här för att visa svaret</summary>  
 
     A:  
-
-    ![BST](/images/ovningar/BST02.png)
+    <Figure
+        src={bst02}
+        caption=""
+        width="300px"
+    />
 
     B:   
-
-    ![BST](/images/ovningar/BST03.png) 
+    <Figure
+        src={bst03}
+        caption=""
+        width="300px"
+    />
 
     C:  
-
-    ![BST](/images/ovningar/BST04.png)
+    <Figure
+        src={bst04}
+        caption=""
+        width="700px"
+    />
 
     </details>
 
@@ -167,9 +198,11 @@ hidden: true
     <summary>Klicka här för att visa svaret</summary>  
 
     T.ex
-
-    ![AVL exempel](/images/ovningar/AVL01.png)
-
+    <Figure
+        src={avl01}
+        caption=""
+        width="300px"
+    />
     </details>
 
 
@@ -218,8 +251,12 @@ hidden: true
     <details>
     <summary>Klicka här för att visa svaret</summary>  
 
-    A:   
-    ![Heap](/images/ovningar/Heap01.png)  
+    A:  
+    <Figure
+        src={heap01}
+        caption=""
+        width="300px"
+    />
     B: Innehållet från index 0 och framåt  56, 40, 48, 35, 29, 12, 22, 10, 23  
 
     </details>
@@ -227,16 +264,22 @@ hidden: true
 1. 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
-
-    ![Heap](/images/ovningar/Heap02.png)  
+    <Figure
+        src={heap02}
+        caption=""
+        width="300px"
+    />
 
     </details>
 
 1. 
     <details>
     <summary>Klicka här för att visa svaret</summary>  
-
-    ![Heap](/images/ovningar/Heap03.png)  
+    <Figure
+        src={heap03}
+        caption=""
+        width="300px"
+    />
 
     </details>
 

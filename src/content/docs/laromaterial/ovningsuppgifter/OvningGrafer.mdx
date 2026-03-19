@@ -1,0 +1,95 @@
+---
+title: Övningsuppgifter Grafer
+description: Uppgifter Grafer
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import uppgiftgrafgrannlistor from '@assets/img/ovningar/UppgiftGrafGrannlistor.png';
+import uppgiftgrafgrannlistorsvar from '@assets/img/ovningar/UppgiftGrafGrannlistorSvar.png';
+import grafgrannmatrissvar from '@assets/img/ovningar/GrafGrannmatrisSvar.png';
+import graf02uppgift from '@assets/img/ovningar/Graf02Uppgift.png';
+import dijkstras01 from '@assets/img/ovningar/Dijkstras01.png';
+
+1. En graf är representerad med grannlistor enligt 
+
+    Rita den graf som grannlistorna representerar.
+
+    <br></br>
+    <Figure
+        src={uppgiftgrafgrannlistor}
+        width="300px"
+    />
+
+1. Ersätt grannlistorna i uppgift 1 med en grannmatris.
+
+1. Givet grafen
+
+    <br></br>
+    <Figure
+        src={graf02uppgift}
+        width="450px"
+    />
+
+    A: Vilken grad har noden A och noden C?  
+    B: Ge exempel på en cykel med start i noden G.  
+    C: Om du bortser från vikterna, ge exempel på en väg F till E som har längden 5. Vilken kostnad har denna väg?
+
+1. Hur många kanter finns det i en graf med 10 noder?
+
+1. Bestäm för grafen nedan kortaste vägen med Dijkstras algoritm från G till alla andra noder
+    <Figure
+        src={dijkstras01}
+        width="400px"
+    />
+
+1. Bestäm för samma graf som i föregående uppgift kortaste vägen med Dijkstras algoritm från nod B till alla andra noder.
+
+## Lösningsförslag
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    <Figure
+        src={uppgiftgrafgrannlistorsvar}
+        width="400px"
+    />
+    </details>
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    Obefintlig kant har markerats med `-` i matrisen.
+    <Figure
+        src={grafgrannmatrissvar}
+        width="300px"
+    />
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    A: grad(A) = 4 och grad(C) = 2  
+    B: G - E - B - D - G.  
+    C: F - C - A - D - B - E och den totala kostnaden är 2 + 2 + 2 + 3 + 5 = 14
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 = 45
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    Bågarna väljs i ordningen:  (G,H), (H,I), (H,D), (H,F), (D,A), (H,E), (F,C), (E,B)
+
+    </details>
+
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+    Bågarna väljs i ordningen:  (B,E), (B,C), (B,A), (A,D), (B,F), (F,H), (H,G), (H,I)
+
+    </details>
