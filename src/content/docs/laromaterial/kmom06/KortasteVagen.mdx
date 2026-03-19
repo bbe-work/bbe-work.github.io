@@ -132,10 +132,14 @@ While the heap is not empty
                 insert v into the heap
 ```
 
-Målsättningen är att implementera Dijkstras algoritm och vi behöver fundera över och klargöra en del saker:
+Att tänka på vid implementation av Dijkstras algoritm
 
-- Vi förutsätter att grafen är representerad genom grannlistor. Det innebär att vi vet att vi kan hitta en nods grannar genom att löpa igenom grannlistan för noden.
-- Vi vill ha effektivitet och känner till att hash-tabell är snabbt när det gäller att hitta info
-- Vi behöver effektivt kunna avgöra om en nod har valts 
-- Vi behöver notera kostnaden till noder och uppdatera kostnaden med billigare alternativ när det är aktuellt.
-- Vi behöver effektivt kunna hitta den nod som kan nås till lägsta kostnad
+- Förutsätt att grafen är representerad genom grannlistor. 
+- Det ska vara effektivt att avgöra om en nod har valts eller ej.
+- Kostnaden till noder behöver noteras (och eventuellt uppdateras) med billigare alternativ när det är aktuellt.
+- Det ska vara effektivt att hitta den nod som kan nås till lägst kostnad.
+
+## Sammanfattningsvis
+
+Ett vanligt förekommande graf-problem är att bestämma kortaste vägen från en nod till varje annan nod. Dijkstras algoritm är ett alternativ för detta.
+Dijkstras utgår från en nod, undersöker vilka andra noder som kan nås och till så låg kostnad som möjligt. Den nod som kan nås till lägst kostnad väljs och därefter kontrolleras grannarna till den nyss valda noden för att uppdatera kostnader till andra noder om dessa bli lägre. Detta fortgår tills all noder som kan nås har hanterats.

@@ -1,6 +1,6 @@
 ---
-title: Övningsuppgifter länkad lista, Stack och Kö
-description: Uppgifter länkning, Stack och Kö
+title: Övningsuppgifter länkad lista, Stack, Kö och Prioritetskö
+description: Uppgifter länkning, Stack, Kö och Prioritetskö
 order : 0010
 hidden: true
 ---
@@ -32,26 +32,45 @@ hidden: true
 1. Redogör för hur operationerna på en Kö hanteras om en enkellänkad lista används. Tidskomplexiteten för respektive operation förutsätts vara O(1).
 
 1. Anta att en dubbellänkad cirkulär lista använder klassen `Node` för att representera noder där
-- `data` används för att lagra ett element
-- `next` används för att peka ut efterföljande nod
-- `prev` används för att peka ut föregående nod  
+    - `data` används för att lagra ett element
+    - `next` används för att peka ut efterföljande nod
+    - `prev` används för att peka ut föregående nod  
 
-Pekaren current pekar på en nod (Node-objektet) i den cirkulära länkade
-listan. 
+    Pekaren current pekar på en nod (Node-objektet) i den cirkulära länkade
+    listan. 
 
-Skriv pseudokod för att bestämma antalet noder i listan.
+    Skriv pseudokod för att bestämma antalet noder i listan.
 
 1. Med samma förutsättningar som i föregående uppgift, skriv pseudokod för att ta bort den nod som `current` pekar på. `current` ska efter borttagningen peka på efterföljaren.
 
 1. Anta att en dubbellänkad lista använder klassen `Node` för att representera noder där
-- `data` används för att lagra ett element
-- `next` används för att peka ut efterföljande nod
-- `prev` används för att peka ut föregående nod  
+    - `data` används för att lagra ett element
+    - `next` används för att peka ut efterföljande nod
+    - `prev` används för att peka ut föregående nod  
 
-Pekaren `first` pekar på den första noden (Node-objektet) i den dubbellänkade
-listan. Vidare är är listan sorterad från minsta till största element.
+    Pekaren `first` pekar på den första noden (Node-objektet) i den dubbellänkade
+    listan. Vidare är är listan sorterad från minsta till största element.
 
-Skriv pseudokod för att sätt in ett element på rätt plats enligt sorteringen. Den nya elementet finns i noden (node-objektet) som pekaren `toInsert` pekar på. Denna nods båda pekare är satta till none.
+    Skriv pseudokod för att sätt in ett element på rätt plats enligt sorteringen. Den nya elementet finns i noden (node-objektet) som pekaren `toInsert` pekar på. Denna nods båda pekare är satta till none.
+
+1. Beskriv principen för ADT:n Prioritetskö och vad operationerna enqueue, dequeue och peek resulterar i.  
+
+1. Vilken blir utskriften om du för Prioritetskön `pq` utför 
+
+```csharp
+pq.Enqueue("Oslo");
+pq.Enqueue("Malmö");
+pq.Enqueue("Göteborg");
+pq.Enqueue("Köpenhamn");
+
+while (pq.Size() > 0)
+{
+    Console.WriteLine(pq.Dequeue());
+}
+```
+
+1. Skriv pseudokod som utför sortering genom att använda en prioritetskö.  
+
 
 ## Lösningsförslag
 
@@ -150,5 +169,38 @@ Skriv pseudokod för att sätt in ett element på rätt plats enligt sorteringen
         toInsert.prev = walker
         walker.next.prev = toInsert
         walker.next = toInsert
+    ```
+    </details>
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+ 
+    enqueue: placera ett element i kön  
+    dequeue: ta bort det element som har högst prio     
+    peek: ge tillgång till det element som har högst prio  
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>  
+ 
+    Oslo  
+    Malmö 
+    Köpenhamn
+    Göteborg
+    
+    </details>
+
+1. 
+    <details>
+    <summary>Klicka här för att visa svaret</summary>
+
+    ```
+    sort(A, n)
+        create pq
+        foreach element in A
+            pq.enqueue(element)
+        for i = n-1 to 0
+            A[i] = pq.dequeue()
     ```
     </details>
