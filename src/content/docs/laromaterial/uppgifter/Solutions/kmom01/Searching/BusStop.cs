@@ -5,7 +5,7 @@ public class BusStop: IComparable<BusStop>
     private int _nr;
     private string? _note;
 
-    public BusStop(string name, int nr, string note = "-")
+    public BusStop(int nr, string name, string note = "-")
     {
         this._name = name;
         this._nr = nr;
@@ -29,6 +29,11 @@ public class BusStop: IComparable<BusStop>
         return res;
     }
 
+    public override string ToString()
+    {
+        return GetInfo();
+    }
+
     public int GetNr()
     {
         return this._nr;
@@ -46,6 +51,6 @@ public class BusStop: IComparable<BusStop>
 
     BusStop GetCopy()
     {
-        return new BusStop(this._name, this._nr, this._note);
+        return new BusStop(this._nr, this._name, this._note);
     }
 }
