@@ -1,7 +1,7 @@
 namespace Searching;
 public class HelperMethods
 {
-    public static BusStop[] ReadBustStopsFromFile(string filename, int nrOf = -1)
+    /*public static BusStop[] ReadBustStopsFromFile(string filename, int nrOf = -1)
     {
         try 
         {
@@ -22,7 +22,7 @@ public class HelperMethods
             Console.WriteLine(e);
             return null;
         }
-    }
+    }*/
 
     public static string[] ReadWordsFromFile(string filename, int nrOf = -1)
     {

@@ -7,12 +7,8 @@ for (int i=0; i<10; i++)
     Console.WriteLine(nrs[i]);
 }
 
-/*BusStop[] busStops = HelperMethods.ReadBustStopsFromFile("stops.txt", 20);
-for (int i=0; i<20; i++)
-{
-    Console.WriteLine(busStops[i].GetInfo());
-}*/
-
+BusStop stop = new BusStop(101, "Katthult", "bla bla");
+Console.WriteLine(stop);
 string[] words = HelperMethods.ReadWordsFromFile("orderedwords1200.txt", 10);
 for (int k=0; k<10; k++)
 {
