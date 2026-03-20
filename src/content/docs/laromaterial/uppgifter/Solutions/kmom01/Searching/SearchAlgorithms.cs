@@ -31,7 +31,10 @@ public class SearchAlgorithms
             indexes?.Add(midIndex);
         }
         if (startIndex > endIndex)
+        {
+            indexes.RemoveAt(indexes.Count - 1); // den extra mittberäkningen som görs
             midIndex = -1;
+        }
         return midIndex;
     }
 }
