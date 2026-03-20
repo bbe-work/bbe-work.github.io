@@ -115,13 +115,13 @@ public class SearchAlgorithms
 
 Anta att `nrs` är en heltalsarray med innehållet 20, 40, 30, 70, 60, 50 och att indexes är en tom lista (`List<int> indexes = new List<int>()`).  
 
-Efter anropet `int index = SearchAlgorithms.LinearSearch(nrs, 6, 30, indexes)` ska `index` innehålla 2 och listan `indexes` innehålla 20, 40, 30.
+Efter anropet `int index = SearchAlgorithms.LinearSearch(nrs, 6, 30, indexes)` ska `index` innehålla 2 och listan `indexes` innehålla 0, 1, 2.
 
-Efter anropet `int index = SearchAlgorithms.LinearSearch(nrs, 6, 90, indexes)` ska `index` innehålla -1 och listan `indexes` innehålla 20, 40, 30, 70, 60, 50.
+Efter anropet `int index = SearchAlgorithms.LinearSearch(nrs, 6, 90, indexes)` ska `index` innehålla -1 och listan `indexes` innehålla 0, 1, 2, 3, 4, 5.
 
 Anta att `orderedNrs` är en heltalsarray med innehållet 22, 33, 44, 55, 66, 77, 88 och indexes är en tom lista.
 
-Efter anropet `int index = SearchAlgorithms.BinarySearch(orderedNrs, 7, 55, indexes)` ska `index` innehålla 3 och listan `indexes` innehålla 55.
+Efter anropet `int index = SearchAlgorithms.BinarySearch(orderedNrs, 7, 55, indexes)` ska `index` innehålla 3 och listan `indexes` innehålla 3.
 
 
 ### Säkerställ att algoritmerna fungerar
