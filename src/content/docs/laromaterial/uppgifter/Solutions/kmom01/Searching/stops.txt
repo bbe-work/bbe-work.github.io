@@ -1,0 +1,10 @@
+101,Katthult Gård,Försening pga arbete i snickarboden
+102,Villa Villekulla,Extra stopp pga ovanlig aktivitet på gården
+103,Lönneberga Centrum,Ökad trafik vid marknadsdag
+104,Mattisborgen,Tillfällig omledning pga skogsarbete
+105,Körsbärsdalen,Begränsad framkomlighet vid bron
+106,Bullerbyn Norra,Många resenärer under eftermiddagstid
+107,Junibacken,Extra avgångar under helger
+108,Nangijala Port,Stoppet trafikeras endast vid särskilda tider
+109,Gröna Lund,Förseningar kan förekomma vid evenemang
+110,Takåsarna,Begränsad framkomlighet vid stark vind

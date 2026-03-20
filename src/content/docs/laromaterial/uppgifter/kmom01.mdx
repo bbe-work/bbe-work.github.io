@@ -9,11 +9,11 @@ import Figure from '@components/CustomFigure.astro';
 
 import klassdiagram from '@assets/img/kmom01/KlassdiagramKmom01Uppgift.png';
 
-I denna uppgift ska du implementera linjär- och binärsökning och undersöka algoritmernas prestanda genom att mäta antalet jämförelser som görs under sökning. Du ska även skapa en generisk klass som definierar en klasstyp vars objekt kan jämföras samt testprogram för att säkerställa att dina sökalgoritmer fungerar korrekt och effektivt.
+I denna uppgift ska du implementera linjär- och binärsökning. Du ska även skapa en generisk klass som definierar en klasstyp vars objekt kan jämföras.
 
 ### Förberedelser
 
-I `kmom01` skapar du ett dotnet console-projekt namngivet `Searching` och ett dotnet NUnit-projekt namngivet `Searching.Tests`. Searching och Searching.Tests ska vara på samma nivå i katalogstrukturen. 
+I `kmom01` skapar du ett dotnet console-projekt namngivet `Searching`.
 
 <details>
 <summary>Kort repetition/sammanställning</summary>  
@@ -28,19 +28,7 @@ cd  Searching
 // exekvera console projektet
 dotnet run
 ```
-```
-// skapa dotnet NUnit projekt
-dotnet new nunit -n Searching.Tests
 
-// ändra till katalogen för Searching.Tests projektet
-cd Searching.Tests
-
-// lägg till referens till Searching projektet
-dotnet add reference ../Searching/Searching.csproj
-
-// exekvera nunit projektet
-dotnet test
-```
 </details>
 
 ### Generisk klass med krav på jämförelse
@@ -66,6 +54,20 @@ då resulterar
 
 Filen ska namnges BusStop.cs och ingå i dotnet-projektet Searching. Klassen ska ingå i ett namespace med namnet `Searching`.
 
+<details>
+<summary>Här hittar du några exempel på påhittade busshållplatser som du kan använda</summary>
+101,Katthult Gård,Försening pga arbete i snickarboden  
+102,Villa Villekulla,Extra stopp pga ovanlig aktivitet på gården  
+103,Lönneberga Centrum,Ökad trafik vid marknadsdag  
+104,Mattisborgen,Tillfällig omledning pga skogsarbete  
+105,Körsbärsdalen,Begränsad framkomlighet vid bron  
+106,Bullerbyn Norra,Många resenärer under eftermiddagstid  
+107,Junibacken,Extra avgångar under helger  
+108,Nangijala Port,Stoppet trafikeras endast vid särskilda tider  
+109,Gröna Lund,Förseningar kan förekomma vid evenemang  
+110,Takåsarna,Begränsad framkomlighet vid stark vind  
+</details>
+
 ### Sökalgoritmer
 
 Algoritmerna ska vara generiska men kräva att elementen som sökningen utförs på implementerar `IComparable`-gränssnittet så att de kan jämföras med varandra.
@@ -74,16 +76,16 @@ Det innebär att det bl. a ska vara möjligt att utföra sökning i en array av 
 
 I en fil namngiven SearchAlgorithms.cs ska du implementera klassen `SearchAlgorithms` med de två sökalgoritmerna `LinearSearch` och `BinarySearch` (se nedan). Klassen ska ingå i samma namespace (`Searching`) som `BusStop`.   
 
-Det finns för båda sökalgoritmerna en *extra parameter* som är en lista (datatypen `List<int>`) vilken ska användas för att registrera de index där element finns som det sökta har jämförts med. Detta för att kunna analysera hur många jämförelser som görs och var i arrayen de jämförelser gjorts.
+Det finns för båda sökalgoritmerna en *extra parameter* som är en lista (datatypen `List<int>`) vilken ska användas för att registrera de index där element finns som det sökta har jämförts med. Detta för att kunna analysera hur många jämförelser som görs och var i arrayen dessa jämförelser gjorts.
 
 Parameterlistan ska vara anpassad efter följande anrop:
 ```
 // Sökning av targetInt i arrayen nrs med 10 heltal 
-int index = SearchAlgorithms.LinearSearch(nrs, 10, target, indexes);
+int index = SearchAlgorithms.LinearSearch(nrs, 10, targetInt, indexes);
 ```
 ```
 // Sökning av targetStr i arrayen words med 100 strängar
-int index = SearchAlgorithms.BinarySearch(words, 100, target, indexes);
+int index = SearchAlgorithms.BinarySearch(words, 100, targetStr, indexes);
 ``` 
 ```
 // Sökning av targetBusStop i arrayen busStops med 1000 BusStop-objekt
@@ -107,13 +109,11 @@ public class SearchAlgorithms
 }
 ```
 
-### Tester för att säkerställa att algoritmerna fungerar
+### Säkerställ att algoritmerna fungerar
 
-När du implementerat sökalgoritmerna ska du göra tester för att säkerställa att algoritmerna fungerar såsom avsett. 
+När du implementerat sökalgoritmerna behöver du göra egna tester för att säkerställa att algoritmerna fungerar såsom avsett. 
 
-Byt namn på `UnitTest1.cs` i Searching.Tests till `SearchAlgorithmTests.cs` och implementera tester i denna fil.   
-
-Använd `TestCase` för att testa olika scenarion och datatyper. Det är viktigt att du inte bara testar att algoritmerna ger rätt svar utan också att de gör det på ett effektivt sätt, dvs. att de gör rätt antal jämförelser och att jämförelserna sker på rätt element i arrayen. 
+Det är viktigt att du inte bara testar att algoritmerna ger rätt resultat utan också att de gör det på ett effektivt sätt, dvs. att de gör rätt antal jämförelser och att jämförelserna sker på rätt element i arrayen. Till detta använder du den extra parametern av typen `List<int>` .
 
 Några tips på vägen:
 
@@ -127,6 +127,71 @@ Några tips på vägen:
     - om det som söks inte finns i arrayen?
 1. Gör algoritmen korrekt antal jämförelser och utförs jämförelserna på rätt element?
 
-I filerna `words999.txt`, `words1200.txt`, `orderedWords999.txt` och `orderedWords1200.txt` finns ord som du kan använda för att testa dina sökalgoritmer på lite större mängder med strängar. De två första filerna innehåller 999 respektive 1200 ord i slumpmässig ordning, medan de två sista filerna innehåller samma ord i sorterad ordning.
+I filen `orderedWords1200.txt` finns 1200 ord i sorterad ordning som du kan använda för att testa dina sökalgoritmer på lite större mängder med strängar. 
 
+<details>
+<summary>Här är ett förslag på metod för att läsa strängar från fil.</summary>  
+
+
+```csharp
+// skapar en array med strängar som läses från fil. Storleken på arrayen bestäms av värdet i nrOf, om vädret är -1 läses alla strängar som finns på filen
+string[] ReadWordsFromFile(string filename, int nrOf = -1)
+{
+    if (nrOf == -1)
+    {
+        string[] all = File.ReadAllLines(filename);
+        return all;
+    }
+
+    string[] words = new string[nrOf];
+
+    using (var reader = new StreamReader(filename))
+    {
+        string? word;
+        int index = 0;
+
+        while ((word = reader.ReadLine()) != null && index < nrOf)
+        {
+            words[index] = word;
+            index++;
+        }
+    }
+
+    return words;
+}
+```
+</details>
 För att testa med större mängder heltal kan du dels generera slumpmässiga heltal genom att använda `Random`-klassen och dels sortera dem med hjälp av `Array.Sort`-metoden. 
+
+<details>
+<summary>Här är ett förslag på metod för att skapa en array med slumpade tal i sorterad ordning.</summary>  
+
+```csharp
+// skapar en array av storlek nrOf och fyller den med slumpade heltal inom [minValue..maxValue] som sorteras
+int[] RandomOrderedNumbers(int minValue, int maxValue, int nrOf, int seed = 1234)
+{
+    Random random = new Random(seed);
+
+    int[] nrs = new int[nrOf];
+    for (int i = 0; i<nrOf; i++)
+        nrs[i] = random.Next(minValue, maxValue + 1);
+    Array.Sort(nrs);
+    return nrs;
+}
+```
+</details>
+
+#### Filer som ingår i uppgiften
+
+- BusStop.cs med klassen BusStop definierad enligt klassdiagrammet
+- SearchingAlgorithms.cs med klassen SearchingAlgorithms med de generiska klassmetoderna för linjärsökning och binärsökning
+
+
+## Detta förväntas du kunna efter att du genomfört uppgiften
+
+- definiera generiska klasser som är jämförbara med CompareTo-metoden
+- implementera generiska metoder
+- implementera och/eller skriva pseudokod för linjär- och binärsökning
+- förstå hur många jämförelser linjär- och binärsökning utför i relation til antalet element
+- förstå och kunna implementera tester som säkerställer att linjär- och binärsökning är korrekta
+
