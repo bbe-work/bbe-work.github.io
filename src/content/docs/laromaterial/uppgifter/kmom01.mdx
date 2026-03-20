@@ -52,6 +52,9 @@ då resulterar
 - `busStopB.CompareTo(busStopA)` i -1
 - `busStopA.CompareTo(busStopA)` i 0
 
+Metoderna `ToString()` och `Equals(...)` överskuggas från Object (som är alla klassers basklass). `ToString()` ska returnera en sträng med alla egenskaper.  
+Metoden `Equals(...)` ska returnera sant om objekten är lika och falskt annars. I detta fall är objekten lika om de har samma nummer (`_nr`) och samma namn (`_name`).  
+
 Filen ska namnges BusStop.cs och ingå i dotnet-projektet Searching. Klassen ska ingå i ett namespace med namnet `Searching`.
 
 <details>
@@ -108,6 +111,18 @@ public class SearchAlgorithms
     }
 }
 ```
+#### Exempel på anrop och förväntat resultat
+
+Anta att `nrs` är en heltalsarray med innehållet 20, 40, 30, 70, 60, 50 och att indexes är en tom lista (`List<int> indexes = new List<int>()`).  
+
+Efter anropet `int index = SearchAlgorithms.LinearSearch(nrs, 6, 30, indexes)` ska `index` innehålla 2 och listan `indexes` innehålla 20, 40, 30.
+
+Efter anropet `int index = SearchAlgorithms.LinearSearch(nrs, 6, 90, indexes)` ska `index` innehålla -1 och listan `indexes` innehålla 20, 40, 30, 70, 60, 50.
+
+Anta att `orderedNrs` är en heltalsarray med innehållet 22, 33, 44, 55, 66, 77, 88 och indexes är en tom lista.
+
+Efter anropet `int index = SearchAlgorithms.BinarySearch(orderedNrs, 7, 55, indexes)` ska `index` innehålla 3 och listan `indexes` innehålla 55.
+
 
 ### Säkerställ att algoritmerna fungerar
 
@@ -181,17 +196,17 @@ int[] RandomOrderedNumbers(int minValue, int maxValue, int nrOf, int seed = 1234
 ```
 </details>
 
-#### Filer som ingår i uppgiften
+#### Filer som ingår i inlämningen
 
-- BusStop.cs med klassen BusStop definierad enligt klassdiagrammet
-- SearchingAlgorithms.cs med klassen SearchingAlgorithms med de generiska klassmetoderna för linjärsökning och binärsökning
+- `BusStop.cs` med klassen BusStop definierad enligt klassdiagrammet
+- `SearchingAlgorithms.cs` med klassen SearchingAlgorithms med de generiska klassmetoderna för linjärsökning och binärsökning
 
 
-## Detta förväntas du kunna efter att du genomfört uppgiften
+### Detta förväntas du kunna efter att du genomfört uppgiften
 
 - definiera generiska klasser som är jämförbara med CompareTo-metoden
 - implementera generiska metoder
-- implementera och/eller skriva pseudokod för linjär- och binärsökning
+- implementera linjär- och binärsökning
 - förstå hur många jämförelser linjär- och binärsökning utför i relation til antalet element
 - förstå och kunna implementera tester som säkerställer att linjär- och binärsökning är korrekta
 
