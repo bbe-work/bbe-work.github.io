@@ -1,25 +1,26 @@
 namespace Searching;
+
 public class BusStop: IComparable<BusStop>
 {
-    private string? _name; 
+    private string _name; 
     private int _nr;
     private string? _note;
 
     public BusStop(int nr, string name, string note = "-")
     {
-        this._name = name;
+        this._name = name ?? "";
         this._nr = nr;
         this._note = note;
     }
 
     public int CompareTo(BusStop? other)
     {
-        if (other == null)
+        if (other == null || other._name == null)
             return 1;
         return this._name.CompareTo(other._name);
     }
 
-    public string GetInfo()
+    public override string ToString()
     {
         string res =  $"{this._nr}: {this._name}";
         if (this._note != null && !this._note.Equals("-"))
@@ -29,10 +30,14 @@ public class BusStop: IComparable<BusStop>
         return res;
     }
 
-    public override string ToString()
+    /*public override bool Equals(object? obj)
     {
-        return GetInfo();
-    }
+        if (obj == null || this.GetType() != obj.GetType())
+            return false;
+        BusStop other = (BusStop)obj;
+
+        return this._nr == other._nr && this._name == other._name!;
+    }*/
 
     public int GetNr()
     {
@@ -41,7 +46,7 @@ public class BusStop: IComparable<BusStop>
 
     public string GetName()
     {
-        return this._name ?? string.Empty;
+        return this._name;
     }
 
     public string GetNote()
@@ -49,8 +54,9 @@ public class BusStop: IComparable<BusStop>
         return this._note ?? string.Empty;
     }
 
-    BusStop GetCopy()
+
+    public BusStop GetCopy()
     {
-        return new BusStop(this._nr, this._name, this._note);
+        return new BusStop(this._nr, this._name, this._note ?? "-");
     }
 }

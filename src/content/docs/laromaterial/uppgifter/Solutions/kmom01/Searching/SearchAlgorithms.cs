@@ -30,7 +30,7 @@ public class SearchAlgorithms
             midIndex = (startIndex + endIndex) / 2;
             indexes?.Add(midIndex);
         }
-        if (startIndex > endIndex)
+        if (startIndex > endIndex && indexes != null)
         {
             indexes.RemoveAt(indexes.Count - 1); // den extra mittberäkningen som görs
             midIndex = -1;
