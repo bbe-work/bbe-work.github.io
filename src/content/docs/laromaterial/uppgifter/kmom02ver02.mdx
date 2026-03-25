@@ -1,0 +1,283 @@
+---
+title: Kmom02 - Sortering
+description: Kmom02 inlämningsuppgift om sortering
+order: 0020
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import klassdiagram from '@assets/img/kmom02/KlassdiagramKmom02Uppgift.png';
+
+I denna uppgift ska du implementera sorteringsalgoritmerna insertionsort och quicksort och undersöka hur algoritmernas prestanda påverkas av ordningen på indata.  
+
+Du ska använda den generiska klass du skapade i kmom01 (`BusStop`). Denna utökas så att vi kan registrera antalet jämförelser. 
+Vidare ska du säkerställa att dina sorteringsalgoritmer fungerar korrekt och effektivt.
+
+### Förberedelser
+
+I `kmom02` skapar du ett dotnet console-projekt namngivet `Sorting` och om du vill göra testerna i ett nunit projekt så skapar du ett sådant namngivet `Sorting.Tests`. Sorting och Sorting.Tests ska vara på samma nivå i katalogstrukturen. 
+
+<details>
+<summary>Kort repetition/sammanställning</summary>  
+
+```
+// skapa dotnet console projekt
+dotnet new console -n Sorting
+
+// ändra till katalogen för Sorting projektet
+cd  Sorting
+
+// exekvera console projektet
+dotnet run
+```
+```
+// skapa dotnet nunit projekt
+dotnet new nunit -n Sorting.Tests
+
+// ändra till katalogen för Sorting.Tests projektet
+cd Sorting.Tests
+
+// lägg till referens till Sorting projektet
+dotnet add reference ../Sorting/Sorting.csproj
+
+// exekvera nunit projektet
+dotnet test
+```
+</details>
+
+### Generisk klass med krav på jämförelse
+
+Kopiera den generiska klassen `BusStop` som du har i `kmom01` till katalogen `Sorting` och ändra dessutom namespace till `Sorting`. 
+
+Uppdatera dessutom `BusStop` enligt klassdiagrammet  
+
+<Figure
+    src={klassdiagram}
+    caption="BusStop klassdiagram"
+    width="400px"
+/>
+
+
+där 
+
+- `NrOfComparisons` används för att räkna antalet gånger anrop av CompareTo utförs
+- `ResetNrOfComparisons()` nollställer `NrOfComparisons`
+- `GetNrOfComparisons()` returnerar innehållet i `NrOfComparisons`
+
+Vidare behöver du i `CompareTo()` räkna upp `NrOfComparisons`
+
+Kontrollera att du får rätt resultat. 
+
+<details>
+<summary>Ett förslag hittar du här</summary>
+
+```csharp
+BusStop busStopA = new BusStop("Traryd", 134, "Hög kant");
+BusStop busStopB = new BusStop("Ljungby", 122, "Ingen busskur för närvarande");
+
+Console.WriteLine($"Antalet jämförelser vid start {BusStop.GetNrOfComparisons()}");
+if (busStopA.CompareTo(busStopB) > 0)
+    Console.WriteLine("OK");
+else
+    Console.WriteLine("INTE OK");
+Console.WriteLine($"Antalet jämförelser ska var 1 och är {BusStop.GetNrOfComparisons()}");
+if (busStopB.CompareTo(busStopA) < 0)
+    Console.WriteLine("OK");
+else
+    Console.WriteLine("INTE OK");
+Console.WriteLine($"Antalet jämförelser ska var 2 och är {BusStop.GetNrOfComparisons()}");
+if (busStopA.CompareTo(busStopA) == 0)
+    Console.WriteLine("OK");
+else
+    Console.WriteLine("INTE OK");
+Console.WriteLine($"Antalet jämförelser ska var 3 och är {BusStop.GetNrOfComparisons()}");
+
+BusStop.ResetNrOfComparisons();
+Console.WriteLine($"Antalet jämförelser efter Reset {BusStop.GetNrOfComparisons()}");
+
+```
+</details>
+
+
+### Sorteringsalgoritmer
+
+Algoritmerna ska vara generiska men kräva att elementen som sorteras implementerar   
+`IComparable`-gränssnittet så att de kan jämföras med varandra.
+
+Du ska implementera insertionsort och quicksort. Dessa ska finnas i filen SortingAlgorithms.cs som ska tillhöra namespace `Sorting`. 
+
+#### Insertionsort
+
+Stommen till Insertionsort ska vara följande
+
+```csharp
+public static void Insertionsort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
+
+```
+
+#### Quicksort
+
+Quicksort ska finnas i två överlagrade metoder där en är publik och en är privat enligt följande  
+
+```csharp
+public static void Quicksort<T>(T[] A, int n) where T : IComparable<T> {/*ska implementeras*/}
+private static void Quicksort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
+
+```
+Den privata metoden är den som är rekursiv och denna anropas från den publika metoden. 
+
+Partitioneringsalgoritmen där sista elementet är pivot får du här:
+
+```csharp 
+private static int Partition<T>(T[] A, int start, int end) where T : IComparable<T>
+{
+    T pivot = A[end];
+    int i = start - 1;
+    
+    for (int j = start; j < end; j++)
+    {
+        if (A[j].CompareTo(pivot) < 0)
+        {
+            i++;
+            (A[i], A[j]) = (A[j], A[i]);
+        }
+    }
+    (A[i + 1], A[end]) = (A[end], A[i + 1]);
+    return i + 1;
+}
+```
+
+#### Kontrollera att dina algoritmer är korrekta
+
+- Prova att sortera med olika datatyper (t.ex int och string).  
+
+- Kontrollera att arrayen verkligen är sorterad när algoritmen är klar.
+
+    <details>
+    <summary>Ett förslag hittar du här</summary>
+
+    ```csharp
+    bool CheckSorted<T>(T[] arr, int n) where T: IComparable<T>
+    {
+        for (int i=1; i<arr.Length-1; i++)
+        {
+            if (arr[i].CompareTo(arr[i+1])>0)
+                return false;
+        }
+        return true;
+    }
+
+    ```
+    </details>
+
+### Använd sorteringsalgoritmerna
+
+Nu ska du undersöka hur effektiva algoritmerna är genom att undersöka antalet jämförelser. Du ska göra detta genom att sortera BusStop-objekt.
+
+Filen `stops.txt` innehåller hållplatser för Blekingetrafiken. Innehållet på filen är
+```text
+stop_id,stop_name,stop_lat,stop_lon,location_type,parent_station,platform_code
+9021010001001000,Kungsplan,56.165202,15.586844,1,,
+9021010001013000,Landsvägsgatan,56.172004,15.588238,1,,
+9021010001014000,Tullskolan,56.174439,15.58903,1,,
+9021010001015000,Polhemsgatan,56.176723,15.590546,1,,
+...
+```
+
+Du kan använda följande kod för att läsa från fil och skapa en array med osorterade BusStop-objekt, där de 8 sista siffrorna i stop_id blir nummer (`_nr`) och stop_name blir namnet (`_name`).
+
+Parametern `nrOf` motsvarar det antal som ska läsas från filen men om dess värde är -1 läses hela filen.
+
+```csharp
+BusStop[] ReadFromFile(string filename, int nrOf = -1)
+{
+    try 
+    {
+        string[] stops = File.ReadAllLines(filename);
+            if (nrOf == -1 || nrOf > stops.Length)
+        nrOf = stops.Length - 1;
+        BusStop[] busStops = new BusStop[nrOf];
+        for (int i=0; i<nrOf; i++)
+        {
+            string[] parts = stops[i+1].Split(",");
+            busStops[i] = new BusStop(int.Parse(parts[0].Substring(8)), parts[1]);
+        }
+        return busStops;
+    }
+    catch(Exception)
+    {
+        return Array.Empty<BusStop>();
+    }
+}
+
+```
+
+#### Undersök algoritmernas effektivitet
+
+Exekvera `Insertionsort` och `Quicksort` med 
+
+1. 10, 100 resp 1000 osorterade BusStop-objekt
+1. 10, 100 resp 1000 omvänt sorterade BusStop-objekt
+1. 10, 100 resp 1000 sorterade BusStop-objekt
+
+och notera resultaten (antalet jämförelser). Är resultaten rimliga/korrekta? Vilket motsvarar bästa fallet? Vilket motsvarar sämsta fallet? Är någon algoritm effektivare under vissa omständigheter? Verkar ordo-notationen för algoritmerna stämma när antalet element ökar? 
+
+ Obs: För att resultatet av sortering av de osorterade BusStop-objekten ska bli relevant behöver du göra minst 5 olika exekveringar med olika ordning i arrayen. Ett tips är att blanda objekten inför varje ny sortering. När dessa körningar genomförts bestämmer du medelvärdet av antalet jämförelser. Var noga med att du har samma ordning på dessa för båda sorteringsalgoritmerna.
+
+<details>
+<summary>Ett förslag på hur du kan blanda hittar du här</summary>
+
+```csharp
+void Shuffle<T>(T[] arr, int n) where T: IComparable<T>
+{
+    for (int times=1; times<n; times++)
+    {
+        int i = random.Next(0, n);
+        int j = random.Next(0, n);
+        (arr[i], arr[j]) = (arr[j], arr[i]);
+    }
+}
+
+```
+</details>
+
+## Resultat
+
+Notera resultateten (t.ex i tabeller) för varje underlag (slumpade, sorterade resp omvänt sorterade) där det för varje sorteringsalgoritm framgår hur många jämförelser som genomförts.
+
+**Slumpmässigt ordnade element**  
+
+| Antalet element   | Insertionsort | Quicksort |  
+|--------|-------|-------------| 
+| 10   |  |  |
+| 100   |  |  |
+| 1000   |  |  |
+
+**Sorterade element**  
+
+| Antalet element   | Insertionsort | Quicksort | 
+|--------|-------|-------------|
+| 10   |  |  |
+| 100   |  |  |
+| 1000   |  |  |
+
+
+**Omvänt sorterade element**  
+
+| Antalet element   | Insertionsort | Quicksort |  
+|--------|-------|-------------| 
+| 10   |  |  |
+| 100   |  |  |
+| 1000   |  |  |
+
+
+Utgå från de frågor som finns i texten med rubriken "Undersök algoritmernas effektivitet" och reflektera över dina resultat.
+
+## Detta förväntas du kunna efter att du genomfört uppgiften
+
+- implementera sorteringsalgoritmen insertionsort 
+- förstå och kunna redogöra för när (avseende ordningen på elementen som ska sorteras) insertionsort är mest effektiv (bästa fallet) och när den är minst effektiv (sämsta fallet)
+- implementera sorteringsalgoritmen quicksort om partitioneringsalgoritmen är given
+- förstå och kunna redogöra för när (avseende ordningen på elementen som ska sorteras) quickssort är mest effektiv (bästa fallet) och när den är minst effektiv (sämsta fallet)
+

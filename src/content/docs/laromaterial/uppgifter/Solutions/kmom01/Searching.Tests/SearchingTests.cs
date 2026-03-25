@@ -4,7 +4,7 @@ using Searching;
 public class SearchingTests
 {
     [Test]
-    public void TestLinearSearchUnorderedNumbersWorstCaseSmallArray()
+    public void LinearSearch_UnorderedNumbers_WorstCaseSmallArray()
     {
         int[] unOrderedNrs = HelperMethods.RandomOrderedNumbers(1, 300, 10, 100);
         List<int> indexes = new List<int>();
@@ -17,7 +17,7 @@ public class SearchingTests
 
     }
     [Test]
-    public void TestLinearSearchUnorderedNumbersBestCaseSmallArray()
+    public void LinearSearch_UnorderedNumbers_BestCaseSmallArray()
     {
         int[] unOrderedNrs = HelperMethods.RandomOrderedNumbers(1, 300, 10, 55);
         List<int> indexes = new List<int>();
@@ -29,7 +29,7 @@ public class SearchingTests
     }
 
     [Test]
-    public void TestLinearSearchUnorderedNumbers()
+    public void LinearSearch_UnorderedNumbers()
     {
         int[] unOrderedNrs = HelperMethods.RandomOrderedNumbers(1, 300, 100, 55);
         List<int> indexes = new List<int>();
@@ -42,7 +42,7 @@ public class SearchingTests
     }
 
     [Test]
-    public void TestBinarySearchWorstCaseSmallArray01()
+    public void BinarySearch_WorstCaseSmallArray01()
     {
         int[] nrs = new int[]{10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85};
         List<int> indexes = new List<int>();
@@ -56,7 +56,7 @@ public class SearchingTests
     }
 
     [Test]
-    public void TestBinarySearchWorstCaseSmallArray02()
+    public void BinarySearch_WorstCaseSmallArray02()
     {
         int[] nrs = new int[]{10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85};
         List<int> indexes = new List<int>();
@@ -70,7 +70,7 @@ public class SearchingTests
     }
 
     [Test]
-    public void TestBinarySearchWorstCase03()
+    public void BinarySearch_WorstCase()
     {
         int[] nrs = new int[1024];
         for (int i=0; i<1024; i++)
@@ -85,7 +85,7 @@ public class SearchingTests
         TestContext.Out.WriteLine($"✅ BinarySearch worst case array");
     }
     [Test]
-    public void TestBinarySearchBestCase()
+    public void BinarySearch_BestCase()
     {
         int[] nrs = new int[1024];
         for (int i=0; i<1024; i++)
@@ -100,7 +100,7 @@ public class SearchingTests
         TestContext.Out.WriteLine($"✅ BinarySearch best case");
     }
     [Test]
-    public void TestBinarySearch01()
+    public void BinarySearch01()
     {
         int[] nrs = new int[1024];
         for (int i=0; i<1024; i++)
@@ -116,7 +116,7 @@ public class SearchingTests
     }
 
     [Test]
-    public void TestBinarySearch02()
+    public void BinarySearch02()
     {
         int[] nrs = new int[1024];
         for (int i=0; i<1024; i++)

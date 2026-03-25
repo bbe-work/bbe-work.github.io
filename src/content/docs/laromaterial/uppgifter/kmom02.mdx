@@ -124,7 +124,7 @@ Tänk efter så att du skriver kod som uppfyller DRY!
 Det ska även tillföras quicksort i några varianter
 
 ```csharp
-public static void Quicksort<T>(T[] A, int start, int end) {/*ska implementeras*/}
+public static void Quicksort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
 public static void QuicksortUsingMedianOfThree<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
 public static void QuicksortUsingInsertionsort<T>(T[] A, int start, int end) where T : IComparable<T> {/*ska implementeras*/}
 ```

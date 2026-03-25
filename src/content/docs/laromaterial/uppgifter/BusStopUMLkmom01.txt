@@ -1,0 +1,22 @@
+@startuml
+
+IComparable <|.. BusStop
+
+class BusStop {
+ - _nr: int
+ - _name: string
+ - _note: string
+ + BusStop(nr : int, name : string, note : string = "-")
+ + ToString() : string <<override>>
+ + CompareTo(other : BusStop?) : int
+ + GetNr() : int
+ + GetName(): string
+ + GetNote() : string
+ + GetCopy() : BusStop
+}
+
+interface IComparable<T> {
+ CompareTo(other : T?) : int
+}
+
+@enduml
