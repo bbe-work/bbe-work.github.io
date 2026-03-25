@@ -22,6 +22,20 @@ public class BusStopTests
 
         Assert.AreEqual(1, BusStop.GetNrOfComparisons());
     }
+
+    [Test]
+public void CompareTo_MultipleCalls_ShouldCountAllComparisons()
+{
+    var a = new BusStop(1, "A", "-");
+    var b = new BusStop(2, "B");
+    var c = new BusStop(3, "C");
+
+    a.CompareTo(b);
+    b.CompareTo(c);
+    a.CompareTo(c);
+
+    Assert.AreEqual(3, BusStop.GetNrOfComparisons());
+}
 }
     
 

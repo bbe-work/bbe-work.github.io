@@ -6,7 +6,7 @@ public class BusStop: IComparable<BusStop>
     private int _nr;
     private string? _note;
 
-    public BusStop(int nr, string name, string note = "-")
+    public BusStop(int nr, string name, string note)
     {
         this._name = name ?? "";
         this._nr = nr;
@@ -29,15 +29,6 @@ public class BusStop: IComparable<BusStop>
         }
         return res;
     }
-
-    /*public override bool Equals(object? obj)
-    {
-        if (obj == null || this.GetType() != obj.GetType())
-            return false;
-        BusStop other = (BusStop)obj;
-
-        return this._nr == other._nr && this._name == other._name!;
-    }*/
 
     public int GetNr()
     {
