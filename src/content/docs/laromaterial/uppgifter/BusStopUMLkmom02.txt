@@ -1,5 +1,6 @@
 @startuml
 
+interface "System.IComparable" as IComparable
 IComparable <|.. BusStop
 
 class BusStop {
