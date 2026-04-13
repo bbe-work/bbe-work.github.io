@@ -52,7 +52,7 @@ Roten finns på **nivå (eng. level)** 0, rotens barn på nivå 1, osv. Det nede
 <Figure
     src={tradfargrotlov}
     caption="Illustration av träd med rot, löv och interna noder"
-    width="300px"
+    width="400px"
 />
 
 
@@ -61,7 +61,7 @@ Noderna är förbundna med varandra på ett bestämt sätt. Det är nämligen s�
 <Figure
     src={tradforalderbarn}
     caption="Illustration av förälder och barn"
-    width="300px"
+    width="400px"
 />
 
 I bilden ovan har roten (den röda noden) 4 barn vilka är noderna med färgerna grön, svart, gul och blå. Även den svarta noden är förälder och dess barn är den orange noden och den grå noden. 
@@ -93,6 +93,7 @@ Några exempel:
 <Figure
     src={binaratrad}
     caption="Exempel på binära träd"
+    width="900px"
 />
 
 Vi konstaterar till exempel att *Träd 1* har höjden 4, att det har 4 löv (2 löv på djupet 2, 1 löv på djupet 3 och 1 löv på djupet 4). Det finns 3 noder som har 2 barn och 3 noder som har 1 barn. Det högra delträdet till roten har höjden 2.
@@ -141,21 +142,21 @@ Vi utgår från följande träd, där noderna har fått bokstavs-etiketter, och 
 <Figure
     src={tradfortraversering}
     caption="Binärt träd som ska traverseras"
-    width="300px"
+    width="400px"
 />
 
 I första anropet av preorder är argumentet roten, dvs noden med R, som därmed "blir" `currentNode` (visas med röd cirkel).  
 <br></br>
 <Figure
     src={preorder01}
-    width="300px"
+    width="400px"
 />
 
 Denna är inte null och visit-utförs på R vilket innebär att R presenteras (markeras med grön cirkel). Nytt anrop utförs nu med R's vänster barn. `currentNode` blir i detta anrop noden O.  
 <br></br>
 <Figure
     src={preorder02}
-    width="300px"
+    width="400px"
 />
 
 Denna är inte null och visit-utförs vilket innebär att O presenteras.  
@@ -163,7 +164,7 @@ Nytt anrop utförs nu med O's vänster barn. `currentNode` blir i detta anrop no
 <br></br>
 <Figure
     src={preorder03}
-    width="300px"
+    width="400px"
 />
 
 Denna är inte null och visit-utförs vilket innebär att P presenteras. 
@@ -172,20 +173,20 @@ Nu anropas preorder med P's vänsterbarn men det är tomt (null) och algoritmen 
 <br></br>
 <Figure
     src={preorder04}
-    width="300px"
+    width="400px"
 />
 Algoritmen fortsätter därmed på föregående anrop vilket är anropet med `currentNode` O (markeras med röd cirkel).  
 
 <br></br>
 <Figure
     src={preorder05}
-    width="300px"
+    width="400px"
 />
 För denna nod är vänster delträd klart (preorder har utförts på hela dess vänster delträd) och det är dags för höger barn som är noden med H.  
 <br></br>
 <Figure
     src={preorder06}
-    width="300px"
+    width="400px"
 />
 
 På motsvarande sätt som för noden med P blir preorder klar för denna nod.  
@@ -193,13 +194,13 @@ På motsvarande sätt som för noden med P blir preorder klar för denna nod.
 <br></br>
 <Figure
     src={preorder07}
-    width="300px"
+    width="400px"
 />
 Föregångaren är noden med O.  
 <br></br>
 <Figure
     src={preorder08}
-    width="300px"
+    width="400px"
 />
 
 Denna är besökt och båda dess delträd är avklarade och hela trädet med O som rot är klart. 
@@ -207,14 +208,14 @@ Denna är besökt och båda dess delträd är avklarade och hela trädet med O s
 <br></br>
 <Figure
     src={preorder09}
-    width="300px"
+    width="400px"
 />
 
 Föregående anrop är med R som `currentNode`. 
 <br></br>
 <Figure
     src={preorder10}
-    width="300px"
+    width="400px"
 />
 
 Här återstår att utföra preorder på höger barn, dvs för noden X.  
@@ -222,21 +223,21 @@ Här återstår att utföra preorder på höger barn, dvs för noden X.
 <br></br>
 <Figure
     src={preorder11}
-    width="300px"
+    width="400px"
 />
 
 Noden besöks. Dess vänster delträd är tomt och preorder fortsätter med höger barn som är noden med S.
 <br></br>
 <Figure
     src={preorder12}
-    width="300px"
+    width="400px"
 />
 
 Noden besöks och preorder utförs på vänster barn, dvs noden med W.
 <br></br>
 <Figure
     src={preorder13}
-    width="300px"
+    width="400px"
 />
 
 Noden med W besöks. Denna har inga barn och preorder återgår till föregående anrop, dvs där `currentNode` är noden med S.
@@ -244,7 +245,7 @@ Noden med W besöks. Denna har inga barn och preorder återgår till föregåend
 <br></br>
 <Figure
     src={preorder14}
-    width="300px"
+    width="400px"
 />
 
 Eftersom noden med S inte har något häger barn är algoritmen klar för delträdet med S som rot. Föregående anrop motsvarar att X är `currentNode`.
@@ -252,7 +253,7 @@ Eftersom noden med S inte har något häger barn är algoritmen klar för deltr�
 <br></br>
 <Figure
     src={preorder15}
-    width="300px"
+    width="400px"
 />
 
 Även detta träd är klart och algoritmen är tillbaka till `currentNode` som R.
@@ -260,14 +261,14 @@ Eftersom noden med S inte har något häger barn är algoritmen klar för deltr�
 <br></br>
 <Figure
     src={preorder16}
-    width="300px"
+    width="400px"
 />
 
 Och nu är hela trädet traverserat.
 <br></br>
 <Figure
     src={preorder17}
-    width="300px"
+    width="400px"
 />
 Besöksordningen blev:  R O P H X S W 
 
@@ -300,7 +301,7 @@ Vi utgår från samma träd som tidigare. Ett besök (visit i algoritmen) inneb�
 <Figure
     src={tradfortraversering}
     caption="Binärt träd som ska traverseras"
-    width="300px"
+    width="400px"
 />
 
 
@@ -344,7 +345,7 @@ Vi utgår från samma träd som tidigare. Ett besök (visit i algoritmen) inneb�
 <Figure
     src={tradfortraversering}
     caption="Binärt träd som ska traverseras"
-    width="300px"
+    width="400px"
 />
 
 Vi följer den rekursiva algoritmen på motsvarande sätt som för inorder:

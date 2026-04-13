@@ -26,7 +26,7 @@ Kopiera den generiska klassen `BusStop` som du har i `kmom02` till katalogen `He
 
 ### min-Heap
 
-Du ska i denna uppgift ska du implementera en min-Heap i klassen `Heap`. Klassen `Heap` ska implementeras  det generiska interfacet `IHeap`
+Du ska i denna uppgift implementera en min-Heap i klassen `Heap`. Klassen `Heap` ska implementeras baserat på det generiska interfacet `IHeap`
 
 ```csharp
 public interface IHeap<T> where T:IComparable<T>
@@ -43,7 +43,7 @@ public interface IHeap<T> where T:IComparable<T>
 }
 ```
 
-Metoden `GetAllElements` är egentligen inte en metod som ska ingå i en Heap men denna behövs för att vi ska kunna göra vissa tester.
+Metoden `GetAllElements` är egentligen inte en metod som ska ingå i en Heap men denna behövs för att vi ska kunna göra vissa kontroller när vi rättar din lösning.
 Det är tillåtet och dessutom lämpligt att tillföra hjälpmetoder för att lösa vissa delproblem.
 
 #### Sortera genom att använda en heap
@@ -72,7 +72,7 @@ Sorteringsordningen ska vara från lägst till högst.
     ```csharp
     bool CheckSorted<T>(T[] arr, int n) where T: IComparable<T>
     {
-        for (int i=1; i<arr.Length-1; i++)
+        for (int i=1; i<n-1; i++)
         {
             if (arr[i].CompareTo(arr[i+1])>0)
                 return false;
