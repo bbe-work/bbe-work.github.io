@@ -38,7 +38,7 @@ En graf består, precis som när det gäller träd, av **noder** och **kanter** 
 />
 
 
-Bilden visar två grafer *Graf 1* och *Graf 2*. Båda graferna har 10 noder (de fyllda cirklarna). *Graf 1* har 12 kanter (linjerna som förbinder noder) och *Graf 2* har 9 kanter. Den observante ser förhoppningsvis att Graf 2 även motsvarar ett träd och vi konstaterar att ett träd också är en graf.
+Bilden visar två grafer *Graf 1* och *Graf 2*. Båda graferna har 10 noder (de fyllda cirklarna). *Graf 1* har 13 kanter (linjerna som förbinder noder) och *Graf 2* har 9 kanter. Den observante ser förhoppningsvis att Graf 2 även motsvarar ett träd och vi konstaterar att ett träd också är en graf.
 
 Vi tittar på en annan bild på en graf där noderna fått etiketter (bokstäver).
 <br></br>
@@ -55,7 +55,7 @@ Man använder begreppet **granne** för de noder som en nod har kant till. I gra
 
 Grafen visar att det går att ta sig från S till P och vidare till E, vilket motsvarar att det finns en **väg** (eng. path) från S till P. Vägen har en **längd** som i detta fall motsvarar antalet kanter. Vi får att längden på vägen från S via P till E är 2. En annan väg från S till E är S -> P -> X -> E. Denna väg är längre då den använder 3 kanter.
 
-I en graf, till skillnad mot träd, kan det finnas det **cykler**. En cykel är en väg, med längden > 0, som börjar och slutar i samma nod och där varje kant endast används en gång. I grafen ovan (Graf 1) finns en cykel genom vägen E -> P -> X -> E. Denna cykel har längden 3. En cykel tar inte hänsyn till start-nod, det är alltså samma cykel som beskrivs genom P -> X -> E -> P.
+I en graf, till skillnad mot träd, kan det finnas **cykler**. En cykel är en väg, med längden > 0, som börjar och slutar i samma nod och där varje kant endast används en gång. I grafen ovan (Graf 1) finns en cykel genom vägen E -> P -> X -> E. Denna cykel har längden 3. En cykel tar inte hänsyn till start-nod, det är alltså samma cykel som beskrivs genom P -> X -> E -> P.
 
 Antalet kanter som ansluter till en nod kallas nodens **grad**. Vi ser att graden för S är 1 vilket skrivs grad(S) = 1 (eller degree(S) = 1). För övriga noder gäller grad(P) = 3, grad(E) = 2 och grad(X) = 2. 
 
@@ -87,7 +87,7 @@ En **komplett graf** är en graf där varje nod har en kant till varje annan nod
     </details>
 
 
-Förutom förbindelser mellan noder kan man ange riktning på kanter och man kan sätta vikt på kanter.
+Förutom att man kan ange riktning på kanter kan man sätta vikt på kanter.
 
 <br></br>
 <Figure
@@ -127,13 +127,14 @@ Den sista grafen i bilden (Graf 4) är både riktad och viktad.
 
 ## Representera graf
 
-Det finns två vedertagna sätt att representera grafer:
+Det finns två vedertagna sätt som används att representera grafer:
 - **grannmatris (adjacency matrix)**
 - **grannlistor (adjacensy lists)**
 
-Grannmatris är en 2-dim-matris där varje nod motsvarar en rad och en kolumn. Den cell i matrisen där rad-nod och kolumn-nod möts motsvarar kanten mellan rad-nod och kolumn-nod. Om grannmatrisen är namngiven `adjacencyMatrix` når vi en kant genom `adjacencyMatrix[<row-node>][<column-node>]`. Matrisen är kvadratisk eftersom alla noder finns på varje rad och varje kolumn.
+Grannmatris är en 2-dim-matris där alla noder finns i varje rad och i varje kolumn. Den cell i matrisen där rad-nod och kolumn-nod möts motsvarar kanten mellan rad-nod och kolumn-nod. Om grannmatrisen är namngiven `adjacencyMatrix` når vi en kant genom `adjacencyMatrix[<row-node>][<column-node>]`. Matrisen är kvadratisk eftersom alla noder finns i varje rad och i varje kolumn.
 
-grannlistor är en sekvens där varje nod förekommen en gång och för varje nod finns en lista med alla noder som är grannar till noden. Om sekvensen för grannlistorna är namngiven `adjacencyLists` når vi listan med alla grannar till en nod genom `adjacencyLists[<the-node>]`.
+Grannlistor innebär att varje nod har en lista med alla sina grann-noder. 
+
 ### Intern datastruktur
 
 #### Grannmatris
@@ -203,7 +204,7 @@ I bilden nedan ser vi grannlistor för respektive graf.
         width="520px"
     />
 
-Här hittar vi alla grannar till en nod i en lista. Det är ingen inbördes ordning på noderna i listorna. Om en nod finns i en lista så innebär det att det finns en kant till denna nod.
+Här hittar vi alla grannar till en nod i en lista. Det är ingen inbördes ordning på noderna i listorna. 
 
 I grannlistan för Graf 1 hittar vi för nod S endast P i listan och vi utläser att det finns en kant från S till P. I grannlistan för X hittar vi P och E vilket innebär att det finns en kant från X til P och en kant från X till E. 
 
@@ -233,10 +234,10 @@ I grannlistorna för de riktade graferna (Graf 3 och Graf 4) ser vi t.ex att det
     </details>
 ## Sammanfattningsvis
 
-En graf kan användas för att modellera hur objekt relaterar till varandra. En graf är uppbyggd av noder och kanter där varje kant förbinder två noder.  
+En graf kan användas för att modellera hur "saker" relaterar till varandra. En graf är uppbyggd av noder och kanter där varje kant förbinder två noder.  
 Ett träd (som vi har tittat på tidigare) är också en graf, men det finns inga cykler i ett träd.  
 Grafer kan vara riktade grafer, vilket innebär att alla kanter har en riktning.  
 Grafer kan även vara viktade, vilket innebär att en varje kant har en vikt/kostnad.  
-För att representera en graf används antingen grannmatris eller grannlistor.
+För att representera en graf används grannmatris eller grannlistor.
 
 
