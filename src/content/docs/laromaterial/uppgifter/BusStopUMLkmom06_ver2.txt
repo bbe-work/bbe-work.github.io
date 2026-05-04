@@ -1,0 +1,34 @@
+@startuml
+
+interface "System.IComparable" as IComparable
+IComparable <|.. BusStop
+BusStop <>.. BusStopKey
+
+class BusStop {
+ - _nr: int
+ - _name: string
+ - _note: string
+ - _key: BusStopKey
+ - NrOfComparisons : int {static}
+ + BusStop(nr : int, name : string, note : string = "-")
+ + ToString() : string <<override>>
+ + CompareTo(other : BusStop?) : int
+ + GetNr() : int
+ + GetName(): string
+ + GetNote() : string
+ + GetCopy() : BusStop
+ + GetKey() : BusStopKey
+ + ResetNrOfComparisons(): void {static}
+ + GetNrOfComparisons() : int {static}
+}
+
+interface IComparable<T> {
+ CompareTo(other : T?) : int
+}
+
+class BusStopKey {
+ + Equals(obj: object?) : bool <<override>>
+ + GetHashCode() : int <<override>>
+}
+
+@enduml

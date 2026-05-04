@@ -18,7 +18,7 @@ Ett vanligt förekommande graf-problem är att bestämma kortaste vägen (egentl
 ## Dijkstras algoritm - introduktion
 
 Strategin är att alltid välja den nod som för närvarande har det kortaste kända avståndet till start-noden.  
-Det innebär att det första som kontrolleras är vilka noder som kan nås från start-noden och vad det kostar (vikten). Det billigaste alternativet väljs. Nu kan vi komma vidare från den nyss valda till dess grannar. Vi undersöker vilka grannarna är och som inte ansluter till redan valda noder och registrera den totala kostnaden till dessa. Nu väljer vi den billigaste totala kostnaden av de som vi har registrerat, dvs av de som går direkt från start-noden och de som går via den nyss valda. Detta upprepas tills det inte finns fler möjliga noder att komma till.
+Det innebär att det första som kontrolleras är vilka noder som kan nås från start-noden och vad det kostar (vikten). Det billigaste alternativet väljs. Nu kan vi komma vidare från den nyss valda till dess grannar. Vi undersöker vilka grannarna är och som inte ingår bland redan valda noder och registrera den totala kostnaden till dessa. Nu väljer vi den billigaste totala kostnaden av de som vi har registrerat, dvs av de som går direkt från start-noden och de som går via den nyss valda. Detta upprepas tills det inte finns fler möjliga noder att komma till.
 
 Vi gör ett exempel där Dijkstras algoritm tillämpas för att finna kortaste vägen från nod X till varje annan nod. 
 <br></br>
@@ -31,7 +31,7 @@ Det vi behöver hantera under algoritmens gång är
 - vilka noder som är möjliga att nå från de som är valda/klara - dessa markeras med blå
 - vilken kostnaden är till de noder som är möjliga att nå - siffran visas vid noden men om det inte finns någon siffra ska det tolkas det som att kostnaden är "oändlig" 
 
-Vi börjar i nod X och markerar den som möjlig att nå (visas i grafen med blått) och vi sätter också kostnaden för att komma till X till 0 (a).  
+Vi börjar i nod X och markerar den som möjlig att nå (visas i grafen med blått) och vi sätter också kostnaden för att komma till X till 0 (a).   
 
 Nu ska vi avgöra vilka noder som är tillgängliga/valbara och vad det kostar att nå dessa så billigt som möjligt. I detta fall finns bara noden X med kostnaden 0. X väljs (markeras med grönt i grafen). 
 Vi kontrollerar vilka grannar X har
@@ -44,7 +44,7 @@ Noderna B och M markeras som nåbara (blå i grafen) och kostnaden för att ta s
 
 Eftersom B och M inte var nåbara tidigare var kostnaden tidigare "oändlig" och de beräknade kostnaderna är billigare och registreras (b).  
 
-Nu undersöks återigen vilka noder som är tillgängliga/valbara och vad det kostar att nå dessa så billigt som möjligt I detta fall finns två möjliga alternativ: noden B med kostnaden 10 och noden M med kostnaden 5. Billigast är alternativet M (markeras med grönt). Det är dags att undersöka grannarna till M vilka är 
+Nu undersöks återigen vilka noder som är tillgängliga/valbara och vad det kostar att nå dessa så billigt som möjligt. I detta fall finns två möjliga alternativ: noden B med kostnaden 10 och noden M med kostnaden 5. Billigast är alternativet M (markeras med grönt). Det är dags att undersöka grannarna till M vilka är 
 - B med kantvikt 3
 - K med kantvikt 9
 - T med kantvikt 2  

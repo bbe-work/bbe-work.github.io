@@ -1,0 +1,85 @@
+---
+title: Kmom10 - Projekt
+description: Grafer kortaste vägen
+order: 0050
+hidden: true
+---
+
+import Figure from '@components/CustomFigure.astro';
+
+import klassdiagram from '@assets/img/kmom02/KlassdiagramKmom02Uppgift.png';
+
+Denna uppgift omfattar i första hand grafer och det specifika grafproblemet att hitta **kortaste vägen** från en nod till alla andra noder eller till en specifik nod.
+
+### Förberedelser
+
+Skapa ett dotnetprojekt i katalogen `kmom10` som namnges `Project`.   
+I `kmom05` har du implementerat en **min-Heap** och i `kmom06` ska du ha implementerat en **hash-tabell**. Dessa ska du kopiera dessa till katalogen `Project`. Ändra dessutom namespace till `GraphProject` vilket ska gälla för alla klasser som ingår i lösningen.
+
+
+### Graf
+
+Implementera en klass som används för att representera en Graf i klassen `Graph`, vilken ska implementeras baserat på det interfacet `IGraph`
+
+```csharp
+public interface IGrap<T> where T:IComparable<T>
+{
+    public void Add(T fromVertice, T toVertice, int weight);
+
+    public bool Remove(T fromVertice, T toVertice, int weight);
+
+    public int GetWeight(T fromVertice, T toVertice);
+
+    public int NrOfVerticies();
+
+    public T[] GetAllVerticies();
+
+    public int GetTotalWeight();
+
+    public (int, List<string, int>) GetShortestPathAsStrings(T fromVertice, T toVertice);
+}
+```
+
+
+#### Klassen Graph
+
+Klassen Graph ska använda grannlistor (adjacency lists) för att representera grafen.
+Du ska i metoden GetShortestPath använda Dijkstras algoritm.
+Du ska använda dina implementationer av min-Heap och hash-tabell på ett rimligt och lämpligt sätt i Dijkstras algoritm.
+Objekten/Elementen/Nyckeln som ska hashas ska vara av en egendefinierad klasstyp som definierar metoderna `GetHashCode` och `Equals`. `GetHashCode` ska resultera i samma kod för två identiska objekt (dvs inte baseras på referensvärdet).
+Det ska inte finnas några orimligt ineffektiva lösningar.
+Det ska finnas en konstruktor som har en parameter motsvarande namnet på den text-fil som innehåller grafen. I denna ska grafen "byggas upp" baserat på det innehåll som finns på filen (se **Innehåll på textfiler**)
+
+
+### Innehåll på textfiler
+
+Textfiler som ska kunna läsas av grafen har följande uppbyggnad
+
+```text
+från:till:vikt
+```
+
+till exempel  
+
+```text
+Stockholm:Helsinki:400
+Oslo:Copenhagen:600
+Oslo:Bergen:460
+Bergen:Trondheim:700
+Trondheim:Stockholm:830
+```
+
+## Tester
+
+Du ska skriva nunit-tester (namnge projektet Project.Tests). Detta ska vara på samma nivå som Project (se kmom02 i C# för info).  
+Det ska finnas tester för Grafen generellt och specifikt för kortaste vägen. Testerna ska vara genomtänkta och tydliga.
+
+
+### Hur effektiv är algoritmen
+
+
+
+## Resultat
+
+Notera resultateten så att det tydligt framgår hur många jämförelser som genomförts och redogör för dina slutsatser.
+
